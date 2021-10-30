@@ -1,0 +1,41 @@
+body{
+    background-image: url("../pictures/bg-img.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#navLogo{
+    width: 250px;
+}
+
+.bleu{
+    color: #29acd6;
+}
+
+.rouge{
+    color: #f25357;
+}
+
+.red-border{
+    border: solid 1px #f25357;
+    border-radius: 5px;
+}
+
+.nav-red-border{
+    border: solid 1px #f25357;
+    border-radius: 25px;
+}
+
+.border-right{
+    border-right: 2px solid #f25357;
+}
+
+.border-bottom{
+    border-bottom: 2px solid #f25357;
+}
+
+.blue-hr{
+    margin:auto;
+    color: #29acd6;
+    width: 90%;
+}
