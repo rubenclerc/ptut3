@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- META -->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Titre -->
+        <title>MindMaster</title>
+        <link rel="icon" href="pictures/logo.png">
+
+        <!-- CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="stylesheet" href="styles/styles.css">
+
+    </head>
+
+    <body>
+        <div class="container-fluid">
+            <div class="row my-3 justify-content-between">
+                <img class="col-md-2" src="pictures/logoEcrit.png" alt="Logo Mindmaster" id="navLogo">
+
+                <h1 class="col-md-2 nav-red-border"><a href="#" class="nav-link text-center">Quitter</a></h1>
+            </div>
+
+            <div class="container">
+                <form action="">
+                    <div class="row bleu red-border justify-content-around">
+                        <h1 class="text-center">CRÉER UN CHALLENGE</h1>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="challenge-name">NOM:</label>
+                                <input type="text" class="form-control blue-border" id="challenge-name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="challenge-difficulty">DIFFICULTÉ:</label>
+                                <select name="challenge-difficulty" class="form-control blue-border">
+                                    <option value="very-easy">Très facile</option>
+                                    <option value="easy">Facile</option>
+                                    <option value="average">Moyen</option>
+                                    <option value="hard">Difficile</option>
+                                    <option value="very-hard">Très difficile</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="challenge-date">JOUR:</label>
+                                <input type="date" class="form-control blue-border" id="challenge-date">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="challenge-no">PARTICIPANTS:</label>
+                                <input type="number" class="form-control blue-border" id="challenge-no">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="challenge-dur">DURÉE:</label>
+                                <input type="number" class="form-control blue-border" id="challenge-dur">
+                                <small class="form-text text-muted">Durée exprimée en heures.</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="challenge-hour">HEURE:</label>
+                                <input type="time" class="form-control blue-border" id="challenge-hour">
+                            </div>
+                        </div>
+
+                        <input type="submit" class="form-control blue-border" value="VALIDER">
+                    </div>  
+                </form>
+            </div>
+        </div>
+    </body>

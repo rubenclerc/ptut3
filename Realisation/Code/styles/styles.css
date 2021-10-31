@@ -8,7 +8,7 @@ body{
     width: 250px;
 }
 
-.bleu{
+.bleu, .nav-link, .nav-link:hover, .nav-link:visited{
     color: #29acd6;
 }
 
@@ -17,12 +17,17 @@ body{
 }
 
 .red-border{
-    border: solid 1px #f25357;
+    border: solid 2px #f25357;
+    border-radius: 5px;
+}
+
+.blue-border{
+    border: solid 2px #29acd6;
     border-radius: 5px;
 }
 
 .nav-red-border{
-    border: solid 1px #f25357;
+    border: solid 2px #f25357;
     border-radius: 25px;
 }
 
