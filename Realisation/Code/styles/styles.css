@@ -1,4 +1,9 @@
+html{
+    height: 98%;
+}
+
 body{
+    min-height: 100%;
     background-image: url("../pictures/bg-img.png");
     background-repeat: no-repeat;
     background-position: center;
@@ -43,4 +48,8 @@ body{
     margin:auto;
     color: #29acd6;
     width: 90%;
+}
+
+#submitButton{
+    width: 10%;
 }

@@ -18,16 +18,16 @@
 
     <body>
         <div class="container-fluid">
-            <div class="row my-3 justify-content-between">
+            <div class="row my-3 mb-5 justify-content-between">
                 <img class="col-md-2" src="pictures/logoEcrit.png" alt="Logo Mindmaster" id="navLogo">
 
-                <h1 class="col-md-2 nav-red-border"><a href="#" class="nav-link text-center">Quitter</a></h1>
+                <h2 class="col-md-1"><a href="#" class="nav-link text-center nav-red-border">Quitter</a></h2>
             </div>
 
             <div class="container">
                 <form action="">
                     <div class="row bleu red-border justify-content-around">
-                        <h1 class="text-center">CRÉER UN CHALLENGE</h1>
+                        <h1 class="text-center my-4">CRÉER UN CHALLENGE</h1>
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -55,13 +55,12 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="challenge-no">PARTICIPANTS:</label>
-                                <input type="number" class="form-control blue-border" id="challenge-no">
+                                <input type="number" min="2" class="form-control blue-border" id="challenge-no">
                             </div>
 
                             <div class="form-group">
-                                <label for="challenge-dur">DURÉE:</label>
-                                <input type="number" class="form-control blue-border" id="challenge-dur">
-                                <small class="form-text text-muted">Durée exprimée en heures.</small>
+                                <label for="challenge-dur">DURÉE (EN HEURES):</label>
+                                <input type="number" min="1" class="form-control blue-border" id="challenge-dur">
                             </div>
 
                             <div class="form-group">
@@ -70,8 +69,10 @@
                             </div>
                         </div>
 
-                        <input type="submit" class="form-control blue-border" value="VALIDER">
-                    </div>  
+                        <div class="row justify-content-around">
+                            <input type="submit" class="form-control blue-border my-3" id="submitButton" value="VALIDER">
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
