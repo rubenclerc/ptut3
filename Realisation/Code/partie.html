@@ -18,23 +18,23 @@
 
     <body>
         <div class="container-fluid">
-            <div class="row my-3">
+            <div class="row my-3 justify-content-between">
                 <img class="col-md-2" src="pictures/logoEcrit.png" alt="Logo Mindmaster" id="navLogo">
 
-                <h1 class="col-md-2 bleu nav-red-border">Challenge 1</h1>
+                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center">Challenge 1</h1>
 
-                <h1 class="col-md-2 bleu nav-red-border">5000</h1>
+                <h1 class="col-md-2 bleu nav-red-border text-left align-self-center">5000</h1>
 
-                <h1 class="col-md-2 bleu">5:32</h1>
+                <h1 class="col-md-2 bleu text-center align-self-center">5:32</h1>
 
-                <h1 class="col-md-2 nav-red-border"><a href="#">Quitter</a></h1>
+                <h2 class="col-md-1 align-self-center"><a href="#" class="nav-link nav-red-border text-center">Quitter</a></h2>
             </div>
 
-            <div class="row my-3">
+            <div class="row my-3 justify-content-around">
                 <div class="col-md-5 red-border mx-3">
-                    <h2 class="rouge">Adversaire 2</h2>
+                    <h2 class="rouge text-center mt-2">Adversaire 2</h2>
 
-                    <hr class="rouge">
+                    <hr class="red-hr">
 
                     <div class="row">
                         <div class="col-md-1 border-right">
@@ -50,27 +50,37 @@
 
                 <div class="col-md-5 mx-3">
                     <div class="row red-border">
-                        <h2 class="bleu border-bottom">Aversaires</h2>
+                        <h2 class="bleu">Aversaires</h2>
 
                         <p>Aversaire</p>
                     </div>
 
                     <div class="row red-border my-3">
                         <form action="">
+                            <div class="row justify-content-around">
+                                <input class="col-md-1" type="number" min="0" max="9" name="" id="">
+                                <input class="col-md-1" type="number" min="0" max="9" name="" id="">
+                                <input class="col-md-1" type="number" min="0" max="9" name="" id="">
+                                <input class="col-md-1" type="number" min="0" max="9" name="" id="">
+                                <input class="col-md-1" type="number" min="0" max="9" name="" id="">
+                                <input class="col-md-1" type="number" min="0" max="9" name="" id="">
+                            </div>
 
-
+                            <input type="submit" value="Valider">
                         </form>
                     </div>
                 </div>
             </div>
 
 
-            <div class="footer mt-3">                
-                <div class="row">
-                    <hr class="blue-hr">
+            <div class="footer my-3">                
+                <div class="row justify-content-around text-center">
+                    <div class="row justify-content-around">
+                        <hr class="blue-hr">
+                    </div>                    
 
-                    <a href="#" class="col-md-6">Conditions d'utilisations</a>
-                    <a href="#" class="col-md-6">Mentions légales</a>
+                    <a href="#" class="col-md-6 nav-link">Conditions d'utilisations</a>
+                    <a href="#" class="col-md-6 nav-link">Mentions légales</a>
                 </div>
             </div>
         </div>        

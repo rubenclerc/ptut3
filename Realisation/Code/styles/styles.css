@@ -40,14 +40,23 @@ body{
     border-right: 2px solid #f25357;
 }
 
-.border-bottom{
-    border-bottom: 2px solid #f25357;
+.blue-hr{
+    display: block;
+    height: 1px;
+    margin: 1em 0; 
+    padding: 0;
+    border: 0; 
+    border-top: 2px solid #29acd6;
 }
 
-.blue-hr{
-    margin:auto;
-    color: #29acd6;
-    width: 90%;
+.red-hr{
+    display: block;
+    height: 1px;
+    margin: 1em 0; 
+    padding: 0;
+    border: 0; 
+    border-top: 2px solid #f25357;
+
 }
 
 #submitButton{
@@ -56,4 +65,14 @@ body{
 
 #submitButtonConnexion, #submitButtonInscription{
     width: 22.5%;
+}
+
+.footer{
+    position: absolute;
+    bottom: 0;
+    width: 98%;
+}
+
+.footer .blue-hr{
+    width: 85%;
 }
