@@ -53,3 +53,7 @@ body{
 #submitButton{
     width: 10%;
 }
+
+#submitButtonConnexion, #submitButtonInscription{
+    width: 22.5%;
+}
