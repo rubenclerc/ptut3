@@ -36,10 +36,6 @@ body{
     border-radius: 25px;
 }
 
-.border-right{
-    border-right: 2px solid #f25357;
-}
-
 .blue-hr{
     display: block;
     height: 1px;
@@ -73,6 +69,70 @@ body{
     width: 98%;
 }
 
-.footer .blue-hr{
+.footer .blue-hr, .adv .red-hr, .md-size{
     width: 85%;
+}
+
+.pts-ico:after{
+    content: '';
+    background:url('../pictures/points.png');
+    background-size:cover;
+        position:absolute;
+    width:1.25em;
+    height:1.25em;
+    margin-left:10px;
+}
+
+.time-ico:after{
+    content: '';
+    background:url('../pictures/time.png');
+    background-size:cover;
+        position:absolute;
+    width:1.25em;
+    height:1.25em;
+    margin-left:10px;
+}
+
+.red-dot:after{
+    content: '';
+    background-color: #f25357;
+    background-size:cover;
+    border-radius: 50%;
+        position:absolute;
+    width:1.25em;
+    height:1.25em;
+    margin-left:10px;
+}
+
+.blue-dot:after{
+    content: '';
+    background-color: #29acd6;
+    background-size:cover;
+    border-radius: 50%;
+        position:absolute;
+    width:1.25em;
+    height:1.25em;
+    margin-left:10px;
+}
+
+.btn-primary{
+    background-color: #29acd6;
+    border-color: #29acd6;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+  width: 3em;
+  height: 3em;
+  border-radius: 25%;
+}
+
+.blue-border-xs{
+    width: 2em;
+    border-radius: 2em;
 }
