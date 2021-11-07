@@ -136,3 +136,11 @@ input[type=number] {
     width: 2em;
     border-radius: 2em;
 }
+
+td, th{
+    font-size: x-large;
+}
+
+.croix{
+    font-weight: bold;
+}
