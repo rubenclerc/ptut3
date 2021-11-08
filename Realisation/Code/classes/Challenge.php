@@ -17,7 +17,7 @@ class Challenge
      * 
      * @var array
      */
-    private $codes;
+    private $codes[];
 
      /**
      * difficulte
@@ -41,18 +41,15 @@ class Challenge
     private $dateFin;
 
      /**
-     * duree
+     * getDuree
      * 
-     * @var string
+     * @return DateTime
      */
-    private $duree;
+    public function getDuree(){
+		$duree= $this->dateFin-$this->dateDebut;
+		return $duree;
+    }
 
-     /**
-     * nbParticipants
-     * 
-     * @var int
-     */
-    private $nbParticipants;
 
      /**
      * nbPlaces
@@ -67,6 +64,31 @@ class Challenge
      * @var Joueur
      */
     private $gagnant;
+	
+	/**
+	*joueurs
+	*
+	*@var array
+	*/
+	private $joueurs[];
+	
+    /**
+     *getNbJoueur
+     *
+     * @return int 
+     */
+	public function getNbJoueur(){
+        return count($this->joueurs);
+    }
+
+    /**
+     * AddJoueur
+     * @param Joueur j
+     */
+    public function AddJoueur(Joueur j){
+        $this->joueurs[]=j;
+    }
+
     
     /**
      * Challenge
