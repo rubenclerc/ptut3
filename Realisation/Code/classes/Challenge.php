@@ -2,11 +2,12 @@
 
 include 'Joueur.php';
 
+
 /**
  * Challenge
  */
-class Challenge
-{    
+class Challenge 
+{   
     /**
      * nomChallenge
      * 
@@ -51,8 +52,8 @@ class Challenge
      * 
      * @return DateTime
      */
-    public function getDuree() : DateTime{
-		$duree= $this->dateFin-$this->dateDebut;
+    public function getDuree() : int{
+        $duree = $this->dateFin->diff($this->dateDebut);
 		return $duree;
     }
 
@@ -91,8 +92,8 @@ class Challenge
      * AddJoueur
      * @param Joueur j
      */
-    public function AddJoueur(Joueur j){
-        $this->participants[]=j;
+    public function AddJoueur(Joueur $j){
+        $this->participants[]=$j;
     }
 
     /**
@@ -131,7 +132,7 @@ class Challenge
      */
     public  function ToString() : string{
         $var = "";
-        $var = "Le nom du challenge est $nomChallenge, la difficulté est $difficulte, le challenge commence le $dateDebut, la duree est de $duree et fini donc le $dateFin, il y a $nbPlaces places et $nbParticipants Participants."
+        $var = "Le nom du challenge est {$this->nomChallenge}, la difficulté est  {$this->difficulte}, le challenge commence le  {$this->dateDebut}, la duree est de  {$this->duree} et fini donc le  {$this->dateFin}, il y a  {$this->nbPlaces} places et  {$this->nbParticipants} Participants.";
         return $var ;
     }
 

@@ -1,5 +1,5 @@
 <?php
-
+require_once "Challenge.php";
 /**
  * Joueur
  */
@@ -32,7 +32,7 @@ class Joueur extends Compte{
      */
     public function Participer(Challenge $challenge, int $code){
         $challenges[]=$challenge;
-        $challenge.AddCode($code);
+        $challenge->addCode($code);
     }
     /**
      * EssayerCode
