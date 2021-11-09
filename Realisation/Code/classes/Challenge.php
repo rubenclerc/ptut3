@@ -1,11 +1,12 @@
 <?php
 
+include 'Joueur.php';
+
 /**
  * Challenge
  */
 class Challenge
 {    
-    include 'Joueur.php';
     /**
      * nomChallenge
      * 
@@ -18,7 +19,7 @@ class Challenge
      * 
      * @var array
      */
-    private $codes[];
+    private $codes = [];
 
     public function addCode(int $code){
         $this->codes[]=$code;
