@@ -131,7 +131,8 @@ class Challenge
      */
     public  function ToString() : string{
         $var = "";
-        $var = "Le nom du challenge est $nomChallenge, la difficulté est $difficulte, le challenge commence le $dateDebut, la duree est de $duree et fini donc le $dateFin, il y a $nbPlaces places et $nbParticipants Participants."
+        $var = "Le nom du challenge est $nomChallenge, la difficulté est $difficulte, le challenge commence le $dateDebut, la duree est de $duree et fini donc le $dateFin, il y a $nbPlaces places et $nbParticipants Participants.";
+        
         return $var ;
     }
 
