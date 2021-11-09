@@ -6,11 +6,16 @@
 class Joueur extends Compte{
     private int $nbPoints;
 
-    private Challenge $challenges[];
+    private Challenge $challenges = [];
 
-    private Tentative $tentatives[];
+    private Tentative $tentatives = [];
 
-    $this->estAdmin=false;
+
+    public function __construct(){
+
+    }
+
+
     /**
      * Joueur
      * @param $username
@@ -27,7 +32,7 @@ class Joueur extends Compte{
      */
     public function Participer(Challenge $challenge, int $code){
         $challenges[]=$challenge;
-        $challenge.addCode($code);
+        $challenge.AddCode($code);
     }
     /**
      * EssayerCode
@@ -43,11 +48,9 @@ class Joueur extends Compte{
      * toString
      * @return string
      */
-    public function toString():string{
-        string $var = "Le nom du joueur est : $this->username et son nombre de points est : $this->nbPoints";
-        return $var;
+    public function ToString():string{
+        
+        return "str";
     }
-
-
 
 }

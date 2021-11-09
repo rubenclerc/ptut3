@@ -1,7 +1,12 @@
 <?php
 
 Class Admin extends Compte{
-    $this->estAdmin=true;
+
+    public function __construct(){
+        $this->estAdmin=true;
+    }
+
+
     /**
      * CreerChallenge
      * @param $nomChallenge

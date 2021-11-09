@@ -76,7 +76,7 @@ class Challenge
 	*
 	*@var array
 	*/
-	private $participants[];
+	private $participants = [];
 	
     /**
      *getNbJoueur

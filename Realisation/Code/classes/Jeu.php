@@ -1,4 +1,5 @@
 <?php
+require_once "Challenge.php";
 
 /**
  * Jeu
@@ -11,7 +12,7 @@ class Jeu
 	*
 	*@var array
 	*/
-	private $challenges[];
+	private $challenges = [];
 
     /**
      *getNbChallenges
@@ -25,10 +26,9 @@ class Jeu
     /**
      * AddChallenges
      * 
-     * @param challenge c
+     * @param Challenge c
      */
-    public function AddJoueur(challenge c){
-        $this->challenges[]=c;
+    public function AddJoueur(){
     }
 
     /**
@@ -37,7 +37,7 @@ class Jeu
      * @return challenges[]
      */
     public function ListerChallenges() : array{
-        return $this->challenges[];
+        return [];
     }
 
     /**
@@ -46,6 +46,8 @@ class Jeu
      * @return Joueur[]
      */
     public function ListerJoueurs() : array{
-        return $Joueurs[] -> getJoueur();
+        return [];
+
     }
 
+}

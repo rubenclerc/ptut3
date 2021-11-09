@@ -9,6 +9,16 @@ class Compte {
     private string $password;
 
     private bool $estAdmin;
+    
+    /**
+     * __construct
+     *
+     * @return void
+     */
+    public function __construct(){
+        
+    }
+
 
     /**
      * 
