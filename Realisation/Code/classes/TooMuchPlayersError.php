@@ -15,3 +15,4 @@ class TooMuchPlayersError extends BadValueError
     }
 
 }
+?>

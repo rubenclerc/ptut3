@@ -15,3 +15,4 @@ class BadPasswordError extends Exception
     }
 
 }
+?>

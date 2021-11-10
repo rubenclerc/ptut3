@@ -120,3 +120,4 @@ class Rsa
         return (openssl_public_decrypt(base64_decode($encrypted), $decrypted, $this->_getPublicKey())) ? $decrypted : null;
     }
 }
+?>

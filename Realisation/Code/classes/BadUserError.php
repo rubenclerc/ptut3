@@ -15,3 +15,4 @@ class BadUserError extends Exception
     }
 
 }
+?>
