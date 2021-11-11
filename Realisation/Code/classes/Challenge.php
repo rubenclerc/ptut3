@@ -15,6 +15,10 @@ class Challenge
      */
     private $nomChallenge;
 
+    public function setNomChallenge(string $nomChallenge){
+        $this->nomChallenge=$nomChallenge;
+    }
+
      /**
      * codes
      * 
@@ -33,6 +37,10 @@ class Challenge
      */
     private $difficulte;
 
+    public function setDifficulte(int $difficulte){
+        $this-> $difficulte=$difficulte;
+    }
+
      /**
      * dateDebut
      * 
@@ -40,12 +48,20 @@ class Challenge
      */
     private $dateDebut;
 
+    public function setDateDebut(DateTime $dateDebut){
+        $this-> $dateDebut=$dateDebut;
+    }
+
      /**
      * dateFin
      * 
      * @var DateTime
      */
     private $dateFin;
+
+    public function setDateFin(DateTime $dateFin){
+        $this-> $dateFin=$dateFin;
+    }
 
      /**
      * getDuree
@@ -64,6 +80,10 @@ class Challenge
      * @var int
      */
     private $nbPlaces;
+
+    public function setNbPlaces(int $nbPlaces){
+        $this->$nbPlaces=$nbPlaces;
+    }
 
      /**
      * gagnant

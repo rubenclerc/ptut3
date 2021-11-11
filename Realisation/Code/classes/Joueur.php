@@ -11,19 +11,8 @@ class Joueur extends Compte{
     private Tentative $tentatives = [];
 
 
-    public function __construct(){
-
-    }
-
-
-    /**
-     * Joueur
-     * @param $username
-     * @param $passwordHash
-     */
-    public function Joueur(string $username, string $passwordHash){
-        $this->username=$username;
-        $this->password=$passwordHash;
+    public function __construct(string $username, string $password, bool $estAdmin){
+        parent::__construct($username, $password,$estAdmin);
     }
     /**
      * Participer

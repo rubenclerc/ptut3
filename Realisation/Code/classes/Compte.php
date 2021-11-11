@@ -15,22 +15,10 @@ class Compte {
      *
      * @return void
      */
-    public function __construct(){
-        
-    }
-
-
-    /**
-     * 
-     */
-    public function seConnecter(){
-        
-    }
-    /**
-     * 
-     */
-    public function seDeconnecter(){
-
+    public function __construct(string $username, string $password, bool $estAdmin){
+        $this->username = $username;
+        $this->password = $password;
+        $this->estAdmin = $estAdmin;
     }
     /**
      * 
