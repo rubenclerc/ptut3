@@ -18,6 +18,19 @@ Class Admin extends Compte{
      */
     public function CreerChallenge (string $nomChallenge, int $difficulte, DateTime $dateDebut, DateTime $dateFin, int $nbPlaces) : Challenge{
         $challenge = new Challenge($nomChallenge,$difficulte,$dateDebut,$dateFin,$nbPlaces);
+        $bdd=Connexion();
+        $req = $bdd->prepare('Insert into Challenge (nomChallenge, difficulte, dateDebut, dateFin,nbPlaces) values (:nomChallenge, :difficulte, :dateDebut, :dateFin, : nbPlaces)');
+        $req->bindValue(':nomChallenge',$nomChallenge);
+        $req->bindValue(':difficulte',$difficulte);
+        $req->bindValue(':dateDebut',$dateDebut);
+        $req->bindValue(':dateFin',$dateFin);
+        $req->bindValue(':nbParticipants',$nbPlaces);
+        if(!$req->execute()){
+            echo 'Erreur';
+        }
+        else{
+            echo 'Réussie !';
+        }
         return $challenge;
     }
     /**
@@ -25,7 +38,14 @@ Class Admin extends Compte{
      * @param $nomChallenge
      */
     public function SupprimerChallenge(string $nomChallenge){
-
+        $bdd=Connexion();
+        $req = $bdd->prepare('Delete from Challenge where nomChallenge='.$nomChallenge);
+        if(!$req->execute()){
+            echo 'Erreur';
+        }
+        else{
+            echo 'Réussie !';
+        }
     }
     /**
      * 
@@ -33,11 +53,11 @@ Class Admin extends Compte{
     public function ModifierChallenge(string $nomChallenge, int $difficulte, DateTime $dateDebut, DateTime $dateFin, int $nbPlaces){
         $bdd=Connexion();
         $req = $bdd->prepare('Update Challenge Set nomChallenge= :nomChallenge, difficulte= :difficulte, dateDebut= :dateDebut, dateFin= :dateFin, nbParticipants= :nbParticipants');
-        $req->bindValue('nomChallenge',$nomChallenge);
-        $req->bindValue('difficulte',$difficulte);
-        $req->bindValue('dateDebut',$dateDebut);
-        $req->bindValue('dateFin',$dateFin);
-        $req->bindValue('nbParticipants',$nbPlaces);
+        $req->bindValue(':nomChallenge',$nomChallenge);
+        $req->bindValue(':difficulte',$difficulte);
+        $req->bindValue(':dateDebut',$dateDebut);
+        $req->bindValue(':dateFin',$dateFin);
+        $req->bindValue(':nbParticipants',$nbPlaces);
         if(!$req->execute()){
             echo 'Erreur';
         }

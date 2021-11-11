@@ -1,5 +1,5 @@
 create table Challenge (
-	idChallenge int primary key not null,
+	idChallenge int primary key not null AUTO_INCREMENT,
 	nomChallenge varchar(255),
 	dateDebut datetime,
 	dateFin datetime,
@@ -10,14 +10,14 @@ create table Challenge (
 );
 
 create table Compte(
-	idCompte int primary key not null,
+	idCompte int primary key not null AUTO_INCREMENT,
 	estAdmin boolean,
 	username varchar(255),
 	passw varchar(255)
 );
 
 create table Tentative(
-	idTentative int primary key not null
+	idTentative int primary key not null AUTO_INCREMENT
 );
 
 
