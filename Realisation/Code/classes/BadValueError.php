@@ -5,7 +5,7 @@ class BadValueError extends Exception
 
     public function __construct()
     {
-        $this->message = "Erreur de valeur: ";
+        $this->message = "Erreur de valeur. ";
     }
 
     

@@ -1,21 +1,62 @@
 <?php
 require_once "ConnBdd.php";
+
 /**
- * 
+ * Compte
  */
 class Compte {
+
+    // Attributs
     private string $username;
 
-    private string $password;
+    private string $passwordHash;
 
-    private bool $estAdmin;
+    // Un compte n'est pas admin par défaut (souci de sécurité)
+    private bool $estAdmin = false;
+    
     
     /**
      * __construct
      *
+     * @param  string $username
+     * @param  string $password
+     * @param  bool $estAdmin
      * @return void
      */
     public function __construct(string $username, string $password, bool $estAdmin){
+        
+        // Connexion à la base de données
+        $db = Connexion();
+
+        // Vérifcations de sécurité
+        $user = htmlentities($username);
+        $pass = htmlentities($password);
+        
+        if(!is_bool($estAdmin)){
+            throw new BadValueError();
+        }
+
+        elseif(strlen($pass) < 12){
+            throw new BadPasswordError("longueur inférieure à 12 caractères");
+        }
+
+        // On peut faire la requête
+        else{
+            // Hashage du mot de passe (CRYPT_BLOWFISH algo)
+            $pass = password_hash($pass, PASSWORD_BCRYPT);
+
+            // Requête d'insertion
+            $req = $db->prepare("INSERT INTO compte (username, password, estAdmin) VALUES (?, ?, ?)");
+        }
+    }
+    
+    /**
+     * seConnecter
+     *
+     * @return void
+     */
+    public function seConnecter(){
+
         if(isset($username)&&isset($password)){
             $bdd = Connexion();
             $req=$bdd->prepare('Select from Compte where username=:username');
@@ -24,7 +65,6 @@ class Compte {
             $row=$req->fetch(PDO::FETCH_ASSOC);
             $hash=$row['passwd'];
             if($password==$hash){
-                $this->estAdmin = $estAdmin;
                 $this->username = $username;
             }
             else{
@@ -34,12 +74,24 @@ class Compte {
         else{
             echo'';
         }
+
     }
+
     /**
-     * 
+     * seDeconnecter
+     *
+     * @return void
      */
-    public function getEstAdmin() : bool{
+    public function seDeconnecter(){
+        session_destroy();
+    }
+    
+    /**
+     * getEstAdmin
+     *
+     * @return bool
+     */
+    public function getEstAdmin(): bool{
         return $this->estAdmin;
     }
 }
-?>
