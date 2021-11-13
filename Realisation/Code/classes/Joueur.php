@@ -52,8 +52,8 @@ class Joueur extends Compte{
      * @param $code
      * @return Reponse
      */
-    public function essayerCode(int $code): Reponse{
-        $tentative = new Tentative($code);
+    public function essayerCode(int $code, Challenge $c, Joueur $j): Reponse{
+        $tentative = new Tentative($code, $c ,$this, $j);
         $this->tentatives[]=$tentative;
         
         return $tentative->Tenter();

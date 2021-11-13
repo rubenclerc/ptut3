@@ -81,8 +81,8 @@ class Challenge
      * @param  int $code
      * @return void
      */
-    public function addCode(int $code){
-        $this->codes[]=$code;
+    public function addCode(Joueur $j, int $code){
+        $this->codes[$j->toString()] =  $code;
     }
     
     /**
@@ -192,6 +192,16 @@ class Challenge
      */
     public function getJoueurs():array{
         return $this->participants;
+    }
+    
+    /**
+     * getCode
+     *
+     * @param  Joueur $j
+     * @return int
+     */
+    public function getCode(Joueur $j): int{
+        return $this->codes[$j->toString()];
     }
 
     /**

@@ -1,35 +1,19 @@
 <?php
 
-
-
 /**
  * Reponse 
  */
 class Reponse
-{  
-    /**
-     * rep
-     * 
-     * @var string
-     */
+{ 
     private $rep;
-
-    /**
-     * tentative 
-     * 
-     * @var string
-     */
     private Tentative $tentative;
-
-
     private int $codeChallenge;
 
-    public function __construct(Challenge $c, Tentative $t)
+    public function __construct(Tentative $t)
     {
-        $this->codeChallenge = $c->getCode();
         $this->tentative = $t;
+        $t->getChallenge()->getCode($t->getAdv());
     }
-
 
     /**
      * Comparer
@@ -37,13 +21,12 @@ class Reponse
      * @return Reponse
      */
     public function Comparer(): Reponse {
-        $result= $this;
-        $var = $this->tentative;
+        $var = $this->tentative->getCode();
         $var2 =$this->codeChallenge;
         $gemalin="";
         $r ="";
-        if (count($var)==count($var2)){
-        $cpt = count($var2);
+
+        $cpt = count(array_map('intval', str_split($var2)));
         for($x=0;$x<$cpt;$x++){
             for($y=0;$y<$cpt;$y++){
                 if($var2[$x]==$var[$y]){
@@ -53,6 +36,7 @@ class Reponse
         }
         for ( $i = 0; $i <=$cpt; $i++) {
             if ($var2[$i]==$var[$i]){
+
                 //comparer le i caractere 
                 $gemalin[$i]="C";
             }  
@@ -61,10 +45,11 @@ class Reponse
         $r=substr_count($gemalin,"A");
         $r.=substr_count($gemalin,"B");
         $r.=substr_count($gemalin,"C");
-        $result->rep = $var;
-        $result->rep.=$r;
-    }
-        return $result;
+
+        $this->rep = $var;
+        $this->rep.=$r;
+        
+        return $this;
     }
 }
 ?>
