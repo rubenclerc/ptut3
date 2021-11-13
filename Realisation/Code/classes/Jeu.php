@@ -24,19 +24,11 @@ class Jeu
     }
 
     /**
-     * AddChallenges
-     * 
-     * @param Challenge c
-     */
-    public function AddJoueur(){
-    }
-
-    /**
      * ListerChallenges
      * 
      * @return challenges[]
      */
-    public function ListerChallenges() : array{
+    public function ListerChallenges(): array{
         return [];
     }
 
@@ -45,7 +37,7 @@ class Jeu
      * 
      * @return Joueur[]
      */
-    public function ListerJoueurs() : array{
+    public function ListerJoueurs(): array{
         return [];
 
     }

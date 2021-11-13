@@ -59,7 +59,7 @@ class Compte {
 
         if(isset($username)&&isset($password)){
             $bdd = Connexion();
-            $req=$bdd->prepare('Select from Compte where username=:username');
+            $req=$bdd->prepare('SELECT * FROM COMPTE WHERE username=:username');
             $req->bindParam(':username',$username);
             $req->execute();
             $row=$req->fetch(PDO::FETCH_ASSOC);
