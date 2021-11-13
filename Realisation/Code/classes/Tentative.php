@@ -24,7 +24,7 @@ class Tentative
         $this->Code = $Code;
     }
 
-    public function Tenter($Code) : Reponse {
+    public function Tenter() : Reponse {
         return $Code;
     }
 

@@ -1,11 +1,13 @@
 <?php
 require_once "Challenge.php";
+require_once "Reponse.php";
+
 /**
  * Joueur
  */
 class Joueur extends Compte{
-    private int $nbPoints;
 
+    private int $nbPoints;
     private array $tentatives = [];
 
 
@@ -17,27 +19,52 @@ class Joueur extends Compte{
      * @param $challenge
      * @param $code
      */
-    public function Participer(Challenge $challenge, int $code){
+    public function participer(Challenge $challenge, int $code){
         $challenges[]=$challenge;
         $challenge->addCode($code);
+
+        $db = Connexion();
+        $req = $db->prepare("SELECT idCompte WHERE username = :usernamae");
+        $req->execute(array(
+            'username' => $this->username
+        ));
+
+        $row = $req->fetch();
+        $idJ = $row['idCompte'];
+
+        $req = $db->prepare("SELECT idChallenge WHERE nomChallenge = :nomChallenge");
+        $req->execute(array(
+            'nomChallenge' => $challenge->ToString()
+        ));
+
+        $row = $req->fetch();
+        $idChall = $row['idChallenge'];
+
+        $req = $db->prepare("INSERT INTO PARTICIPER(idCompte, idChallenge, code) VALUES (:idJoueur, :idJoueur, :code)");
+        $req->execute(array(
+            'idJoueur' => $idJ,
+            'idChallenge' => $idChall,
+            'code' => $code
+        ));
     }
     /**
      * EssayerCode
      * @param $code
-     * @return Tentative
+     * @return Reponse
      */
-    public function EssayerCode(int $code) : Tentative{
+    public function essayerCode(int $code): Reponse{
         $tentative = new Tentative($code);
         $this->tentatives[]=$tentative;
-        return $tentative;
+        
+        return $tentative->Tenter();
     }
     /**
      * toString
      * @return string
      */
-    public function ToString():string{
+    public function toString():string{
         
-        return "str";
+        return "$this->username";
     }
 
 }
