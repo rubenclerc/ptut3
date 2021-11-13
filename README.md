@@ -1,1 +1,3 @@
 # Projet tutoré de S3
+
+Le but du projet est de créer une sorte de Mastermind simplifié sous forme d’application web multijoueur. Un administrateur pourrait créer différents challenges avec différentes règles : le nombre de chiffres à rentrer pour le code à deviner, le nombre de joueurs pour la partie et la durée du challenge. Tous les participants auront les mêmes contraintes, et chaque participant peut rejoindre plusieurs challenges. Lorsqu’un participant essaie de casser le code d’un autre joueur, il peut changer de joueur et revenir au précédent. Le score sera calculé sur le nombre de codes trouvés ainsi que sur le nombre d’essais. Tous les codes des joueurs seront entrés dans une base de données et seront chiffrés.

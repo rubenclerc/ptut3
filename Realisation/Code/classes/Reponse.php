@@ -1,5 +1,7 @@
 <?php
 
+
+
 /**
  * Reponse 
  */
@@ -19,30 +21,23 @@ class Reponse
      */
     private Tentative $tentative;
 
-    /**
-     * codeChallenge 
-     * 
-     * @var string
-     */
-    private Tentative $codeChallenge;
 
-    /**
-     * __construct
-     * 
-     * @var string
-     */
-    public function __construct(string $rep)
+    private int $codeChallenge;
+
+    public function __construct(Challenge $c, Tentative $t)
     {
-        $this->rep = $rep;
+        $this->codeChallenge = $c->getCode();
+        $this->tentative = $t;
     }
+
 
     /**
      * Comparer
      * 
      * @return Reponse
      */
-    public function Comparer() : Reponse {
-        $result= new Reponse("");
+    public function Comparer(): Reponse {
+        $result= $this;
         $var = $this->tentative;
         $var2 =$this->codeChallenge;
         $gemalin="";
