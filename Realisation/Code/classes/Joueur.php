@@ -6,9 +6,7 @@ require_once "Challenge.php";
 class Joueur extends Compte{
     private int $nbPoints;
 
-    private Challenge $challenges = [];
-
-    private Tentative $tentatives = [];
+    private array $tentatives = [];
 
 
     public function __construct(string $username, string $password, bool $estAdmin){

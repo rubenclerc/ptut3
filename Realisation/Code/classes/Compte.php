@@ -14,7 +14,6 @@ class Compte {
     // Un compte n'est pas admin par défaut (souci de sécurité)
     private bool $estAdmin = false;
     
-    
     /**
      * __construct
      *
@@ -24,30 +23,33 @@ class Compte {
      * @return void
      */
     public function __construct(string $username, string $password, bool $estAdmin){
-        
-        // Connexion à la base de données
-        $db = Connexion();
 
-        // Vérifcations de sécurité
-        $user = htmlentities($username);
-        $pass = htmlentities($password);
-        
-        if(!is_bool($estAdmin)){
-            throw new BadValueError();
+        if(isset($username) && isset($password) && isset($estAdmin)){
+            // Connexion à la base de données
+            $db = Connexion();
+
+            // Vérifcations de sécurité
+            $user = htmlentities($username);
+            $pass = htmlentities($password);
+            
+            if(!is_bool($estAdmin)){
+                throw new BadValueError();
+            }
+
+            elseif(strlen($pass) < 12){
+                throw new BadPasswordError("longueur inférieure à 12 caractères");
+            }
+
+            // On peut faire la requête
+            else{
+                // Hashage du mot de passe (CRYPT_BLOWFISH algo)
+                $pass = password_hash($pass, PASSWORD_BCRYPT);
+
+                // Requête d'insertion
+                $req = $db->prepare("INSERT INTO compte (username, password, estAdmin) VALUES (?, ?, ?)");
+            } 
         }
 
-        elseif(strlen($pass) < 12){
-            throw new BadPasswordError("longueur inférieure à 12 caractères");
-        }
-
-        // On peut faire la requête
-        else{
-            // Hashage du mot de passe (CRYPT_BLOWFISH algo)
-            $pass = password_hash($pass, PASSWORD_BCRYPT);
-
-            // Requête d'insertion
-            $req = $db->prepare("INSERT INTO compte (username, password, estAdmin) VALUES (?, ?, ?)");
-        }
     }
     
     /**

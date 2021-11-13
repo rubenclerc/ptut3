@@ -19,28 +19,36 @@ class Jeu
      *
      * @return int 
      */
-	public function getNbChallenges() : int {
+	public function getNbChallenges(): int {
         return count($this->challenges);
     }
 
     /**
      * ListerChallenges
      * 
-     * @return challenges[]
+     * @return array
      */
     public function ListerChallenges(): array{
-        return [];
+        return $this->challenges;
     }
-
+    
     /**
-     * ListerChallenges
-     * 
-     * @return Joueur[]
+     * ListerJoueurs
+     *
+     * @param  Challenge $c
+     * @return array
      */
-    public function ListerJoueurs(): array{
-        return [];
+    public function ListerJoueurs(Challenge $c): array{
+
+        $res = [];
+
+        // Parcourt les joueurs du challenge et les ajoute au tableau résultat
+        foreach($c->getJoueurs() as $joueur){
+            $res[] = $joueur;
+        }
+
+        return $res;
 
     }
 
 }
-?>
