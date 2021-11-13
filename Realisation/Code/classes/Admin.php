@@ -1,11 +1,19 @@
 <?php
 require_once "ConnBdd.php";
-Class Admin extends Compte{
 
+Class Admin extends Compte{
+    
+    /**
+     * __construct
+     *
+     * @param  string $username
+     * @param  string $password
+     * @param  bool $estAdmin
+     * @return void
+     */
     public function __construct(string $username, string $password, bool $estAdmin){
         parent::__construct($username,$password,$estAdmin);
     }
-
 
     /**
      * CreerChallenge
@@ -16,54 +24,44 @@ Class Admin extends Compte{
      * @param $nbPlaces
      * @return Challenge
      */
-    public function CreerChallenge (string $nomChallenge, int $difficulte, DateTime $dateDebut, DateTime $dateFin, int $nbPlaces) : Challenge{
+    public function creerChallenge (string $nomChallenge, int $difficulte, DateTime $dateDebut, DateTime $dateFin, int $nbPlaces) : Challenge{
         $challenge = new Challenge($nomChallenge,$difficulte,$dateDebut,$dateFin,$nbPlaces);
-        $bdd=Connexion();
-        $req = $bdd->prepare('Insert into Challenge (nomChallenge, difficulte, dateDebut, dateFin,nbPlaces) values (:nomChallenge, :difficulte, :dateDebut, :dateFin, : nbPlaces)');
-        $req->bindValue(':nomChallenge',$nomChallenge);
-        $req->bindValue(':difficulte',$difficulte);
-        $req->bindValue(':dateDebut',$dateDebut);
-        $req->bindValue(':dateFin',$dateFin);
-        $req->bindValue(':nbParticipants',$nbPlaces);
-        if(!$req->execute()){
-            throw new BadValueError();
-        }
-        else{
-            echo 'Réussie !';
-        }
+
         return $challenge;
     }
     /**
      * SupprimerChallenge
      * @param $nomChallenge
      */
-    public function SupprimerChallenge(string $nomChallenge){
+    public function supprimerChallenge(string $nomChallenge){
         $bdd=Connexion();
-        $req = $bdd->prepare('Delete from Challenge where nomChallenge='.$nomChallenge);
-        if(!$req->execute()){
-            echo 'Erreur';
-        }
-        else{
-            echo 'Réussie !';
-        }
+
+        $req = $bdd->prepare('DELETE FROM CHALLENGE WHERE nomChallenge= :nomChallenge');
+        $req->execute(array(
+            'nomChallenge' => $nomChallenge
+        ));
     }
     /**
      * 
      */
-    public function ModifierChallenge(string $nomChallenge, int $difficulte, DateTime $dateDebut, DateTime $dateFin, int $nbPlaces){
+    public function modifierChallenge(Challenge $c, string $nomChallenge, int $difficulte, DateTime $dateDebut, DateTime $dateFin, int $nbPlaces){
         $bdd=Connexion();
-        $req = $bdd->prepare('Update Challenge Set nomChallenge= :nomChallenge, difficulte= :difficulte, dateDebut= :dateDebut, dateFin= :dateFin, nbParticipants= :nbParticipants');
-        $req->bindValue(':nomChallenge',$nomChallenge);
-        $req->bindValue(':difficulte',$difficulte);
-        $req->bindValue(':dateDebut',$dateDebut);
-        $req->bindValue(':dateFin',$dateFin);
-        $req->bindValue(':nbParticipants',$nbPlaces);
-        if(!$req->execute()){
-            echo 'Erreur';
-        }
-        else{
-            echo'Réussie !';
-        }
+        $req = $bdd->prepare('UPDATE CHALLENGE nomChallenge= :nomChallenge, difficulte= :difficulte, dateDebut= :dateDebut, dateFin= :dateFin, nbParticipants= :nbParticipants WHERE nomChallenge = :oldName');
+
+        $req->execute(array(
+            'nomChallenge' => $nomChallenge,
+            'difficulte' => $difficulte,
+            'dateDebut' => $dateDebut,
+            'dateFin' => $dateFin,
+            'nbParticipants' => $nbPlaces,
+            'oldName' => $c->ToString()
+        ));
+
+        $c->setNomChallenge($nomChallenge);
+        $c->setDifficulte($difficulte);
+        $c->setDateDebut($dateDebut);
+        $c->setDateFin($dateFin);
+        $c->setNbPlaces($nbPlaces);
     }
 
 }
