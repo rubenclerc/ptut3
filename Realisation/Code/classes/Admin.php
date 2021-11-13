@@ -26,7 +26,7 @@ Class Admin extends Compte{
         $req->bindValue(':dateFin',$dateFin);
         $req->bindValue(':nbParticipants',$nbPlaces);
         if(!$req->execute()){
-            echo 'Erreur';
+            throw new BadValueError();
         }
         else{
             echo 'Réussie !';

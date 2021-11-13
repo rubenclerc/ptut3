@@ -7,23 +7,48 @@ require_once "ConnBdd.php";
 class Compte {
 
     // Attributs
+
     private string $username;
 
     private string $passwordHash;
 
-    // Un compte n'est pas admin par défaut (souci de sécurité)
-    private bool $estAdmin = false;
+    private bool $estAdmin;
     
+
+    // Méthodes
+
     /**
      * __construct
      *
-     * @param  string $username
-     * @param  string $password
-     * @param  bool $estAdmin
      * @return void
      */
-    public function __construct(string $username, string $password, bool $estAdmin){
+    public function __construct(){
 
+        // Le constructeur redirige vers une autre méthode en fonction des paramètres
+        $cpt = func_num_args();
+        $args = func_get_args();
+
+        switch($cpt){
+            case 0: 
+                $this->__constructVide();
+                break;
+
+            case 3:
+                $this->__constructComplet($args[0], $args[1], $args[2]);
+                break;
+
+            default:
+                throw new BadValueError();
+                break;
+        }
+    }
+
+    // Constructeur créé lors de l'inscription
+    public function __constructVide(){
+
+    }
+
+    public function __constructComplet($username, $password, $estAdmin){
         if(isset($username) && isset($password) && isset($estAdmin)){
             // Connexion à la base de données
             $db = Connexion();
@@ -49,7 +74,6 @@ class Compte {
                 $req = $db->prepare("INSERT INTO compte (username, password, estAdmin) VALUES (?, ?, ?)");
             } 
         }
-
     }
     
     /**
@@ -76,7 +100,6 @@ class Compte {
         else{
             echo'';
         }
-
     }
 
     /**

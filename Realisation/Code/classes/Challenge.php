@@ -1,6 +1,5 @@
 <?php
-
-include 'Joueur.php';
+require_once 'Joueur.php';
 
 
 /**
@@ -8,57 +7,97 @@ include 'Joueur.php';
  */
 class Challenge 
 {   
-    /**
-     * nomChallenge
-     * 
-     * @var string
-     */
-    private $nomChallenge;
 
+    // Attributs
+
+    private string $nomChallenge;
+    private array $codes;
+    private int $difficulte;
+    private DateTime $dateDebut;
+    private DateTime $dateFin;
+    private int $nbPlaces;
+    private Joueur $gagnant;
+    private array $participants;
+
+    // Méthodes
+
+    /**
+     * Challenge
+     *
+     * @param  string nomChallenge
+     * @param  int difficulte
+     * @param  DateTime dateDebut
+     * @param  DateTime dateFin
+     * @param  int nbPlaces
+     * @return Challenge
+     */
+    public function __construct(string $nomChallenge, int $difficulte, DateTime $dateDebut, DateTime $dateFin, int $nbPlaces)
+    {
+        $this->nomChallenge = $nomChallenge;
+        $this->difficulte = $difficulte;
+        $this->nbPlaces = $nbPlaces;
+
+        if($dateFin < $dateDebut)
+        {
+            throw new Exception("La date de fin doit être supérieure à la date de début");
+        }
+        else{
+            $this->dateDebut = $dateDebut;
+            $this->dateFin = $dateFin;
+        }
+    }
+    
+    /**
+     * setNomChallenge
+     *
+     * @param  string $nomChallenge
+     * @return void
+     */
     public function setNomChallenge(string $nomChallenge){
         $this->nomChallenge=$nomChallenge;
     }
-
-     /**
-     * codes
-     * 
-     * @var array
+    
+    /**
+     * addCode
+     *
+     * @param  int $code
+     * @return void
      */
-    private $codes = [];
-
     public function addCode(int $code){
         $this->codes[]=$code;
     }
-
-     /**
-     * difficulte
-     * 
-     * @var int
+    
+    /**
+     * setDifficulte
+     *
+     * @param  int $difficulte
+     * @return void
      */
-    private $difficulte;
-
     public function setDifficulte(int $difficulte){
-        $this-> $difficulte=$difficulte;
+        if($difficulte > 4){
+            throw new BadValueError();
+        }
+        else{
+            $this-> $difficulte=$difficulte;
+        }
     }
-
-     /**
-     * dateDebut
-     * 
-     * @var DateTime
+    
+    /**
+     * setDateDebut
+     *
+     * @param  DateTime $dateDebut
+     * @return void
      */
-    private $dateDebut;
-
     public function setDateDebut(DateTime $dateDebut){
         $this-> $dateDebut=$dateDebut;
     }
-
-     /**
-     * dateFin
-     * 
-     * @var DateTime
+    
+    /**
+     * setDateFin
+     *
+     * @param  DateTime $dateFin
+     * @return void
      */
-    private $dateFin;
-
     public function setDateFin(DateTime $dateFin){
         $this-> $dateFin=$dateFin;
     }
@@ -66,53 +105,37 @@ class Challenge
      /**
      * getDuree
      * 
-     * @return DateTime
+     * @return int
      */
-    public function getDuree() : int{
-        $duree = $this->dateFin->diff($this->dateDebut);
+    public function getDuree(): int{
+        $duree = $this->dateFin->getTimestamp() - $this->dateDebut->getTimestamp();
 		return $duree;
     }
-
-
-     /**
-     * nbPlaces
-     * 
-     * @var int
+    
+    /**
+     * setNbPlaces
+     *
+     * @param  int $nbPlaces
+     * @return void
      */
-    private $nbPlaces;
-
     public function setNbPlaces(int $nbPlaces){
         $this->$nbPlaces=$nbPlaces;
-    }
-
-     /**
-     * gagnant
-     * 
-     * @var Joueur
-     */
-    private $gagnant;
-	
-	/**
-	*joueurs
-	*
-	*@var array
-	*/
-	private $participants = [];
+    }	
 	
     /**
      *getNbJoueur
      *
      * @return int 
      */
-	public function getNbJoueur() : int{
-        return count($this->joueurs);
+	public function getNbJoueur(): int{
+        return count($this->participants);
     }
 
     /**
      * AddJoueur
      * @param Joueur j
      */
-    public function AddJoueur(Joueur $j){
+    public function addJoueur(Joueur $j){
         $this->participants[]=$j;
     }
 
@@ -124,38 +147,14 @@ class Challenge
         return $this->participants;
     }
 
-    
-    /**
-     * Challenge
-     *
-     * @param  string nomChallenge
-     * @param  int difficulte
-     * @param  DateTime dateDebut
-     * @param  DateTime dateFin
-     * @param  int nbPlaces
-     * @return Challenge
-     */
-    public function Challenge($nomChallenge,$difficulte,$dateDebut,$dateFin,$nbPlaces) {
-        $this->nomChallenge  = $nomChallenge;
-        $this->difficulte = $difficulte;
-        $this->dateDebut = $dateDebut;
-        $this->dateFin = $dateFin;
-        $this->nbPlaces = $nbPlaces;
-    }
-
-    
     /**
      * ToString
      *
      * 
      * @return string
      */
-    public  function ToString() : string{
-        $var = "";
-        $var = "Le nom du challenge est {$this->nomChallenge}, la difficulté est  {$this->difficulte}, le challenge commence le  {$this->dateDebut}, la duree est de  {$this->duree} et fini donc le  {$this->dateFin}, il y a  {$this->nbPlaces} places et  {$this->nbParticipants} Participants.";
-        return $var ;
-    }
-
-    
+    public  function ToString(): string{
+        return "$this->nomChallenge";
+    }    
 }
 ?>
