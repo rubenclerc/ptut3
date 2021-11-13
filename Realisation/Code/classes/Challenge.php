@@ -41,9 +41,21 @@ class Challenge
         {
             throw new Exception("La date de fin doit être supérieure à la date de début");
         }
+
         else{
             $this->dateDebut = $dateDebut;
             $this->dateFin = $dateFin;
+
+            // Insertion dans la DB
+            $db = Connexion();
+            $req = $db->prepare("INSERT INTO CHALLENGE(nomChallenge, dateDebut, dateFin, nbParticipantsMax, difficulte) VALUES(:nomChallenge, :dateDebut, :dateFin, :nbParticipantsMax, :difficulte)");
+            $req->bindParam(':nomChallenge', $this->nomChallenge);
+            $req->bindParam(':dateDebut', $this->dateDebut);
+            $req->bindParam(':dateFin', $this->dateFin);
+            $req->bindParam(':nbParticipantsMax', $this->nbPlaces);
+            $req->bindParam(':difficulte', $this->difficulte);
+
+            $req->execute();
         }
     }
     
@@ -55,6 +67,12 @@ class Challenge
      */
     public function setNomChallenge(string $nomChallenge){
         $this->nomChallenge=$nomChallenge;
+
+        $db = Connexion();
+        $req = $db->prepare("UPDATE CHALLENGE SET nomChallenge = :nomChallenge WHERE nomChallenge = :nomChallenge");
+        $req->bindParam(':nomChallenge', $this->nomChallenge);
+
+        $req->execute();
     }
     
     /**
@@ -79,6 +97,13 @@ class Challenge
         }
         else{
             $this-> $difficulte=$difficulte;
+
+            $db = Connexion();
+            $req = $db->prepare("UPDATE CHALLENGE SET difficulte = :difficulte WHERE nomChallenge = :nomChallenge");
+            $req->bindParam(':difficulte', $this->difficulte);
+            $req->bindParam(':nomChallenge', $this->nomChallenge);
+    
+            $req->execute();
         }
     }
     
@@ -90,6 +115,13 @@ class Challenge
      */
     public function setDateDebut(DateTime $dateDebut){
         $this-> $dateDebut=$dateDebut;
+
+        $db = Connexion();
+        $req = $db->prepare("UPDATE CHALLENGE SET dateDebut = :dateDebut WHERE nomChallenge = :nomChallenge");
+        $req->bindParam(':dateDebut', $this->dateDebut);
+        $req->bindParam(':nomChallenge', $this->nomChallenge);
+
+        $req->execute();
     }
     
     /**
@@ -100,7 +132,32 @@ class Challenge
      */
     public function setDateFin(DateTime $dateFin){
         $this-> $dateFin=$dateFin;
+
+        $db = Connexion();
+        $req = $db->prepare("UPDATE CHALLENGE SET dateFin = :dateFin WHERE nomChallenge = :nomChallenge");
+        $req->bindParam(':dateFin', $this->dateFin);
+        $req->bindParam(':nomChallenge', $this->nomChallenge);
+
+        $req->execute();
     }
+
+    /**
+     * setNbPlaces
+     *
+     * @param  int $nbPlaces
+     * @return void
+     */
+    public function setNbPlaces(int $nbPlaces){
+        $this->$nbPlaces=$nbPlaces;
+
+        $db = Connexion();
+        $req = $db->prepare("UPDATE CHALLENGE SET nbParticipantsMax = :nbParticipantsMax WHERE nomChallenge = :nomChallenge");
+        $req->bindParam(':nbParticipantsMax', $this->nbPlaces);
+        $req->bindParam(':nomChallenge', $this->nomChallenge);
+
+        $req->execute();
+    }	
+	
 
      /**
      * getDuree
@@ -112,16 +169,6 @@ class Challenge
 		return $duree;
     }
     
-    /**
-     * setNbPlaces
-     *
-     * @param  int $nbPlaces
-     * @return void
-     */
-    public function setNbPlaces(int $nbPlaces){
-        $this->$nbPlaces=$nbPlaces;
-    }	
-	
     /**
      *getNbJoueur
      *
