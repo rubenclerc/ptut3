@@ -21,10 +21,10 @@ class Joueur extends Compte{
      */
     public function participer(Challenge $challenge, int $code){
         $challenges[]=$challenge;
-        $challenge->addCode($code);
+        $challenge->addCode($this,$code);
 
         $db = Connexion();
-        $req = $db->prepare("SELECT idCompte WHERE username = :usernamae");
+        $req = $db->prepare("SELECT idCompte WHERE username = :username");
         $req->execute(array(
             'username' => $this->username
         ));

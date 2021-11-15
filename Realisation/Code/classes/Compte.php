@@ -43,7 +43,7 @@ class Compte {
         }
     }
 
-    // Constructeur créé lors de l'inscription
+    // Constructeur créé lors de la connexion
     public function __constructVide(){
 
     }
@@ -71,7 +71,11 @@ class Compte {
                 $pass = password_hash($pass, PASSWORD_BCRYPT);
 
                 // Requête d'insertion
-                $req = $db->prepare("INSERT INTO compte (username, password, estAdmin) VALUES (?, ?, ?)");
+                $req = $db->prepare("INSERT INTO compte (username, password, estAdmin) VALUES (:username, :password, :estAdmin)");
+                $req->bindParam(':username',$user);
+                $req->bindParam(':password',$pass);
+                $req->bindParam(':estAdmin',$estAdmin);
+                $req->execute();
             } 
         }
     }
@@ -85,13 +89,15 @@ class Compte {
 
         if(isset($username)&&isset($password)){
             $bdd = Connexion();
+            $user=htmlentities($username);
+            $pass=htmlentities($password);
             $req=$bdd->prepare('SELECT * FROM COMPTE WHERE username=:username');
-            $req->bindParam(':username',$username);
+            $req->bindParam(':username',$user);
             $req->execute();
             $row=$req->fetch(PDO::FETCH_ASSOC);
             $hash=$row['passwd'];
-            if($password==$hash){
-                $this->username = $username;
+            if($pass==$hash){
+                $this->username = $user;
             }
             else{
                 echo "Ce n'est pas le bon mot de passe ou le bon nom d'utilisateur";
@@ -118,5 +124,19 @@ class Compte {
      */
     public function getEstAdmin(): bool{
         return $this->estAdmin;
+    }
+
+    public function userExist($username): bool {
+        $exist=true;
+        $bdd = Connexion();
+        $user=htmlentities($username);
+        $req=$bdd->prepare('SELECT * FROM COMPTE WHERE username=:username');
+        $req->bindParam(':username',$user);
+        $req->execute();
+        $row=$req->fetch(PDO::FETCH_ASSOC);
+        if($row==0){
+            $exist=false;
+        }
+        return $exist;
     }
 }
