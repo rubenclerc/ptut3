@@ -15,8 +15,8 @@ class Tentative
      * @return void
      */
     public function __construct(int $code, Challenge $c, Joueur $joueur, Joueur $adv){
-        $c=htmlentities($code);
-        $this->code = $c;
+        $co=htmlentities($code);
+        $this->code = $co;
         $this->challenge = $c;
         $this->adv = $adv;
         $this->joueur = $joueur;
