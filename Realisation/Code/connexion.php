@@ -1,6 +1,19 @@
 <?php
+require_once 'classes/Compte.php';
+session_start();
+
 if(isset($_POST['username']) && isset($_POST['password'])){
     $compte = new Compte();
+
+    $header = $compte->connexion($_POST['username'], $_POST['password']);
+
+    if($header){
+        $_SESSION['username'] = htmlentities($_POST['username']);
+        Header('Location: accueil.php');
+        exit();
+    }else{
+        echo "pas bon";
+    }
 }
 ?>
 
@@ -32,7 +45,7 @@ if(isset($_POST['username']) && isset($_POST['password'])){
     
     
             <div class="container">
-                <form action="accueil.php" method="POST">
+                <form action="connexion.php" method="POST">
                     <div class="container col-md-9">
                         <div class="row bleu red-border justify-content-around">
                             <h1 class="text-center my-4"> SE CONNECTER</h1>

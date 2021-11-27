@@ -35,8 +35,27 @@ class Compte {
     }
 
     // Constructeur créé lors de la connexion
-    public function connexion(){
+    public function connexion(string $username, string $password): bool{
+        $return = false;
 
+        $this->username = htmlentities($username);
+        $this->passwordHash = hash("sha256", $password);
+
+        $db = Connexion();
+
+        $req = $db->prepare("SELECT username, passw, estAdmin FROM COMPTE WHERE username = :user AND passw = :pass");
+        $req->execute(array(
+            'user' => $this->username,
+            'pass' => $this->passwordHash
+        ));
+
+        $result = $req->fetch(PDO::FETCH_ASSOC);
+
+        if($result['username'] == $this->username && $result['passw'] == $this->passwordHash){
+            $return = true;           
+        }
+
+        return $return;
     }
 
     public function inscription($username, $password){
