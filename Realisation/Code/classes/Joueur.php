@@ -1,14 +1,22 @@
 <?php
 require_once "Challenge.php";
 require_once "Reponse.php";
+require_once "Compte.php";
 
 /**
  * Joueur
  */
 class Joueur extends Compte{
 
-    private int $nbPoints;
-    private array $tentatives = [];
+    /**
+     * @var int
+     */
+    private $nbPoints;
+
+    /**
+     * @var array
+     */
+    private $tentatives = [];
 
 
     public function __construct(string $username, string $password, bool $estAdmin){

@@ -8,11 +8,20 @@ class Compte {
 
     // Attributs
 
-    private string $username;
+    /**
+     * @var string
+     */
+    private $username;
 
-    private string $passwordHash;
+    /**
+     *  @var string
+     */
+    private $passwordHash;
 
-    private bool $estAdmin;
+    /**
+     * @var bool
+     */
+    private $estAdmin;
     
 
     // Méthodes

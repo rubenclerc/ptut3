@@ -1,5 +1,6 @@
 <?php
 require_once "ConnBdd.php";
+require_once 'Compte.php';
 
 Class Admin extends Compte{
     

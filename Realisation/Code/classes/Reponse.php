@@ -5,9 +5,20 @@
  */
 class Reponse
 { 
+    /**
+     * @var Reponse
+     */
     private $rep;
-    private Tentative $tentative;
-    private int $codeChallenge;
+
+    /**
+     * @var Tentative
+     */
+    private $tentative;
+
+    /**
+     * @var int
+     */
+    private $codeChallenge;
 
     public function __construct(Tentative $t)
     {

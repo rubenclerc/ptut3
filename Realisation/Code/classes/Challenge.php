@@ -10,14 +10,45 @@ class Challenge
 
     // Attributs
 
-    private string $nomChallenge;
-    private array $codes;
-    private int $difficulte;
-    private DateTime $dateDebut;
-    private DateTime $dateFin;
-    private int $nbPlaces;
-    private Joueur $gagnant;
-    private array $participants;
+    /**
+     * @var string
+     */
+    private $nomChallenge;
+
+    /**
+     * @var array
+     */
+    private $codes;
+
+    /**
+     * @var int
+     */
+    private $difficulte;
+
+    /**
+     * @var DateTime
+     */
+    private $dateDebut;
+
+    /**
+     * @var DateTime
+     */
+    private $dateFin;
+
+    /**
+     * @var int
+     */
+    private $nbPlaces;
+
+    /**
+     * @var Joueur
+     */
+    private $gagnant;
+
+    /**
+     * @var array
+     */
+    private $participants;
 
     // Méthodes
 
