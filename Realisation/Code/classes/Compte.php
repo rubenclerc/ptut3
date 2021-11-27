@@ -32,60 +32,32 @@ class Compte {
      * @return void
      */
     public function __construct(){
-
-        // Le constructeur redirige vers une autre méthode en fonction des paramètres
-        $cpt = func_num_args();
-        $args = func_get_args();
-
-        switch($cpt){
-            case 0: 
-                $this->__constructVide();
-                break;
-
-            case 3:
-                $this->__constructComplet($args[0], $args[1], $args[2]);
-                break;
-
-            default:
-                throw new BadValueError();
-                break;
-        }
     }
 
     // Constructeur créé lors de la connexion
-    public function __constructVide(){
+    public function connexion(){
 
     }
 
-    public function __constructComplet($username, $password, $estAdmin){
-        if(isset($username) && isset($password) && isset($estAdmin)){
+    public function inscription($username, $password){
+        if(isset($username) && isset($password)){
             // Connexion à la base de données
             $db = Connexion();
 
             // Vérifcations de sécurité
             $user = htmlentities($username);
             $pass = htmlentities($password);
-            
-            if(!is_bool($estAdmin)){
-                throw new BadValueError();
-            }
 
-            elseif(strlen($pass) < 12){
-                throw new BadPasswordError("longueur inférieure à 12 caractères");
-            }
+            // Hashage du mot de passe (CRYPT_BLOWFISH algo)
+            $pass = password_hash($pass, PASSWORD_BCRYPT);
 
-            // On peut faire la requête
-            else{
-                // Hashage du mot de passe (CRYPT_BLOWFISH algo)
-                $pass = password_hash($pass, PASSWORD_BCRYPT);
+            // Requête d'insertion
+            $req = $db->prepare("INSERT INTO compte (username, password, estAdmin) VALUES (:username, :password, :estAdmin)");
+            $req->bindParam(':username',$user);
+            $req->bindParam(':password',$pass);
+            $req->bindParam(':estAdmin', 0);
+            $req->execute();
 
-                // Requête d'insertion
-                $req = $db->prepare("INSERT INTO compte (username, password, estAdmin) VALUES (:username, :password, :estAdmin)");
-                $req->bindParam(':username',$user);
-                $req->bindParam(':password',$pass);
-                $req->bindParam(':estAdmin',$estAdmin);
-                $req->execute();
-            } 
         }
     }
     

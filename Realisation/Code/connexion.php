@@ -1,3 +1,9 @@
+<?php
+if(isset($_POST['username']) && isset($_POST['password'])){
+    $compte = new Compte();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -26,15 +32,15 @@
     
     
             <div class="container">
-                <form action="">
+                <form action="accueil.php" method="POST">
                     <div class="container col-md-9">
                         <div class="row bleu red-border justify-content-around">
                             <h1 class="text-center my-4"> SE CONNECTER</h1>
                             <div class="col-md-3">
-                                <label for="" class="form-label">Identifiant : </label>
-                                <input type="text" class="form-control blue-border" placeholder="Identifiant" class="form-control blue-border" required="required">
-                                <label for="" class="form-label">Mot de passe : </label>
-                                <input type="password"  class="form-control blue-border" required="required"><br>
+                                <label for="username" class="form-label">Identifiant : </label>
+                                <input type="text" name="username" class="form-control blue-border" placeholder="Identifiant" class="form-control blue-border" required="required">
+                                <label for="password" class="form-label">Mot de passe : </label>
+                                <input type="password" name="password" class="form-control blue-border" required="required"><br>
                             </div>
                             <div class="row justify-content-around">
                                 <input type="submit" class="form-control blue-border my-3" id="submitButtonConnexion" value="VALIDER">
