@@ -39,7 +39,7 @@ class Compte {
 
     }
 
-    public function inscription($username, $password){
+    public function inscription($username, $password,$estAdmin){
         if(isset($username) && isset($password)){
             // Connexion à la base de données
             $db = Connexion();
@@ -52,12 +52,12 @@ class Compte {
             $pass = password_hash($pass, PASSWORD_BCRYPT);
 
             // Requête d'insertion
-            $req = $db->prepare("INSERT INTO compte (username, password, estAdmin) VALUES (:username, :password, :estAdmin)");
+            $req = $db->prepare('INSERT INTO compte (username, passw, estAdmin) values (:username, :pass, :estAdmin)');
             $req->bindParam(':username',$user);
-            $req->bindParam(':password',$pass);
-            $req->bindParam(':estAdmin', 0);
+            $req->bindParam(':pass',$pass);
+            $req->bindParam(':estAdmin', $estAdmin);
             $req->execute();
-
+            echo"coucou";
         }
     }
     
