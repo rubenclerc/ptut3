@@ -68,7 +68,7 @@ class Compte {
             $pass = htmlentities($password);
 
             // Hashage du mot de passe (CRYPT_BLOWFISH algo)
-            $pass = password_hash($pass, PASSWORD_BCRYPT);
+            $pass = hash("sha256",$pass);
 
             // Requête d'insertion
             $req = $db->prepare('INSERT INTO compte (username, passw, estAdmin) values (:username, :pass, :estAdmin)');
@@ -76,7 +76,6 @@ class Compte {
             $req->bindParam(':pass',$pass);
             $req->bindParam(':estAdmin', $estAdmin);
             $req->execute();
-            echo"coucou";
         }
     }
     
