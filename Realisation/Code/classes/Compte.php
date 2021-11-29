@@ -67,8 +67,8 @@ class Compte {
             $user = htmlentities($username);
             $pass = htmlentities($password);
 
-            // Hashage du mot de passe (CRYPT_BLOWFISH algo)
-            $pass = hash("sha256",$pass);
+            // Hashage du mot de passe
+            $this->passwordHash = hash("sha256", $password);
 
             // Requête d'insertion
             $req = $db->prepare('INSERT INTO compte (username, passw, estAdmin) values (:username, :pass, :estAdmin)');
@@ -76,6 +76,7 @@ class Compte {
             $req->bindParam(':pass',$pass);
             $req->bindParam(':estAdmin', $estAdmin);
             $req->execute();
+            echo"coucou";
         }
     }
     
@@ -137,5 +138,13 @@ class Compte {
             $exist=false;
         }
         return $exist;
+    }
+
+    public function setUsername($username){
+        $this->username = $username;
+    }
+
+    public function toString(): string{
+        return $this->username;
     }
 }

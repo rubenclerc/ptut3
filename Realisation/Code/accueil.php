@@ -1,5 +1,16 @@
 <?php
+require_once 'classes/ConnBdd.php';
+require_once 'classes/Compte.php';
 session_start();
+
+if(!isset($_SESSION['username'])) {
+    header('Location: connexion.php');
+    exit();
+}
+
+$compte = new Compte();
+$compte->setUsername($_SESSION['username']);
+
 
 ?>
 
@@ -29,9 +40,11 @@ session_start();
 
                 <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2">Tutoriel</h1>
                 
-                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2">Identifiant</h1>
+                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= $compte->toString() ?></h1>
 
-                <a href="#" class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><h1 >Deconnexion</h1></a>
+                <a href="connexion.php" class="col-md-2 text-center align-self-center py-2">
+                    <button class="btn btn-danger" onclick="<?php $compte->seDeconnecter() ?>"><h3>Se déconnecter</h3></button>
+                </a>
             </div>
 
 
@@ -52,121 +65,31 @@ session_start();
                           </tr>
                         </thead>
                         <tbody >
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge1</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td>Inscrit</td>
-                          </tr>
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge2</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td>Inscrit</td>
-                          </tr>
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge3</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td>Inscrit</td>
-                          </tr>
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge4</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td>Inscrit</td>
-                          </tr>
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge5</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td>Inscrit</td>
-                          </tr>
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge6</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td>Inscrit</td>
-                          </tr>
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge7</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td>Inscrit</td>
-                          </tr>
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge8</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td>Inscrit</td>
-                          </tr>
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge9</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td>Inscrit</td>
-                          </tr>                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge10</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td>Inscrit</td>
-                          </tr> 
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge11</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td>Inscrit</td>
-                          </tr> 
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge12</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td>Inscrit</td>
-                          </tr>                     
+                          <?php
+                          $db = Connexion();
+                          $req = $db->prepare('SELECT * FROM challenge');
+                          $req->execute();
+
+                            while($res = $req->fetch(PDO::FETCH_ASSOC))
+                            {
+                                echo '<tr class="text-center align-self-center">';
+                                echo '<td>'. $res["nomChallenge"] .'</td>';
+                                echo '<td>'. $res["difficulte"] .'</td>';
+                                echo '<td>'. $res["nbPartcipants"] .'</td>';
+                                echo '<td>'. $res["dateDebut"] .'</td>';
+                                echo '<td>'. $res["dateDebut"] .'</td>';
+                                echo '<td>'. $res["dateDebut"] .'</td>';
+                                echo '<td> <form action="accueil.php" method="POST">
+                                              <input type="submit" name="joinChall" class="btn btn-primary" value="Rejoindre">
+                                           </form> </td>';
+                                echo '</tr>';
+                            }
+                          ?>                 
                         </tbody>
                       </table>
                     </div>
                 </div>
             </div>
-
-            
-
 
             <div class="footer my-3">                
                 <div class="row justify-content-around text-center">
