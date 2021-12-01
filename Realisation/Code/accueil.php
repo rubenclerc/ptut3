@@ -3,13 +3,20 @@ require_once 'classes/ConnBdd.php';
 require_once 'classes/Compte.php';
 session_start();
 
+// Si un utilisateur veut accéder à la page sans être connecté
 if(!isset($_SESSION['username'])) {
     header('Location: connexion.php');
     exit();
 }
 
+// Set du username
 $compte = new Compte();
 $compte->setUsername($_SESSION['username']);
+
+// Accès à un challenge
+if(isset($_POST['joinChall'])){
+    
+}
 
 
 ?>
