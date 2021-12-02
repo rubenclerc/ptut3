@@ -26,7 +26,7 @@
     
             <div class="container">
                 <form action="inscription_traitement.php" method="POST" >
-                    <<div class="container col-md-9">
+                    <div class="container col-md-9">
                         <div class="row bleu red-border justify-content-around">
                             <h1 class="text-center my-4">S'INSCRIRE</h1>
                             <div class="col-md-3">
@@ -43,7 +43,7 @@
                             </div>
                             <div class="row justify-content-around">
                                 <input type="submit" class="form-control blue-border my-3" id="submitButtonInscription" value="VALIDER">
-                                <h6 class="text-center my-4"> <a href="connexion.html" style="color:#FF0000">Déjà inscrit ?</a></h6>
+                                <h6 class="text-center my-4"> <a href="connexion.php" style="color:#FF0000">Déjà inscrit ?</a></h6>
                             </div>
                         </div>
                     </div>

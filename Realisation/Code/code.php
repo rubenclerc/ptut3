@@ -1,3 +1,18 @@
+<?php
+session_start();
+
+require_once 'classes/ConnBdd.php';
+require_once 'classes/Compte.php';
+
+
+echo $_SESSION['username'];
+
+// Set du username
+$compte = new Compte();
+$compte->setUsername($_SESSION['username']);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>

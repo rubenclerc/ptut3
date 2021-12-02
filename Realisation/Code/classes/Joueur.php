@@ -75,5 +75,8 @@ class Joueur extends Compte{
         return "$this->username";
     }
 
+    public function peutParticiper(Challenge $challenge):bool{
+       return false;
+    }
 }
 ?>

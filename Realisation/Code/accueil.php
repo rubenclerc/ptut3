@@ -15,12 +15,11 @@ $compte->setUsername($_SESSION['username']);
 
 // Accès à un challenge
 if(isset($_POST['joinChall'])){
-    
+    Header('Location: code.php');
 }
 
-
+echo $_SESSION['username'];
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -86,7 +85,7 @@ if(isset($_POST['joinChall'])){
                                 echo '<td>'. $res["dateDebut"] .'</td>';
                                 echo '<td>'. $res["dateDebut"] .'</td>';
                                 echo '<td>'. $res["dateDebut"] .'</td>';
-                                echo '<td> <form action="accueil.php" method="POST">
+                                echo '<td> <form action="code.php" method="POST">
                                               <input type="submit" name="joinChall" class="btn btn-primary" value="Rejoindre">
                                            </form> </td>';
                                 echo '</tr>';

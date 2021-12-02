@@ -73,7 +73,7 @@ class Compte {
             // Requête d'insertion
             $req = $db->prepare('INSERT INTO compte (username, passw, estAdmin) values (:username, :pass, :estAdmin)');
             $req->bindParam(':username',$user);
-            $req->bindParam(':pass',$pass);
+            $req->bindParam(':pass', $this->passwordHash);	
             $req->bindParam(':estAdmin', $estAdmin);
             $req->execute();
             echo"coucou";
