@@ -10,7 +10,7 @@ class Tentative
     /**
      * __construct
      *
-     * @param  inr $code
+     * @param  int $code
      * @param  Challenge $c
      * @return void
      */
@@ -21,21 +21,46 @@ class Tentative
         $this->adv = $adv;
         $this->joueur = $joueur;
 
-        /* Partie DAO à faire
+        // Partie DAO à faire
         $db = Connexion();
 
-        $req = $db->prepare("INSERT INTO TENTATIVE(code, idC, id_joueur, id_adv) VALUES(:code, :id_challenge, :id_joueur, :id_adv)");
-        */
+        $req=$db->prepare('SELECT codeEssaye FROM Participer WHERE challenge=:challenge and joueur=:id_adv');
+            $req->bindParam(':username',$user);
+            $req->bindParam(':id_adv', $adv);
+            $req->execute();
+            $row=$req->fetch(PDO::FETCH_ASSOC);
+
+            
+        $req = $db->prepare('INSERT INTO TENTATIVE(code, idC, id_joueur, id_adv) VALUES(:code, :id_challenge, :id_joueur, :id_adv)');
+            $req->bindParam(':code',$code);	
+            $req->bindParam(':id_joueur', $joueur);
+            $req->bindParam(':id_adv', $adv);
+            $req->execute();
+            echo"coucou";
+            
+            
+            
+            if ($this->Gagner()){
+                ///à remplir
+            }
+       
     }
     
     /**
-     * Tenter
+     * Gagner
      *
-     * @return Reponse
+     * @return bool
      */
-    public function Tenter(): Reponse {
+    public function Gagner(): bool {
+        $bool = false;
         $res = new Reponse($this);
-        return $res->Comparer();
+        $st =$res->Comparer($this);
+        $r=substr_count($st,"C");
+        $ni = log10($this->code)+1;
+        if ($r == $ni){
+            $bool  =true;
+        }
+        return $bool;
     }
     
     /**

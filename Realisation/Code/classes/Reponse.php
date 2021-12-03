@@ -28,13 +28,18 @@ class Reponse
 
     /**
      * Comparer
-     * 
+     * B = mal placé
+     * c = bon
      * @return Reponse
      */
-    public function Comparer(): Reponse {
-        $var = $this->tentative->getCode();
+    public function Comparer(Tentative $t): string {
+        $var = $t->getCode();
         $var2 =$this->codeChallenge;
-        $gemalin="";
+        $ni = log10($this->code)+1;
+        $gemalin = "";
+        for ($i=0;$i<$ni;$i++){
+        $gemalin.="A";
+        }
         $r ="";
 
         $cpt = count(array_map('intval', str_split($var2)));
@@ -53,14 +58,8 @@ class Reponse
             }  
             
         }
-        $r=substr_count($gemalin,"A");
-        $r.=substr_count($gemalin,"B");
-        $r.=substr_count($gemalin,"C");
-
-        $this->rep = $var;
-        $this->rep.=$r;
-        
-        return $this;
+        $this->rep = $gemalin;
+        return $this->rep;
     }
 }
 ?>
