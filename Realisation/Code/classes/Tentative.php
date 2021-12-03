@@ -87,5 +87,30 @@ class Tentative
     {
         return $this->code;
     }
+    public function Tenter(): Reponse {
+        $res = new Reponse($this);
+        return $res->Comparer($this);
+    }
+
+    public function getA(): int
+    {
+        $res = new Reponse($this);
+        $st =$res->Comparer($this);
+        return $r=substr_count($st,"A");
+    }
+
+    public function getB(): int
+    {
+        $res = new Reponse($this);
+        $st =$res->Comparer($this);
+        return $r=substr_count($st,"B");
+    }
+
+    public function getC(): int
+    {
+        $res = new Reponse($this);
+        $st =$res->Comparer($this);
+        return $r=substr_count($st,"C");
+    }
 }
 ?>
