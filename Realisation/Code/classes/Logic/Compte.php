@@ -147,4 +147,12 @@ class Compte {
     public function toString(): string{
         return $this->username;
     }
+
+    public function getUsername(): string{
+        return $this->username;
+    }
+
+    public function getPasswordHash(): string{
+        return $this->passwordHash;
+    }
 }
