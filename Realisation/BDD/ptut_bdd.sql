@@ -1,5 +1,5 @@
 create table Challenge (
-	idChallenge int primary key not null AUTO_INCREMENT;,
+	idChallenge int primary key not null AUTO_INCREMENT,
 	nomChallenge varchar(255),
 	dateDebut datetime,
 	dateFin datetime,
