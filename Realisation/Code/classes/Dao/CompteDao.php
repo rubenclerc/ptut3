@@ -24,7 +24,7 @@ class CompteDao{
     }
 
     public function Read(string $login, string $passHash): Compte{
-        if(isset($login)&&isset($passHash)){
+        if(isset(htmlentities($login))&&isset(htmlentities($passHash))){
             try{
                 $req=$this->db->prepare('SELECT * FROM COMPTE WHERE username=:username');
                 $req->bindParam(':username',$login);
