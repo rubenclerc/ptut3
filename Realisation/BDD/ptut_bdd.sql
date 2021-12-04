@@ -26,7 +26,8 @@ create table Essayer(
 	tentative int not null,
 	joueurAttaquant int not null,
 	joueurAttaque int not null,
-	primary key(tentative,joueurAttaquant,joueurAttaque)
+	challenge int not null,
+	primary key(tentative,joueurAttaquant,joueurAttaque,challenge)
 );
 
 

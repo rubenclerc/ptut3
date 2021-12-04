@@ -242,7 +242,7 @@ class Challenge
      * @return string
      */
     public  function ToString(): string{
-        return "$this->nomChallenge";
+        return $this->nomChallenge;
     }    
 }
 ?>

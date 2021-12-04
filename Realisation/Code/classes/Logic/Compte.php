@@ -31,7 +31,10 @@ class Compte {
      *
      * @return void
      */
-    public function __construct(){
+    public function __construct(string $username, string $password, bool $estAdmin){
+        $this->$username=$username;
+        $this->passwordHash=$password;
+        $this->estAdmin=$estAdmin;
     }
 
     // Constructeur créé lors de la connexion
@@ -76,7 +79,6 @@ class Compte {
             $req->bindParam(':pass', $this->passwordHash);	
             $req->bindParam(':estAdmin', $estAdmin);
             $req->execute();
-            echo"coucou";
         }
     }
     
