@@ -41,8 +41,9 @@ class CompteDao{
                 echo $ex->__toString();
             }
 
-            if($row["username"] == null){
-                throw new BadUserError();
+            if(($row["username"] == null)){
+                $userError = new BadUserError();
+                throw new $userError;
             }
             elseif($row["passw"] != $passHash){
                 throw new BadPasswordError("");

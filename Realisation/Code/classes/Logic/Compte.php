@@ -1,5 +1,6 @@
 <?php
 require_once "ConnBdd.php";
+require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "CompteDao.php");
 
 /**
  * Compte
@@ -38,18 +39,14 @@ class Compte {
         $this->username = htmlentities($username);
         $this->passwordHash = hash("sha256", $password);
 
-        $db = Connexion();
+        $compteDao = new CompteDao();
+        $compte = $compteDao->Read($this->username, $this->passwordHash);
 
-        $req = $db->prepare("SELECT username, passw, estAdmin FROM COMPTE WHERE username = :user AND passw = :pass");
-        $req->execute(array(
-            'user' => $this->username,
-            'pass' => $this->passwordHash
-        ));
-
-        $result = $req->fetch(PDO::FETCH_ASSOC);
-
-        if($result['username'] == $this->username && $result['passw'] == $this->passwordHash){
-            $return = true;           
+        if($compte != null){
+            $this->estAdmin = $compte->getEstAdmin();
+            $this->username = $compte->getUsername();
+            $this->passwordHash = $compte->getPasswordHash();
+            $return = true;
         }
 
         return $return;

@@ -10,7 +10,7 @@ class BadUserError extends Exception
     }
 
     
-    public function __toString(): string{
+    public  function __toString(): string{
         return $this->message;
     }
 

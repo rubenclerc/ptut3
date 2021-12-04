@@ -1,15 +1,22 @@
 <?php
-require_once 'classes/Logic/Compte.php';
 session_start();
 
+require_once 'classes/Logic/Compte.php';
+
+// Si l'utilisateur est déjà connecté
+if(isset($_SESSION['username'])){
+    Header("Location: accueil.php");
+    exit();
+}
+
+// Script de connexion
 if(isset($_POST['username']) && isset($_POST['password'])){
     $compte = new Compte();
-    $res = false;
+
     $header = $compte->connexion($_POST['username'], $_POST['password']);
 
     if($header){
-        $_SESSION['username'] = htmlentities($_POST['username']);
-        $res = true;
+        $_SESSION['username'] = $compte->getUsername();
         Header('Location: accueil.php');
         exit();
     }
@@ -38,8 +45,6 @@ if(isset($_POST['username']) && isset($_POST['password'])){
         <div class="container-fluid">
             <div class="row my-3 mb-5 justify-content-between">
                 <img class="col-md-2" src="pictures/logoEcrit.png" alt="Logo Mindmaster" id="navLogo">
-
-                <h2 class="col-md-1"><a href="#" class="nav-link text-center nav-red-border">Quitter</a></h2>
             </div>
     
     
@@ -49,13 +54,6 @@ if(isset($_POST['username']) && isset($_POST['password'])){
                         <div class="row bleu red-border justify-content-around">
                             <h1 class="text-center my-4"> SE CONNECTER</h1>
                             <div class="col-md-3">
-                                <?php 
-                                if(isset($res)){
-                                    if(!$res){
-                                        echo '<p class="text-center text-danger">Mauvais username/password</p>';
-                                    }
-                                }
-                                ?>
                                 <label for="username" class="form-label">Identifiant : </label>
                                 <input type="text" name="username" class="form-control blue-border" placeholder="Identifiant" class="form-control blue-border" required="required">
                                 <label for="password" class="form-label">Mot de passe : </label>
@@ -63,7 +61,7 @@ if(isset($_POST['username']) && isset($_POST['password'])){
                             </div>
                             <div class="row justify-content-around">
                                 <input type="submit" class="form-control blue-border my-3" id="submitButtonConnexion" value="VALIDER">
-                                <h6 class="text-center my-4"> <a href="inscription.html" style="color:#FF0000">Pas de compte ?</a></h6>
+                                <h6 class="text-center my-4"> <a href="inscription.php" style="color:#FF0000">Pas de compte ?</a></h6>
                             </div>
                         </div>
                     </div>
