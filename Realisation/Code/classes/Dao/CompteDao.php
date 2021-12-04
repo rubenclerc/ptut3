@@ -2,6 +2,7 @@
 require_once "../Logic/ConnBdd.php";
 require_once "../Logic/Compte.php";
 require_once "../Logic/BadUserError.php";
+require_once "../Logic/BadPasswordError.php";
 
 class CompteDao{
     
@@ -24,28 +25,34 @@ class CompteDao{
     }
 
     public function Read(string $login, string $passHash): Compte{
-        if(isset(htmlentities($login))&&isset(htmlentities($passHash))){
+
         $compte = null;
-        $row =null;
-        }
+        $row = null;
+
         if(isset($login)&&isset($passHash)){
             try{
                 $req=$this->db->prepare('SELECT * FROM COMPTE WHERE username=:username');
                 $req->bindParam(':username',$login);
                 $req->execute();
+
                 $row=$req->fetch(PDO::FETCH_ASSOC);
-                $pass=$row['passw'];
-                $c = null;
-                if ($pass==$passHash){
-                    $estAdmin=$row['estAdmin'];
-                    $c = new Compte($login,$pass,$estAdmin);
-                }
-                return $c;
             }
-            catch(BadUserError $ex){
+            catch(Exception $ex){
                 echo $ex->__toString();
             }
+
+            if($row["username"] == null){
+                throw new BadUserError();
+            }
+            elseif($row["passw"] != $passHash){
+                throw new BadPasswordError("");
+            }
+            else{
+                $compte = new Compte($row["username"], $row["passw"], $row["estAdmin"]);
+            }
         }
+
+        return $compte;
     }
 
     public function Update(Compte $c){
