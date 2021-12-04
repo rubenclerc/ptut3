@@ -60,7 +60,7 @@ if(isset($_POST['username']) && isset($_POST['password'])){
                                 <input type="password" name="password" class="form-control blue-border" required="required"><br>
                             </div>
                             <div class="row justify-content-around">
-                                <input type="submit" class="form-control blue-border my-3" id="submitButtonConnexion" value="VALIDER">
+                                <input type="submit" class="form-control btn btn-primary my-3" id="submitButtonConnexion" value="VALIDER">
                                 <h6 class="text-center my-4"> <a href="inscription.php" style="color:#FF0000">Pas de compte ?</a></h6>
                             </div>
                         </div>

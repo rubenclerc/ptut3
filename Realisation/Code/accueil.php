@@ -63,9 +63,6 @@ if(isset($_POST['deconnexion'])){
                     </form>
                 </a>
             </div>
-
-
-
             
             <div class="container-fluid">
                 <div class="row red-border">
@@ -101,7 +98,7 @@ if(isset($_POST['deconnexion'])){
                                 echo '<td>'. $nbParti ."/" . $challenge->getNbPlaces() .'</td>';
                                 echo '<td>'. $challenge->getDateDebut()->format('D d M') .'</td>';
                                 echo '<td>'. $challenge->getDateDebut()->format('H') . "h". $challenge->getDateDebut()->format('m') . '</td>';
-                                echo '<td>'. $challenge->getDuree()->format('H') . "h" .'</td>';
+                                echo '<td>'. $challenge->getDuree()->format('d') . "j, " . $challenge->getDuree()->format('h'). "H" .'</td>';
                                 echo '<td> <form action="code.php" method="POST">
                                               <input type="submit" name="joinChall" class="btn btn-primary" value="Rejoindre">
                                            </form> </td>';

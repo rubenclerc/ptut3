@@ -78,7 +78,7 @@ session_start();
                                 
                             </div>
                             <div class="row justify-content-around">
-                                <input type="submit" class="form-control blue-border my-3" id="submitButtonInscription" value="VALIDER">
+                                <input type="submit" class="form-control btn btn-primary" id="submitButtonInscription" value="VALIDER">
                                 <h6 class="text-center my-4"> <a href="connexion.php" style="color:#FF0000">Déjà inscrit ?</a></h6>
                             </div>
                         </div>

@@ -14,6 +14,13 @@ if(!isset($_SESSION['username'])) {
     exit();
 }
 
+// Déconnexion
+if(isset($_POST['deconnexion'])){
+    $compte->seDeconnecter();
+    header('Location: connexion.php');
+    exit();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -41,9 +48,13 @@ if(!isset($_SESSION['username'])) {
 
                 <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2">Challenge 1</h1>
                 
-                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2">Identifiant</h1>
+                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= $compte->toString() ?></h1>
 
-                <a href="#" class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><h1 >Deconnexion</h1></a>
+                <a href="connexion.php" class="col-md-2 text-center align-self-center py-2">
+                    <form action="accueil.php" method="POST">
+                            <button type="submit" class="btn btn-danger" name="deconnexion"><h3> Se déconnecter </h3></button>
+                    </form>
+                </a>
                 
             </div>
         </div>
