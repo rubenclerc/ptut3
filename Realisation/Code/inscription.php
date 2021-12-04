@@ -12,14 +12,23 @@ session_start();
     }
 
     // Scipt d'inscritption
-    if(isset($_POST['Identifiant']) && isset($_POST['MdP'])){
-        $compte = new Compte();
-        $inscriptionValidee = $compte->inscription($_POST["Identifiant"],$_POST["MdP"]);
+    if(isset($_POST['Identifiant']) && isset($_POST['MdP']) && isset($_POST['verifMdP'])){
+        $isMdpGood = true;
+        $mdp = htmlentities($_POST['MdP']);
+        $verifMdp = htmlentities($_POST['verifMdP']);
 
-        if($inscriptionValidee){
-            $_SESSION['username'] = $compte->getUsername();
-            Header("Location: accueil.php");
-            exit();
+        if(!($mdp == $verifMdp)){
+            $isMdpGood = false;
+        } else{
+            $compte = new Compte();
+
+            $inscriptionValidee = $compte->inscription($_POST["Identifiant"],$_POST["MdP"]);
+    
+            if($inscriptionValidee){
+                $_SESSION['username'] = $compte->getUsername();
+                Header("Location: accueil.php");
+                exit();
+            }
         }
     }
 
@@ -54,9 +63,10 @@ session_start();
                 <form action="inscription.php" method="POST" >
                     <div class="container col-md-9">
                         <div class="row bleu red-border justify-content-around">
-                            <?php if(isset($inscriptionValidee) && !$inscriptionValidee){ echo "<div class='alert alert-danger'>Mauvais username ou mdp</div>"; } ?>
                             <h1 class="text-center my-4">S'INSCRIRE</h1>
                             <div class="col-md-3">
+                                <?php if(isset($isMdpGood) && !$isMdpGood){ echo "<div class='alert alert-danger text-center'>Rentrer les mêmes mots de passe</div>"; } ?>
+                                <?php if(isset($inscriptionValidee) && !$inscriptionValidee){ echo "<div class='alert alert-danger text-center'>Utilisateur déjà existant</div>"; } ?>
                                 <label for="Identifiant" class="form-label">Identifiant :</label>
                                 <input type="text" class="form-control blue-border" name="Identifiant" required="required">
                             
