@@ -2,7 +2,7 @@
 
 class BadPasswordError extends Exception
 {
-    private string $options;
+    private $options;
 
     public function __construct(string $options)
     {

@@ -1,3 +1,31 @@
+<?php
+session_start();
+
+    require_once "classes/Logic/Compte.php";
+    require_once "classes/Logic/ConnBdd.php";
+    require_once "classes/Dao/CompteDao.php";
+
+    // Si l'utilisateur est déjà connecté
+    if(isset($_SESSION['username'])){
+        Header("Location: accueil.php");
+        exit();
+    }
+
+    // Scipt d'inscritption
+    if(isset($_POST['Identifiant']) && isset($_POST['MdP'])){
+        $compte = new Compte();
+        $inscriptionValidee = $compte->inscription($_POST["Identifiant"],$_POST["MdP"]);
+
+        if($inscriptionValidee){
+            $_SESSION['username'] = $compte->getUsername();
+            Header("Location: accueil.php");
+            exit();
+        }
+    }
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,17 +48,15 @@
         <div class="container-fluid">
             <div class="row my-3 mb-5 justify-content-between">
                 <img class="col-md-2" src="pictures/logoEcrit.png" alt="Logo Mindmaster" id="navLogo">
-
-                <h2 class="col-md-1"><a href="#" class="nav-link text-center nav-red-border">Quitter</a></h2>
             </div>
     
             <div class="container">
-                <form action="inscription_traitement.php" method="POST" >
+                <form action="inscription.php" method="POST" >
                     <div class="container col-md-9">
                         <div class="row bleu red-border justify-content-around">
+                            <?php if(isset($inscriptionValidee) && !$inscriptionValidee){ echo "<div class='alert alert-danger'>Mauvais username ou mdp</div>"; } ?>
                             <h1 class="text-center my-4">S'INSCRIRE</h1>
                             <div class="col-md-3">
-                                
                                 <label for="Identifiant" class="form-label">Identifiant :</label>
                                 <input type="text" class="form-control blue-border" name="Identifiant" required="required">
                             

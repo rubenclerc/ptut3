@@ -55,25 +55,20 @@ class Compte {
         return $return;
     }
 
-    public function inscription($username, $password,$estAdmin){
-        if(isset($username) && isset($password)){
-            // Connexion à la base de données
-            $db = Connexion();
+    public function inscription($username, $password): bool{
+        $compteDao = new CompteDao();
+        $exist = $compteDao->Userexist($username);
+        $inscriptionValidee = false;
 
-            // Vérifcations de sécurité
-            $user = htmlentities($username);
-            $pass = htmlentities($password);
-
-            // Hashage du mot de passe
+        if(!$exist){
+            $this->username = htmlentities($username);
             $this->passwordHash = hash("sha256", $password);
+            $inscriptionValidee = true;
 
-            // Requête d'insertion
-            $req = $db->prepare('INSERT INTO compte (username, passw, estAdmin) values (:username, :pass, :estAdmin)');
-            $req->bindParam(':username',$user);
-            $req->bindParam(':pass', $this->passwordHash);	
-            $req->bindParam(':estAdmin', $estAdmin);
-            $req->execute();
+            $compteDao->Create($this);
         }
+
+        return $inscriptionValidee;
     }
     
     /**
@@ -120,20 +115,6 @@ class Compte {
      */
     public function getEstAdmin(): bool{
         return $this->estAdmin;
-    }
-
-    public function userExist($username): bool {
-        $exist=true;
-        $bdd = Connexion();
-        $user=htmlentities($username);
-        $req=$bdd->prepare('SELECT * FROM COMPTE WHERE username=:username');
-        $req->bindParam(':username',$user);
-        $req->execute();
-        $row=$req->fetch(PDO::FETCH_ASSOC);
-        if($row==0){
-            $exist=false;
-        }
-        return $exist;
     }
 
     public function setUsername($username){

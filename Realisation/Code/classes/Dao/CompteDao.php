@@ -1,8 +1,8 @@
 <?php
-require_once "../Logic/ConnBdd.php";
-require_once "../Logic/Compte.php";
-require_once "../Logic/BadUserError.php";
-require_once "../Logic/BadPasswordError.php";
+require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Compte.php");
+require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "ConnBdd.php");
+require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "BadUserError.php");
+require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "BadPasswordError.php");
 
 class CompteDao{
     
@@ -72,5 +72,20 @@ class CompteDao{
         $req->bindParam(':pass', $pass);	
         $req->bindParam(':estAdmin', $admin);
         $req->execute();
+    }
+
+    public function UserExist($username): bool {
+        $exist=true;
+        $user=htmlentities($username);
+
+        $req=$this->db->prepare('SELECT idCompte FROM COMPTE WHERE username=:username');
+        $req->bindParam(':username',$user);
+        $req->execute();
+        $row = $req->fetch(PDO::FETCH_ASSOC);
+        if($row==0){
+            $exist=false;
+        }
+
+        return $exist;
     }
 }
