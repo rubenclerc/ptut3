@@ -243,6 +243,22 @@ class Challenge
      */
     public  function ToString(): string{
         return $this->nomChallenge;
-    }    
+    } 
+    
+    public function getDateDebut():DateTime{
+        return $this->dateDebut;
+    }
+
+    public function getDateFin():DateTime{
+        return $this->dateFin;
+    }
+
+    public function getDiffuculte():int{
+        return $this->difficulte;
+    }
+
+    public function getNbPlaces():int{
+        return $this->nbPlaces;
+    }
 }
 ?>
