@@ -1,7 +1,7 @@
 <?php
-require_once "../Logic/ConnBdd.php";
-require_once "../Logic/Challenge.php";
-require_once "../Logic/Admin.php";
+require_once (dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "ConnBdd.php");
+require_once (dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Challenge.php");
+require_once (dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Admin.php");
 
 class ChallengeDao
 {
@@ -18,7 +18,7 @@ class ChallengeDao
         $dateDebut=$challenge->getDateDebut();
         $dateFin=$challenge->getDateFin();
         $nbParticipants=$challenge->getNbPlaces();
-        $difficulte=$challenge->getDiffuculte();
+        $difficulte=$challenge->getDifficulte();
 
         $req=$this->db->prepare('SELECT * FROM compte WHERE username = :username');
             $req->bindParam(':username',$admin->getUsername());
@@ -52,7 +52,7 @@ class ChallengeDao
         $dateDebut=$challenge->getDateDebut();
         $dateFin=$challenge->getDateFin();
         $nbParticipants=$challenge->getNbPlaces();
-        $difficulte=$challenge->getDiffuculte();
+        $difficulte=$challenge->getDifficulte();
         $req=$this->db->prepare('SELECT * FROM challenge WHERE nomChallenge=:nomChall');
         $req->bindParam(':nomChall',$nomChallenge);
         $req->execute();
@@ -92,12 +92,12 @@ class ChallengeDao
     }
 
     public function ListAll(): array{
-        $req=$this->db->prepare('SELECT * from challenge');
+        $req=$this->db->prepare('SELECT * FROM CHALLENGE');
         $req->execute();
         $challenges = array();
         while($row=$req->fetch(PDO::FETCH_ASSOC)){
-            $c = new Challenge($row['nomChallenge'],$row['difficulte'],$row['dateDebut'],$row['dateFin'],$row['nbParticipants']);
-            array_push($challanges,$c);
+            $c = new Challenge($row['nomChallenge'], $row['difficulte'], new DateTime($row['dateDebut']), new DateTime($row['dateFin']), $row['nbPartcipants']);
+            $challenges[] = $c;
         }
         return $challenges;
     }
@@ -141,6 +141,31 @@ class ChallengeDao
         $req->bindParam(':joueur',$idCo);
         $req->bindParam(':code',$code);
         $req->execute();
+    }
+
+    public function ChallengeExits(string $nomChallenge): bool{
+        $res = true;
+        $chall = htmlentities($nomChallenge);
+
+        $req = $this->db->prepare('SELECT idChallenge FROM challenge where nomChallenge = :nomChallenge');
+        $req->bindParam(':nomChall',$chall);
+        $req->execute();
+
+        if($req->rowCount() == 0){
+            $res = false;
+        }
+
+        return $res;
+    }
+
+    public function CountParticipants(string $nomChallenge): int{
+        $req = $this->db->prepare('SELECT COUNT(*) FROM Participer inner join Challenge on Participer.challenge=Challenge.idChallenge where Challenge.nomChallenge = :nomChallenge');
+        $req->bindParam(':nomChallenge',$nomChallenge);
+        $req->execute();
+
+        $row = $req->fetch(PDO::FETCH_ASSOC);
+
+        return $row['COUNT(*)'];
     }
 
 }

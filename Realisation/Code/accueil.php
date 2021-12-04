@@ -1,7 +1,9 @@
 <?php
-require_once 'classes/Logic/ConnBdd.php';
-require_once 'classes/Logic/Compte.php';
 session_start();
+
+require_once ("classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "ConnBdd.php");
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Compte.php");
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "ChallengeDao.php");
 
 // Si un utilisateur veut accéder à la page sans être connecté
 if(!isset($_SESSION['username'])) {
@@ -57,7 +59,7 @@ if(isset($_POST['deconnexion'])){
 
                 <a href="connexion.php" class="col-md-2 text-center align-self-center py-2">
                     <form action="accueil.php" method="POST">
-                        <button type="submit" class="btn btn-danger" name="deconnexion"> Se déconnecter</button>
+                            <button type="submit" class="btn btn-danger" name="deconnexion"><h3> Se déconnecter </h3></button>
                     </form>
                 </a>
             </div>
@@ -81,19 +83,25 @@ if(isset($_POST['deconnexion'])){
                         </thead>
                         <tbody >
                           <?php
-                          $db = Connexion();
-                          $req = $db->prepare('SELECT * FROM challenge');
-                          $req->execute();
+                            $challengeDao = new ChallengeDao();
+                            $challenges = $challengeDao->ListAll();
 
-                            while($res = $req->fetch(PDO::FETCH_ASSOC))
+                            foreach($challenges as $challenge)
                             {
+                                $nbParti = $challengeDao->CountParticipants($challenge->ToString());
+
+                                if($nbParti == null)
+                                {
+                                    $nbParti = 0;
+                                }
+
                                 echo '<tr class="text-center align-self-center">';
-                                echo '<td>'. $res["nomChallenge"] .'</td>';
-                                echo '<td>'. $res["difficulte"] .'</td>';
-                                echo '<td>'. $res["nbPartcipants"] .'</td>';
-                                echo '<td>'. $res["dateDebut"] .'</td>';
-                                echo '<td>'. $res["dateDebut"] .'</td>';
-                                echo '<td>'. $res["dateDebut"] .'</td>';
+                                echo '<td>'. $challenge->ToString() .'</td>';
+                                echo '<td>'. $challenge->getDifficulte() .'</td>';
+                                echo '<td>'. $nbParti ."/" . $challenge->getNbPlaces() .'</td>';
+                                echo '<td>'. $challenge->getDateDebut()->format('D d M') .'</td>';
+                                echo '<td>'. $challenge->getDateDebut()->format('H') . "h". $challenge->getDateDebut()->format('m') . '</td>';
+                                echo '<td>'. $challenge->getDuree()->format('H') . "h" .'</td>';
                                 echo '<td> <form action="code.php" method="POST">
                                               <input type="submit" name="joinChall" class="btn btn-primary" value="Rejoindre">
                                            </form> </td>';

@@ -62,32 +62,13 @@ class Challenge
      * @param  int nbPlaces
      * @return Challenge
      */
-    public function __construct(string $nomChallenge, int $difficulte, DateTime $dateDebut, DateTime $dateFin, int $nbPlaces)
+    public function __construct(string $nomChallenge="", int $difficulte=0, DateTime $dateDebut, DateTime $dateFin, int $nbPlaces=0)
     {
         $this->nomChallenge = $nomChallenge;
         $this->difficulte = $difficulte;
+        $this->dateDebut = $dateDebut;
+        $this->dateFin = $dateFin;
         $this->nbPlaces = $nbPlaces;
-
-        if($dateFin < $dateDebut)
-        {
-            throw new Exception("La date de fin doit être supérieure à la date de début");
-        }
-
-        else{
-            $this->dateDebut = $dateDebut;
-            $this->dateFin = $dateFin;
-
-            // Insertion dans la DB
-            $db = Connexion();
-            $req = $db->prepare("INSERT INTO CHALLENGE(nomChallenge, dateDebut, dateFin, nbParticipantsMax, difficulte) VALUES(:nomChallenge, :dateDebut, :dateFin, :nbParticipantsMax, :difficulte)");
-            $req->bindParam(':nomChallenge', $this->nomChallenge);
-            $req->bindParam(':dateDebut', $this->dateDebut);
-            $req->bindParam(':dateFin', $this->dateFin);
-            $req->bindParam(':nbParticipantsMax', $this->nbPlaces);
-            $req->bindParam(':difficulte', $this->difficulte);
-
-            $req->execute();
-        }
     }
     
     /**
@@ -195,8 +176,11 @@ class Challenge
      * 
      * @return int
      */
-    public function getDuree(): int{
-        $duree = $this->dateFin->getTimestamp() - $this->dateDebut->getTimestamp();
+    public function getDuree(): DateTime{
+        $int = $this->dateFin->getTimestamp() - $this->dateDebut->getTimestamp();
+        $duree = new DateTime();
+        $duree->setTimestamp($int);
+
 		return $duree;
     }
     
@@ -253,7 +237,7 @@ class Challenge
         return $this->dateFin;
     }
 
-    public function getDiffuculte():int{
+    public function getDifficulte():int{
         return $this->difficulte;
     }
 
