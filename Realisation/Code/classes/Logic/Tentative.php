@@ -14,7 +14,7 @@ class Tentative
      * @param  Challenge $c
      * @return void
      */
-    public function __construct(int $code, Challenge $c, Joueur $joueur, Joueur $adv){
+    public function __construct(int $code, Joueur $joueur, Joueur $adv, Challenge $c){
         $co=htmlentities($code);
         $this->code = $co;
         $this->challenge = $c;
@@ -61,14 +61,7 @@ class Tentative
             $req->bindParam(':id_Attaque', $idA);
             $req->bindParam(":id_Challenge",$idC);
             $req->execute();
-            echo"coucou";
             
-            
-            
-            if ($this->Gagner()){
-                ///à remplir
-            }
-       
     }
     
     /**
