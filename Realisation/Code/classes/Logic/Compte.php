@@ -25,6 +25,11 @@ class Compte {
     
 
     // Méthodes
+    public function __construct($username = "", $passwordHash = "", $estAdmin = false){
+        $this->username = $username;
+        $this->passwordHash = $passwordHash;
+        $this->estAdmin = $estAdmin;
+    }
 
     // Constructeur créé lors de la connexion
     public function connexion(string $username, string $password): bool{
