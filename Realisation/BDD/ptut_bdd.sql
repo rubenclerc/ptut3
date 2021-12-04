@@ -40,16 +40,16 @@ create table Participer(
 	primary key (challenge, joueur)
 );
 
-alter table Challenge add constraint fk_cAdmin foreign key (compteAdmin) references Compte(idCompte);
+alter table Challenge add constraint fk_cAdmin foreign key (compteAdmin) references Compte(idCompte) ON UPDATE CASCADE;
 
-alter table Challenge add constraint fk_cJoueur foreign key (compteJoueur) references Compte(idCompte);
+alter table Challenge add constraint fk_cJoueur foreign key (compteJoueur) references Compte(idCompte) ON UPDATE CASCADE;
 
-alter table Essayer add constraint fk_tentative foreign key (tentative) references Tentative(idTentative);
+alter table Essayer add constraint fk_tentative foreign key (tentative) references Tentative(idTentative) ON UPDATE CASCADE;
 
-alter table Essayer add constraint fk_joueurAttaquant foreign key (joueurAttaquant) references Compte(idCompte);
+alter table Essayer add constraint fk_joueurAttaquant foreign key (joueurAttaquant) references Compte(idCompte) ON UPDATE CASCADE;
 
-alter table Essayer add constraint fk_joueurAttaque foreign key (joueurAttaque) references Compte(idCompte);
+alter table Essayer add constraint fk_joueurAttaque foreign key (joueurAttaque) references Compte(idCompte) ON UPDATE CASCADE;
 
-alter table Participer add constraint fk_joueur foreign key (joueur) references Compte(idCompte);
+alter table Participer add constraint fk_joueur foreign key (joueur) references Compte(idCompte) ON UPDATE CASCADE;
 
-alter table Participer add constraint fk_challenge foreign key (challenge) references Challenge(idChallenge);
+alter table Participer add constraint fk_challenge foreign key (challenge) references Challenge(idChallenge) ON UPDATE CASCADE;

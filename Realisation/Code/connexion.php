@@ -1,5 +1,5 @@
 <?php
-require_once 'classes/Compte.php';
+require_once 'classes/Logic/Compte.php';
 session_start();
 
 if(isset($_POST['username']) && isset($_POST['password'])){
@@ -14,7 +14,6 @@ if(isset($_POST['username']) && isset($_POST['password'])){
         exit();
     }
 }
-echo $_SESSION['username'];
 ?>
 
 <!DOCTYPE html>

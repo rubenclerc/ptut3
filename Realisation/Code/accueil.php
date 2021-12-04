@@ -1,6 +1,6 @@
 <?php
-require_once 'classes/ConnBdd.php';
-require_once 'classes/Compte.php';
+require_once 'classes/Logic/ConnBdd.php';
+require_once 'classes/Logic/Compte.php';
 session_start();
 
 // Si un utilisateur veut accéder à la page sans être connecté
@@ -16,9 +16,16 @@ $compte->setUsername($_SESSION['username']);
 // Accès à un challenge
 if(isset($_POST['joinChall'])){
     Header('Location: code.php');
+    exit();
 }
 
-echo $_SESSION['username'];
+// Déconnexion
+if(isset($_POST['deconnexion'])){
+    $compte->seDeconnecter();
+    header('Location: connexion.php');
+    exit();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +56,9 @@ echo $_SESSION['username'];
                 <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= $compte->toString() ?></h1>
 
                 <a href="connexion.php" class="col-md-2 text-center align-self-center py-2">
-                    <button class="btn btn-danger" onclick="<?php $compte->seDeconnecter() ?>"><h3>Se déconnecter</h3></button>
+                    <form action="accueil.php" method="POST">
+                        <button type="submit" class="btn btn-danger" name="deconnexion"> Se déconnecter</button>
+                    </form>
                 </a>
             </div>
 

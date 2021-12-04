@@ -5,7 +5,11 @@ require_once "../Logic/BadUserError.php";
 
 class CompteDao{
     
-    private $db=Connexion();
+    private $db;
+
+    public function __construct(){
+        $this->db = Connexion();
+    }
 
     public function Create(Compte $c){
         $username=$c->getUsername();

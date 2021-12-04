@@ -1,15 +1,18 @@
 <?php
 session_start();
 
-require_once 'classes/ConnBdd.php';
-require_once 'classes/Compte.php';
-
-
-echo $_SESSION['username'];
+require_once 'classes/Logic/ConnBdd.php';
+require_once 'classes/Logic/Compte.php';
 
 // Set du username
 $compte = new Compte();
 $compte->setUsername($_SESSION['username']);
+
+// Si un utilisateur veut accéder à la page sans être connecté
+if(!isset($_SESSION['username'])) {
+    header('Location: connexion.php');
+    exit();
+}
 
 ?>
 

@@ -26,17 +26,6 @@ class Compte {
 
     // Méthodes
 
-    /**
-     * __construct
-     *
-     * @return void
-     */
-    public function __construct(string $username, string $password, bool $estAdmin){
-        $this->$username=$username;
-        $this->passwordHash=$password;
-        $this->estAdmin=$estAdmin;
-    }
-
     // Constructeur créé lors de la connexion
     public function connexion(string $username, string $password): bool{
         $return = false;
