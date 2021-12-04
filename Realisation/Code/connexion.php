@@ -2,6 +2,7 @@
 session_start();
 
 require_once 'classes/Logic/Compte.php';
+require_once 'classes/Dao/CompteDao.php';
 
 // Si l'utilisateur est déjà connecté
 if(isset($_SESSION['username'])){
@@ -11,14 +12,21 @@ if(isset($_SESSION['username'])){
 
 // Script de connexion
 if(isset($_POST['username']) && isset($_POST['password'])){
-    $compte = new Compte();
+    $c=new CompteDao();
+    $compte = $c->Read($_POST['username'],$_POST['password']);
 
     $header = $compte->connexion($_POST['username'], $_POST['password']);
 
     if($header){
         $_SESSION['username'] = $compte->getUsername();
-        Header('Location: accueil.php');
-        exit();
+        if(!$compte->getEstAdmin()){
+            Header('Location: accueil.php');
+            exit();
+        }
+        else{
+            Header('Location:admin.html');
+            exit();
+        }
     }
 }
 ?>

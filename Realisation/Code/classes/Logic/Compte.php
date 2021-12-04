@@ -26,7 +26,7 @@ class Compte {
     
 
     // Méthodes
-    public function __construct($username = "", $passwordHash = "", $estAdmin = false){
+    public function __construct($username = "", $passwordHash = "", $estAdmin){
         $this->username = $username;
         $this->passwordHash = $passwordHash;
         $this->estAdmin = $estAdmin;

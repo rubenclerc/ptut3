@@ -115,7 +115,7 @@ class ChallengeDao
         $req=$this->db->prepare('SELECT * from Compte inner join Participer on Compte.idJoueur=Participer.joueur inner join Challenge on Participer.challenge=Challenge.idChallenge where Challenge.idChallenge = '.$idC);
         while($row=$req->fetch(PDO::FETCH_ASSOC)){
             $j = new Joueur($row['username'],$row['passw'],$row['estAdmin']);
-            array_push($participants,$j);
+            $participants[]=$j;
         }
         return $participants;
     }
