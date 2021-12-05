@@ -15,12 +15,6 @@ if(!isset($_SESSION['username'])) {
 $compte = new Joueur();
 $compte->setUsername($_SESSION['username']);
 
-// Accès à un challenge
-if(isset($_POST['joinChall'])){
-    Header('Location: code.php');
-    exit();
-}
-
 // Déconnexion
 if(isset($_POST['deconnexion'])){
     $compte->seDeconnecter();
@@ -55,7 +49,7 @@ if(isset($_POST['deconnexion'])){
 
                 <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2">Tutoriel</h1>
                 
-                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= $compte->toString() ?></h1>
+                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= $compte->getUsername() ?></h1>
 
                 <a href="connexion.php" class="col-md-2 text-center align-self-center py-2">
                     <form action="accueil.php" method="POST">
@@ -99,9 +93,9 @@ if(isset($_POST['deconnexion'])){
                                 echo '<td>'. $challenge->getDateDebut()->format('D d M') .'</td>';
                                 echo '<td>'. $challenge->getDateDebut()->format('H') . "h". $challenge->getDateDebut()->format('m') . '</td>';
                                 echo '<td>'. $challenge->getDuree()->format('d') . "j, " . $challenge->getDuree()->format('h'). "H" .'</td>';
-                                echo '<td> <form action="code.php" method="POST">
-                                              <input type="submit" name="joinChall" class="btn btn-primary" value="Rejoindre">
-                                           </form> </td>';
+                                echo '<td>
+                                            <a href="code.php?chal= '. $challenge->ToString() . '" class="btn btn-primary">Rejoindre </a>
+                                      </td>';
                                 echo '</tr>';
                             }
                           ?>                 

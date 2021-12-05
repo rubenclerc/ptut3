@@ -26,7 +26,7 @@ class Compte {
     
 
     // Méthodes
-    public function __construct($username = "", $passwordHash = "", $estAdmin){
+    public function __construct($username = "", $passwordHash = "", $estAdmin = false){
         $this->username = $username;
         $this->passwordHash = $passwordHash;
         $this->estAdmin = $estAdmin;
@@ -67,34 +67,7 @@ class Compte {
 
         return $inscriptionValidee;
     }
-    
-    /**
-     * seConnecter
-     *
-     * @return void
-     */
-    public function seConnecter(){
 
-        if(isset($username)&&isset($password)){
-            $bdd = Connexion();
-            $user=htmlentities($username);
-            $pass=htmlentities($password);
-            $req=$bdd->prepare('SELECT * FROM COMPTE WHERE username=:username');
-            $req->bindParam(':username',$user);
-            $req->execute();
-            $row=$req->fetch(PDO::FETCH_ASSOC);
-            $hash=$row['passwd'];
-            if($pass==$hash){
-                $this->username = $user;
-            }
-            else{
-                echo "Ce n'est pas le bon mot de passe ou le bon nom d'utilisateur";
-            }
-        }
-        else{
-            echo'';
-        }
-    }
 
     /**
      * seDeconnecter

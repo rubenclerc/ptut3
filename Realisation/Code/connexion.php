@@ -12,8 +12,7 @@ if(isset($_SESSION['username'])){
 
 // Script de connexion
 if(isset($_POST['username']) && isset($_POST['password'])){
-    $c=new CompteDao();
-    $compte = $c->Read($_POST['username'],$_POST['password']);
+    $compte = new Compte();
 
     $header = $compte->connexion($_POST['username'], $_POST['password']);
 
@@ -24,7 +23,7 @@ if(isset($_POST['username']) && isset($_POST['password'])){
             exit();
         }
         else{
-            Header('Location:admin.html');//à changer en admin.php quand la page sera créée
+            Header('Location:admin.php');
             exit();
         }
     }

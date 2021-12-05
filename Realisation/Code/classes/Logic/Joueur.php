@@ -66,14 +66,6 @@ class Joueur extends Compte{
         
         return $tentative->Tenter();
     }
-    /**
-     * toString
-     * @return string
-     */
-    public function toString():string{
-        
-        return "$this->username";
-    }
 
     public function peutParticiper(Challenge $challenge):bool{
        return false;

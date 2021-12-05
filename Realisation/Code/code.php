@@ -3,6 +3,7 @@ session_start();
 
 require_once 'classes/Logic/ConnBdd.php';
 require_once 'classes/Logic/Compte.php';
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Joueur.php");
 
 // Set du username
 $compte = new Joueur();
@@ -46,7 +47,7 @@ if(isset($_POST['deconnexion'])){
             <div class="row my-3 mb-5 justify-content-between">
                 <img class="col-md-2" src="pictures/logoEcrit.png" alt="Logo Mindmaster" id="navLogo">
 
-                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2">Challenge 1</h1>
+                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= htmlspecialchars($_GET["chal"]) ?></h1>
                 
                 <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= $compte->toString() ?></h1>
 
