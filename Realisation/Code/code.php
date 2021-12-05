@@ -5,7 +5,7 @@ require_once 'classes/Logic/ConnBdd.php';
 require_once 'classes/Logic/Compte.php';
 
 // Set du username
-$compte = new Compte();
+$compte = new Joueur();
 $compte->setUsername($_SESSION['username']);
 
 // Si un utilisateur veut accéder à la page sans être connecté

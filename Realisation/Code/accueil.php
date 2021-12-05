@@ -12,7 +12,7 @@ if(!isset($_SESSION['username'])) {
 }
 
 // Set du username
-$compte = new Compte();
+$compte = new Joueur();
 $compte->setUsername($_SESSION['username']);
 
 // Accès à un challenge

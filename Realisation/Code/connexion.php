@@ -24,7 +24,7 @@ if(isset($_POST['username']) && isset($_POST['password'])){
             exit();
         }
         else{
-            Header('Location:admin.html');
+            Header('Location:admin.html');//à changer en admin.php quand la page sera créée
             exit();
         }
     }

@@ -19,7 +19,7 @@ class Joueur extends Compte{
     private $tentatives = [];
 
 
-    public function __construct(string $username, string $password, bool $estAdmin=false){
+    public function __construct(string $username="", string $password="", bool $estAdmin=false){
         parent::__construct($username, $password,$estAdmin);
     }
     /**

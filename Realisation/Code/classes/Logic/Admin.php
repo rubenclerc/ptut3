@@ -12,7 +12,7 @@ Class Admin extends Compte{
      * @param  bool $estAdmin
      * @return void
      */
-    public function __construct(string $username, string $password, bool $estAdmin=true){
+    public function __construct(string $username="", string $password="", bool $estAdmin=true){
         $user=htmlentities($username);
         $pass=htmlentities($password);
         $admin=htmlentities($estAdmin);
