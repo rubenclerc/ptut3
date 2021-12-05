@@ -94,7 +94,7 @@ if(isset($_POST['deconnexion'])){
                                 echo '<td>'. $challenge->getDateDebut()->format('H') . "h". $challenge->getDateDebut()->format('m') . '</td>';
                                 echo '<td>'. $challenge->getDuree()->format('d') . "j, " . $challenge->getDuree()->format('h'). "H" .'</td>';
                                 echo '<td>
-                                            <a href="code.php?chal= '. $challenge->ToString() . '" class="btn btn-primary">Rejoindre </a>
+                                            <a href="code.php?chal='. $challenge->ToString() . '" class="btn btn-primary">Rejoindre </a>
                                       </td>';
                                 echo '</tr>';
                             }

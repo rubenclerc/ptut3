@@ -22,6 +22,19 @@ if(isset($_POST['deconnexion'])){
     exit();
 }
 
+// Joindre la page de partie
+if(isset($_POST["val"])){
+    $warning = false;
+
+    if(!empty($_POST["n0"] && $_POST["n1"] && $_POST["n2"] && $_POST["n3"] && $_POST["n4"] && $_POST["n5"])){
+        $url = "partie.php?chal=" . $_GET["chal"];
+        Header("Location: $url");
+    }else{
+        $warning = true;
+    }
+
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -63,19 +76,20 @@ if(isset($_POST['deconnexion'])){
         <div class="container">
                 <div class="row red-border my-3 px-5 py-3">
                         <h1 class="rouge text-center">Rejoindre le challenge </h1>
+                
+                        <?php if(isset($warning) && $warning) { echo "<div class='alert alert-danger'>Completez tous les champs</div>"; } ?>
 
-                        <form action="code.php" method="POST">
+                        <form action="code.php?chal=<?= $_GET["chal"] ?>"  method="POST">
                             <div class="row justify-content-around form-group">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="" id="">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="" id="">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="" id="">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="" id="">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="" id="">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="" id="">
+                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n0">
+                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n1">
+                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n2">
+                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n3">
+                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n4">
+                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n5">
                             </div>
-
                             <div class="row justify-content-center px-5 pt-3">
-                                <input class="btn btn-primary" type="submit" value="Valider">
+                                <input class="btn btn-primary" name="val" type="submit" value="Valider">
                             </div>
                         </form>
                     </div>

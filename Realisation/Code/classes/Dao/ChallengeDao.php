@@ -106,13 +106,18 @@ class ChallengeDao
     // Partie d'un challenge précis
 
     public function ListParticipants(string $nomChallenge): array{
+
         $participants=array();
         $req=$this->db->prepare('SELECT idChallenge from challenge where nomChallenge = :nomChallenge');
-        $req->bindParam(':nomChall',$nomChallenge);
+        $req->bindParam(':nomChallenge',$nomChallenge);
         $req->execute();
         $row=$req->fetch(PDO::FETCH_ASSOC);
         $idC = $row['idChallenge'];
-        $req=$this->db->prepare('SELECT * from Compte inner join Participer on Compte.idJoueur=Participer.joueur inner join Challenge on Participer.challenge=Challenge.idChallenge where Challenge.idChallenge = '.$idC);
+
+        $req=$this->db->prepare('SELECT * from Compte inner join Participer on Compte.idCompte=Participer.joueur WHERE challenge = :idChal');
+        $req->bindParam(':idChal',$idC);
+        $req->execute();
+        
         while($row=$req->fetch(PDO::FETCH_ASSOC)){
             $j = new Joueur($row['username'],$row['passw'],$row['estAdmin']);
             $participants[]=$j;

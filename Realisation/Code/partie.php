@@ -1,3 +1,30 @@
+<?php
+session_start();
+
+require_once('classes' . DIRECTORY_SEPARATOR . 'Logic'. DIRECTORY_SEPARATOR .'ConnBdd.php');
+require_once('classes' . DIRECTORY_SEPARATOR . 'Logic'. DIRECTORY_SEPARATOR .'Compte.php');
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Joueur.php");
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "ChallengeDao.php");
+
+
+// Set du username
+$compte = new Joueur();
+$compte->setUsername($_SESSION['username']);
+
+// Si un utilisateur veut accéder à la page sans être connecté
+if(!isset($_SESSION['username'])) {
+    header('Location: connexion.php');
+    exit();
+}
+
+// Déconnexion
+if(isset($_POST['deconnexion'])){
+    $compte->seDeconnecter();
+    header('Location: connexion.php');
+    exit();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -21,13 +48,17 @@
             <div class="row my-3 justify-content-between">
                 <img class="col-md-2" src="pictures/logoEcrit.png" alt="Logo Mindmaster" id="navLogo">
 
-                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2">Challenge 1</h1>
+                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= htmlspecialchars($_GET["chal"]) ?></h1>
 
                 <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2 pts-ico">5000</h1>
 
                 <h1 class="col-md-2 bleu text-center align-self-center time-ico">5:32</h1>
 
-                <h2 class="col-md-1 align-self-center"><a href="#" class="nav-link nav-red-border text-center">Quitter</a></h2>
+                <a href="connexion.php" class="col-md-2 text-center align-self-center py-2">
+                    <form action="accueil.php" method="POST">
+                            <button type="submit" class="btn btn-danger" name="deconnexion"><h3> Se déconnecter </h3></button>
+                    </form>
+                </a>
             </div>
 
             <div class="row my-3 justify-content-around">
@@ -131,31 +162,24 @@
                         </div>
 
                         <div class="text-center">
-                            <h4 class="bleu">Adversaire 1</h4>
+                            <?php
+                            $challengeDao = new ChallengeDao();
+                            $participants = $challengeDao->ListParticipants($_GET["chal"]);
 
-                            <div class="row justify-content-around">
-                                <hr class="md-size">
-                            </div>
+                            foreach($participants as $participant){
 
-                            <h4 class="rouge">Adversaire 2</h4>
+                                if($participant->getUsername() != $_SESSION["username"]){
+                                    echo "<h4 class='bleu'>{$participant->getUsername()}</h4>";
 
-                            <div class="row justify-content-around">
-                                <hr class="md-size">
-                            </div>
+                                    echo "<div class='row justify-content-around'>
+                                            <hr class='md-size'>
+                                        </div>";
+                                }
 
-                            <h4 class="rouge">Adversaire 3</h4>
 
-                            <div class="row justify-content-around">
-                                <hr class="md-size">
-                            </div>
+                            }
 
-                            <h4 class="bleu">Adversaire 4</h4>
-
-                            <div class="row justify-content-around">
-                                <hr class="md-size">
-                            </div>
-
-                            <h4 class="rouge pb-2">Adversaire 5</h4>
+                            ?>                   
                         </div>
 
                     </div>
