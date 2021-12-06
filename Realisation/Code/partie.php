@@ -11,19 +11,13 @@ require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "
 $compte = new Joueur();
 $compte->setUsername($_SESSION['username']);
 
+$name ="";
+
 // Si un utilisateur veut accéder à la page sans être connecté
 if(!isset($_SESSION['username'])) {
     header('Location: connexion.php');
     exit();
 }
-
-// Déconnexion
-if(isset($_POST['deconnexion'])){
-    $compte->seDeconnecter();
-    header('Location: connexion.php');
-    exit();
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,102 +48,34 @@ if(isset($_POST['deconnexion'])){
 
                 <h1 class="col-md-2 bleu text-center align-self-center time-ico">5:32</h1>
 
-                <a href="connexion.php" class="col-md-2 text-center align-self-center py-2">
-                    <form action="accueil.php" method="POST">
-                            <button type="submit" class="btn btn-danger" name="deconnexion"><h3> Se déconnecter </h3></button>
-                    </form>
+                <a href="accueil.php" class="col-md-2 text-center align-self-center py-2">
+                        <button class="btn btn-danger" ><h3>Quitter le challenge</h3></button>
                 </a>
             </div>
 
             <div class="row my-3 justify-content-around">
                 <div class="col-md-5 red-border mx-3">
-                    <h2 class="rouge text-center mt-2">Adversaire 2</h2>
 
-                    <hr class="red-hr">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-<?=$name?>" role="tabpanel" aria-labelledby="v-pills-<?=$name?>-tab">
+                        <h2 class="rouge text-center mt-2"><?=$name?></h2>
 
-                    <div class="row justify-content-around mb-4">
-                            <h4 class="col-md-2 bleu blue-dot">2</h4>
-                            <h4 class="col-md-2 rouge red-dot">2</h4>
+                        <hr class="red-hr">
 
-                            <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                            <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                            <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                            <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                            <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                            <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
+                        <div class="row justify-content-around mb-4">
+                                <h4 class="col-md-2 bleu blue-dot">2</h4>
+                                <h4 class="col-md-2 rouge red-dot">2</h4>
+
+                                <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
+                                <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
+                                <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
+                                <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
+                                <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
+                                <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
+                        </div>
                     </div>
+                </div>
 
-                    <div class="row justify-content-around mb-4">
-                        <h4 class="col-md-2 bleu blue-dot">2</h4>
-                        <h4 class="col-md-2 rouge red-dot">2</h4>
-
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                    </div>
-
-                    <div class="row justify-content-around mb-4">
-                        <h4 class="col-md-2 bleu blue-dot">2</h4>
-                        <h4 class="col-md-2 rouge red-dot">2</h4>
-
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                    </div>
-
-                    <div class="row justify-content-around mb-4">
-                        <h4 class="col-md-2 bleu blue-dot">2</h4>
-                        <h4 class="col-md-2 rouge red-dot">2</h4>
-
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                    </div>
-
-                    <div class="row justify-content-around mb-4">
-                        <h4 class="col-md-2 bleu blue-dot">2</h4>
-                        <h4 class="col-md-2 rouge red-dot">2</h4>
-
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                    </div>
-
-                    <div class="row justify-content-around mb-4">
-                        <h4 class="col-md-2 bleu blue-dot">2</h4>
-                        <h4 class="col-md-2 rouge red-dot">2</h4>
-
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                    </div>
-
-                    <div class="row justify-content-around mb-4">
-                        <h4 class="col-md-2 bleu blue-dot">2</h4>
-                        <h4 class="col-md-2 rouge red-dot">2</h4>
-
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                    </div>
 
                 </div>
 
@@ -161,15 +87,25 @@ if(isset($_POST['deconnexion'])){
                             <hr class="red-hr">
                         </div>
 
-                        <div class="text-center">
+                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <?php
                             $challengeDao = new ChallengeDao();
                             $participants = $challengeDao->ListParticipants($_GET["chal"]);
+                            $i = 0;
 
                             foreach($participants as $participant){
 
                                 if($participant->getUsername() != $_SESSION["username"]){
-                                    echo "<h4 class='bleu'>{$participant->getUsername()}</h4>";
+                                    $name = $participant->getUsername();
+
+                                    if($i == 0){
+                                        echo "<button class='nav-link active' id='v-pills-$name-tab' data-bs-toggle='pill' type='button' data-bs-targer='#v-pills-$name' role='tab' aria-controls='v-pills-$name' aria-selected='false'>$name</button>";
+
+                                    }else{
+                                        echo "<button class='bleu nav-link' id='v-pills-$name-tab' data-bs-toggle='pill' data-bs-targer='#v-pills-$name'role='tab' type='button' aria-controls='v-pills-$name' aria-selected='false'>$name</button>";
+                                    }
+                                    $i++;
+
 
                                     echo "<div class='row justify-content-around'>
                                             <hr class='md-size'>
@@ -181,7 +117,6 @@ if(isset($_POST['deconnexion'])){
 
                             ?>                   
                         </div>
-
                     </div>
 
                     <div class="row red-border my-3 px-5 py-3">
@@ -203,7 +138,6 @@ if(isset($_POST['deconnexion'])){
                 </div>
             </div>
 
-
             <div class="footer my-3">                
                 <div class="row justify-content-around text-center">
                     <div class="row justify-content-around">
@@ -214,6 +148,8 @@ if(isset($_POST['deconnexion'])){
                     <a href="#" class="col-md-6 nav-link">Mentions légales</a>
                 </div>
             </div>
-        </div>        
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>  
     </body>
 </html>

@@ -68,13 +68,13 @@ session_start();
                                 <?php if(isset($isMdpGood) && !$isMdpGood){ echo "<div class='alert alert-danger text-center'>Rentrer les mêmes mots de passe</div>"; } ?>
                                 <?php if(isset($inscriptionValidee) && !$inscriptionValidee){ echo "<div class='alert alert-danger text-center'>Utilisateur déjà existant</div>"; } ?>
                                 <label for="Identifiant" class="form-label">Identifiant :</label>
-                                <input type="text" class="form-control blue-border" name="Identifiant" required="required">
+                                <input type="text" class="form-control blue-border" name="Identifiant" placeholder="Identifiant" required="required">
                             
                                 <label for="MdP" class="form-label">Mot de passe :</label>
-                                <input type="password"  class="form-control blue-border" name="MdP" required="required">
+                                <input type="password"  class="form-control blue-border" name="MdP" placeholder="*********" required="required">
                             
                                 <label for="verifMdP" class="form-label">Confirmez mot de passe :</label>
-                                <input type="password"  class="form-control blue-border" name="verifMdP" required="required"><br>
+                                <input type="password"  class="form-control blue-border" name="verifMdP" placeholder="*********" required="required"><br>
                                 
                             </div>
                             <div class="row justify-content-around">

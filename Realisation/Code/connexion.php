@@ -64,7 +64,7 @@ if(isset($_POST['username']) && isset($_POST['password'])){
                                 <label for="username" class="form-label">Identifiant : </label>
                                 <input type="text" name="username" class="form-control blue-border" placeholder="Identifiant" class="form-control blue-border" required="required">
                                 <label for="password" class="form-label">Mot de passe : </label>
-                                <input type="password" name="password" class="form-control blue-border" required="required"><br>
+                                <input type="password" name="password" class="form-control blue-border" placeholder="**********" required="required"><br>
                             </div>
                             <div class="row justify-content-around">
                                 <input type="submit" class="form-control btn btn-primary my-3" id="submitButtonConnexion" value="VALIDER">

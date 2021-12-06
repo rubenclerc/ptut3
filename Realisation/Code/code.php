@@ -15,13 +15,6 @@ if(!isset($_SESSION['username'])) {
     exit();
 }
 
-// Déconnexion
-if(isset($_POST['deconnexion'])){
-    $compte->seDeconnecter();
-    header('Location: connexion.php');
-    exit();
-}
-
 // Joindre la page de partie
 if(isset($_POST["val"])){
     $warning = false;
@@ -64,10 +57,8 @@ if(isset($_POST["val"])){
                 
                 <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= $compte->toString() ?></h1>
 
-                <a href="connexion.php" class="col-md-2 text-center align-self-center py-2">
-                    <form action="accueil.php" method="POST">
-                            <button type="submit" class="btn btn-danger" name="deconnexion"><h3> Se déconnecter </h3></button>
-                    </form>
+                <a href="accueil.php" class="col-md-2 text-center align-self-center py-2">
+                        <button class="btn btn-danger" ><h3>Quitter le challenge</h3></button>
                 </a>
                 
             </div>
