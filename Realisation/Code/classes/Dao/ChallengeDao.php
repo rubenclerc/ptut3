@@ -43,7 +43,7 @@ class ChallengeDao
         $req->bindParam(':nomChall',$nomChallenge);
         $req->execute();
         $row=$req->fetch(PDO::FETCH_ASSOC);
-        $challenge=new Challenge($row['nomChallenge'],$row['difficulte'],$row['dateDebut'],$row['dateFin'],$row['nbParticipants']);
+        $challenge=new Challenge($row['nomChallenge'],$row['difficulte'],new DateTime($row['dateDebut']), new DateTime($row['dateFin']),$row['nbPartcipants']);
         return $challenge;
     }
 

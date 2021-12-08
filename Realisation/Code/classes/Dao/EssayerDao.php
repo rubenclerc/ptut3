@@ -1,8 +1,8 @@
 <?php
-require_once "../Logic/ConnBdd.php";
-require_once "../Logic/Joueur.php";
-require_once "../Logic/Challenge.php";
-require_once "../Logic/Tentative.php";
+require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "ConnBdd.php");
+require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Joueur.php");
+require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Challenge.php");
+require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Tentative.php");
 
 class EssayerDao{
 

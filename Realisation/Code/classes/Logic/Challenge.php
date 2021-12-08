@@ -183,6 +183,14 @@ class Challenge
 
 		return $duree;
     }
+
+    public function getTpsRestant(): DateTime{
+        $int = $this->dateFin->getTimestamp() - time();
+        $duree = new DateTime();
+        $duree->setTimestamp($int);
+
+        return $duree;
+    }
     
     /**
      *getNbJoueur

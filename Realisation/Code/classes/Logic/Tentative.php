@@ -2,10 +2,10 @@
 
 class Tentative
 {  
-    private int $code;
-    private Challenge $challenge;
-    private Joueur $adv;
-    private Joueur $joueur;
+    private $code;
+    private $challenge;
+    private $adv;
+    private $joueur;
     
     /**
      * __construct
@@ -64,11 +64,8 @@ class Tentative
             
     }
     
-    /**
-     * Gagner
-     *
-     * @return bool
-     */
+
+    /* PARTIE COMMENTEE POUR LES TESTS
     public function Gagner(): bool {
         $bool = false;
         $res = new Reponse($this);
@@ -81,21 +78,12 @@ class Tentative
         return $bool;
     }
     
-    /**
-     * getChallenge
-     *
-     * @return Challenge
-     */
     public function getChallenge(): Challenge
     {
         return $this->challenge;
     }
     
-    /**
-     * getAdv
-     *
-     * @return Joueur
-     */
+
     public function getAdv(): Joueur
     {
         return $this->adv;
@@ -129,6 +117,7 @@ class Tentative
         $res = new Reponse($this);
         $st =$res->Comparer($this);
         return $r=substr_count($st,"C");
-    }
+    }*/
+
 }
 ?>

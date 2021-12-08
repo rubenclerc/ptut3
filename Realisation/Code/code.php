@@ -58,7 +58,7 @@ if(isset($_POST["val"])){
                 <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= $compte->toString() ?></h1>
 
                 <a href="accueil.php" class="col-md-2 text-center align-self-center py-2">
-                        <button class="btn btn-danger" ><h3>Quitter le challenge</h3></button>
+                        <button class="btn btn-danger" ><h3>Revenir à l'accueil</h3></button>
                 </a>
                 
             </div>

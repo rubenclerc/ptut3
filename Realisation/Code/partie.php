@@ -5,18 +5,31 @@ require_once('classes' . DIRECTORY_SEPARATOR . 'Logic'. DIRECTORY_SEPARATOR .'Co
 require_once('classes' . DIRECTORY_SEPARATOR . 'Logic'. DIRECTORY_SEPARATOR .'Compte.php');
 require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Joueur.php");
 require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "ChallengeDao.php");
-
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "EssayerDao.php");
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "CompteDao.php");
 
 // Set du username
+$compteDao = new CompteDao();
 $compte = new Joueur();
 $compte->setUsername($_SESSION['username']);
 
-$name ="";
+// Challenge courant
+$challengeDao = new ChallengeDao();
+$curChallenge = $challengeDao->Read(htmlentities($_GET['chal']));
 
 // Si un utilisateur veut accéder à la page sans être connecté
 if(!isset($_SESSION['username'])) {
     header('Location: connexion.php');
     exit();
+}
+
+// Tentative
+if(isset($_POST["code"])){
+    $adv = $compteDao->DirtyRead(htmlentities($_GET['adv']));
+    $code = htmlentities($_POST["n0"]) . htmlentities($_POST["n1"]) . htmlentities($_POST["n2"]) . htmlentities($_POST["n3"]) . htmlentities($_POST["n4"]) . htmlentities($_POST["n5"]);
+
+    $essai = new EssayerDao();
+    $essai->Create($compte, $adv, intval($code), $curChallenge);
 }
 ?>
 <!DOCTYPE html>
@@ -42,42 +55,40 @@ if(!isset($_SESSION['username'])) {
             <div class="row my-3 justify-content-between">
                 <img class="col-md-2" src="pictures/logoEcrit.png" alt="Logo Mindmaster" id="navLogo">
 
-                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= htmlspecialchars($_GET["chal"]) ?></h1>
+                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= $curChallenge->ToString() ?></h1>
 
-                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2 pts-ico">5000</h1>
+                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2 pts-ico"><?= $compte->getNbPoints() ?></h1>
 
-                <h1 class="col-md-2 bleu text-center align-self-center time-ico">5:32</h1>
+                <h1 class="col-md-2 bleu text-center align-self-center time-ico"><?= $curChallenge->getTpsRestant()->format('d') . "j, " . $curChallenge->getTpsRestant()->format('H') . "h" . $curChallenge->getTpsRestant()->format('i') ?></h1>
 
                 <a href="accueil.php" class="col-md-2 text-center align-self-center py-2">
-                        <button class="btn btn-danger" ><h3>Quitter le challenge</h3></button>
+                        <button class="btn btn-danger" ><h3>Revenir à l'accueil</h3></button>
                 </a>
             </div>
 
             <div class="row my-3 justify-content-around">
+
+            <?php if(isset($_GET['adv'])){ ?>                
                 <div class="col-md-5 red-border mx-3">
+                    <div class="tab-content" id="v-pills-tabContent">
+                            <h2 class="rouge text-center mt-2"><?= htmlentities($_GET['adv']) ?></h2>
 
-                <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade show active" id="v-pills-<?=$name?>" role="tabpanel" aria-labelledby="v-pills-<?=$name?>-tab">
-                        <h2 class="rouge text-center mt-2"><?=$name?></h2>
+                            <hr class="red-hr">
 
-                        <hr class="red-hr">
+                            <div class="row justify-content-around mb-4">
+                                    <h4 class="col-md-2 bleu blue-dot">2</h4>
+                                    <h4 class="col-md-2 rouge red-dot">2</h4>
 
-                        <div class="row justify-content-around mb-4">
-                                <h4 class="col-md-2 bleu blue-dot">2</h4>
-                                <h4 class="col-md-2 rouge red-dot">2</h4>
-
-                                <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                                <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                                <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                                <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                                <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                                <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                        </div>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
+                            </div>
                     </div>
                 </div>
-
-
-                </div>
+            <?php } ?>
 
                 <div class="col-md-5 mx-3 adv">
                     <div class="row red-border">
@@ -89,7 +100,6 @@ if(!isset($_SESSION['username'])) {
 
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <?php
-                            $challengeDao = new ChallengeDao();
                             $participants = $challengeDao->ListParticipants($_GET["chal"]);
                             $i = 0;
 
@@ -97,12 +107,13 @@ if(!isset($_SESSION['username'])) {
 
                                 if($participant->getUsername() != $_SESSION["username"]){
                                     $name = $participant->getUsername();
+                                    $url = "partie.php?chal=". htmlentities($_GET["chal"]) ."&adv=". htmlentities($name);
 
                                     if($i == 0){
-                                        echo "<button class='nav-link active' id='v-pills-$name-tab' data-bs-toggle='pill' type='button' data-bs-targer='#v-pills-$name' role='tab' aria-controls='v-pills-$name' aria-selected='false'>$name</button>";
+                                        echo "<a href='$url' class='nav-link text-center'>$name</a>";
 
                                     }else{
-                                        echo "<button class='bleu nav-link' id='v-pills-$name-tab' data-bs-toggle='pill' data-bs-targer='#v-pills-$name'role='tab' type='button' aria-controls='v-pills-$name' aria-selected='false'>$name</button>";
+                                        echo "<a href='$url' class='bleu nav-link text-center'>$name</a>";
                                     }
                                     $i++;
 
@@ -120,18 +131,18 @@ if(!isset($_SESSION['username'])) {
                     </div>
 
                     <div class="row red-border my-3 px-5 py-3">
-                        <form action="">
+                        <form action="partie.php" method="POST">
                             <div class="row justify-content-around form-group">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="" id="">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="" id="">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="" id="">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="" id="">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="" id="">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="" id="">
+                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n0" required>
+                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n1" required>
+                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n2" required>
+                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n3" required>
+                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n4" required>
+                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n5" required>
                             </div>
 
                             <div class="row justify-content-center px-5 pt-3">
-                                <input class="btn btn-primary" type="submit" value="Valider">
+                                <input class="btn btn-primary" type="submit" value="Valider" name="code">
                             </div>
                         </form>
                     </div>

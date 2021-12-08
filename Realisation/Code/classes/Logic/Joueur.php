@@ -19,8 +19,9 @@ class Joueur extends Compte{
     private $tentatives = [];
 
 
-    public function __construct(string $username="", string $password="", bool $estAdmin=false){
+    public function __construct(string $username="", string $password="", bool $estAdmin=false, int $nbPoints = 0){
         parent::__construct($username, $password,$estAdmin);
+        $this->nbPoints = $nbPoints;
     }
     /**
      * Participer
@@ -69,6 +70,10 @@ class Joueur extends Compte{
 
     public function peutParticiper(Challenge $challenge):bool{
        return false;
+    }
+
+    public function getNbPoints():int{
+        return $this->nbPoints;
     }
 }
 ?>
