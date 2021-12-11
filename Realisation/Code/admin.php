@@ -21,9 +21,9 @@
             <div class="row my-3 justify-content-between">
                 <img class="col-md-2" src="pictures/logoEcrit.png" alt="Logo Mindmaster" id="navLogo">
 
-                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2">Tutoriel</h1>
+                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2">Ajouter</h1>
                 
-                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2">Identifiant</h1>
+                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= $compte->getUsername() ?></h1>
 
                 <a href="#" class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><h1 >Deconnexion</h1></a>
             </div>
