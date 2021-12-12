@@ -6,7 +6,7 @@
 class Reponse
 { 
     /**
-     * @var Reponse
+     * @var string
      */
     private $rep;
 
@@ -32,17 +32,21 @@ class Reponse
      * c = bon
      * @return Reponse
      */
-    public function Comparer(Tentative $t): string {
-        $var = $t->getCode();
+    public function Comparer(): void {
+
+        $var = $this->tentative->getCode();
         $var2 =$this->codeChallenge;
-        $ni = log10($this->code)+1;
+        $ni = intval(log10($this->code)) +1;
         $gemalin = "";
+
         for ($i=0;$i<$ni;$i++){
         $gemalin.="A";
         }
+
         $r ="";
 
-        $cpt = count(array_map('intval', str_split($var2)));
+        $cpt =intval(log10($var2)) + 1;
+
         for($x=0;$x<$cpt;$x++){
             for($y=0;$y<$cpt;$y++){
                 if($var2[$x]==$var[$y]){
@@ -50,6 +54,7 @@ class Reponse
                 }
             }
         }
+
         for ( $i = 0; $i <=$cpt; $i++) {
             if ($var2[$i]==$var[$i]){
 
@@ -58,8 +63,23 @@ class Reponse
             }  
             
         }
+
         $this->rep = $gemalin;
+    }
+
+    public function getRep(){
         return $this->rep;
+    }
+
+
+    public function getB(): int
+    {
+        return substr_count($this->rep,"B");
+    }
+
+    public function getC(): int
+    {
+        return substr_count($this->rep,"C");
     }
 }
 ?>

@@ -60,21 +60,20 @@ class CompteDao{
         $compte = null;
         $row = null;
 
-        if(isset($login)){
-            try{
-                $req=$this->db->prepare('SELECT * FROM COMPTE WHERE username=:username');
-                $req->bindParam(':username',$username);
-                $req->execute();
+        try{
+            $req=$this->db->prepare('SELECT * FROM COMPTE WHERE username=:username');
+            $req->bindParam(':username',$username);
+            $req->execute();
 
-                $row=$req->fetch(PDO::FETCH_ASSOC);
-            }
-            catch(Exception $ex){
-                echo $ex->__toString();
-            }
-
-            $compte = new Compte($row["username"], $row["passw"], $row["estAdmin"]);
-
+            $row=$req->fetch(PDO::FETCH_ASSOC);
         }
+        catch(Exception $ex){
+            echo $ex->__toString();
+        }
+
+        $compte = new Compte($row["username"], $row["passw"], $row["estAdmin"]);
+
+
 
         return $compte;
     }

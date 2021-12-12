@@ -17,7 +17,8 @@ create table Compte(
 );
 
 create table Tentative(
-	idTentative int primary key not null AUTO_INCREMENT
+	idTentative int primary key not null AUTO_INCREMENT,
+	tmp VARCHAR(2)
 );
 
 

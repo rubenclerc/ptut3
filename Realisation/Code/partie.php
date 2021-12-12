@@ -5,8 +5,9 @@ require_once('classes' . DIRECTORY_SEPARATOR . 'Logic'. DIRECTORY_SEPARATOR .'Co
 require_once('classes' . DIRECTORY_SEPARATOR . 'Logic'. DIRECTORY_SEPARATOR .'Compte.php');
 require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Joueur.php");
 require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "ChallengeDao.php");
-require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "EssayerDao.php");
 require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "CompteDao.php");
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Tentative.php");
+
 
 // Set du username
 $compteDao = new CompteDao();
@@ -26,10 +27,9 @@ if(!isset($_SESSION['username'])) {
 // Tentative
 if(isset($_POST["code"])){
     $adv = $compteDao->DirtyRead(htmlentities($_GET['adv']));
-    $code = htmlentities($_POST["n0"]) . htmlentities($_POST["n1"]) . htmlentities($_POST["n2"]) . htmlentities($_POST["n3"]) . htmlentities($_POST["n4"]) . htmlentities($_POST["n5"]);
+    $code = intval(htmlentities($_POST["n0"]) . htmlentities($_POST["n1"]) . htmlentities($_POST["n2"]) . htmlentities($_POST["n3"]) . htmlentities($_POST["n4"]) . htmlentities($_POST["n5"]));
 
-    $essai = new EssayerDao();
-    $essai->Create($compte, $adv, intval($code), $curChallenge);
+    $essai = new Tentative($code, $compte, $adv, $curChallenge);
 }
 ?>
 <!DOCTYPE html>
@@ -131,7 +131,7 @@ if(isset($_POST["code"])){
                     </div>
 
                     <div class="row red-border my-3 px-5 py-3">
-                        <form action="partie.php" method="POST">
+                        <form action="<?=  "partie.php?chal=". htmlentities($_GET["chal"]) ."&adv=". htmlentities($name) ?>" method="POST">
                             <div class="row justify-content-around form-group">
                                 <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n0" required>
                                 <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n1" required>
