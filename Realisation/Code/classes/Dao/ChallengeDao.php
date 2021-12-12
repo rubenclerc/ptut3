@@ -2,6 +2,8 @@
 require_once (dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "ConnBdd.php");
 require_once (dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Challenge.php");
 require_once (dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Admin.php");
+require_once (dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Rsa.php");
+
 
 class ChallengeDao
 {
@@ -126,22 +128,23 @@ class ChallengeDao
     }
 
     public function UpdateParticipants(string $nomChallenge, string $username, int $code){
+
         //On récupère l'ID du challenge
         $req=$this->db->prepare('SELECT idChallenge from challenge where nomChallenge = :nomChallenge');
-        $req->bindParam(':nomChall',$nomChallenge);
+        $req->bindParam(':nomChallenge',$nomChallenge);
         $req->execute();
         $row=$req->fetch(PDO::FETCH_ASSOC);
         $idC = $row['idChallenge'];
 
         //On récupère l'ID du joueur
-        $req=$this->db->prepare('SELECT idCompte from compte where usernmae = :username');
+        $req=$this->db->prepare('SELECT idCompte from compte where username = :username');
         $req->bindParam(':username',$username);
         $req->execute();
         $row=$req->fetch(PDO::FETCH_ASSOC);
         $idCo = $row['idCompte'];
 
         //On insert le joueur, le challenge et le code dans la table
-        $req=$this->db->prepare('INSERT into Participer (challenge,joueur,codeJoueur) values(:challenge,:joueur,:code)');
+        $req=$this->db->prepare('INSERT into participer (codeJoueur, nbPoints, challenge, joueur) values(:code, 0, :challenge, :joueur)');
         $req->bindParam(':challenge',$idC);
         $req->bindParam(':joueur',$idCo);
         $req->bindParam(':code',$code);
@@ -171,6 +174,24 @@ class ChallengeDao
         $row = $req->fetch(PDO::FETCH_ASSOC);
 
         return $row['COUNT(*)'];
+    }
+
+    public function isIn(string $user, string $nomChallenge):bool{
+        $res = false;
+
+        $req = $this->db->prepare('SELECT * FROM Participer WHERE joueur = (SELECT idCompte FROM compte WHERE username = :user) AND challenge = (SELECT idChallenge FROM challenge WHERE nomChallenge = :nomChallenge)');
+        $req->bindParam(':user',$user);
+        $req->bindParam(':nomChallenge',$nomChallenge);
+        $req->execute();
+
+        $nbLines = $req->rowCount();
+
+        if($nbLines >= 1){
+            $res = true;
+        }
+
+
+        return $res;
     }
 
 }

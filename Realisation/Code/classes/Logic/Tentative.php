@@ -65,7 +65,6 @@ class Tentative
     }
     
 
-    /* PARTIE COMMENTEE POUR LES TESTS
     public function Gagner(): bool {
         $bool = false;
         $res = new Reponse($this);
@@ -117,7 +116,7 @@ class Tentative
         $res = new Reponse($this);
         $st =$res->Comparer($this);
         return $r=substr_count($st,"C");
-    }*/
+    }
 
 }
 ?>

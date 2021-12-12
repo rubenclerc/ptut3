@@ -4,14 +4,26 @@ session_start();
 require_once 'classes/Logic/ConnBdd.php';
 require_once 'classes/Logic/Compte.php';
 require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Joueur.php");
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "ChallengeDao.php");
 
-// Set du username
+
+// Init
 $compte = new Joueur();
 $compte->setUsername($_SESSION['username']);
+
+$challengeDao = new ChallengeDao();
+$challenge = $challengeDao->Read($_GET['chal']);
 
 // Si un utilisateur veut accéder à la page sans être connecté
 if(!isset($_SESSION['username'])) {
     header('Location: connexion.php');
+    exit();
+}
+
+// Teste si le joueur a déjà participé à ce challenge
+if($challengeDao->isIn($compte->getUsername(), $challenge->ToString())){
+    $url = "partie.php?chal=" . $_GET["chal"];
+    Header("Location: $url");
     exit();
 }
 
@@ -20,8 +32,14 @@ if(isset($_POST["val"])){
     $warning = false;
 
     if(!empty($_POST["n0"] && $_POST["n1"] && $_POST["n2"] && $_POST["n3"] && $_POST["n4"] && $_POST["n5"])){
+
+        $code = intval(htmlentities($_POST["n0"] . $_POST["n1"] . $_POST["n2"] . $_POST["n3"] . $_POST["n4"] . $_POST["n5"]));
+        $challengeDao->UpdateParticipants($challenge->ToString(), $compte->getUsername(), $code);
+        echo $code;
+        
         $url = "partie.php?chal=" . $_GET["chal"];
         Header("Location: $url");
+        exit();
     }else{
         $warning = true;
     }
