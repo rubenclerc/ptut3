@@ -194,4 +194,19 @@ class ChallengeDao
         return $res;
     }
 
+    public function getCodes(string $nomChallenge, string $login): array{
+        $codes = array();
+
+        $req = $this->db->prepare('SELECT codeEssaye FROM PARTICIPER WHERE challenge = (SELECT idChallenge FROM challenge WHERE nomChallenge = :nomChallenge) AND joueurAttaque = (SELECT idCompte FROM compte WHERE username = :login)');
+        $req->bindParam(':nomChallenge',$nomChallenge);
+        $req->bindParam(':login',$login);
+        $req->execute();
+
+        while($row = $req->fetch(PDO::FETCH_ASSOC)){
+            $codes[] = $row['codeEssaye'];
+        }
+
+        return $codes;
+    }
+
 }

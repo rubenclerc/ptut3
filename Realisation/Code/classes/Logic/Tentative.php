@@ -22,9 +22,6 @@ class Tentative
         $this->challenge = $c;
         $this->adv = $adv;
         $this->joueur = $joueur;
-
-        $essayerDao = new EssayerDao();
-        $essayerDao->Create($joueur, $adv, $code, $c);
             
     }
     
@@ -48,7 +45,7 @@ class Tentative
     }
     
 
-    public function getAdv(): Joueur
+    public function getAdv(): Compte
     {
         return $this->adv;
     }
@@ -57,9 +54,11 @@ class Tentative
     {
         return $this->code;
     }
+    
     public function Tenter(): Reponse {
         $res = new Reponse($this);
-        return $res->Comparer($this);
+        $res->Comparer($this);
+        return $res->get();
     }
 
 }

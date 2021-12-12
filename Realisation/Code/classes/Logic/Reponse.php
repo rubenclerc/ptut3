@@ -16,27 +16,27 @@ class Reponse
     private $tentative;
 
     /**
-     * @var int
+     * @var array
      */
     private $codeChallenge;
 
     public function __construct(Tentative $t)
     {
         $this->tentative = $t;
-        $t->getChallenge()->getCode($t->getAdv());
+        $this->codeChallenge = $t->getChallenge()->getCode($t->getAdv());
     }
 
     /**
      * Comparer
      * B = mal placé
      * c = bon
-     * @return Reponse
+     * @return void
      */
     public function Comparer(): void {
 
         $var = $this->tentative->getCode();
-        $var2 =$this->codeChallenge;
-        $ni = intval(log10($this->code)) +1;
+        $var2 =$this->tentative->getChallenge()->getLastCode($this->tentative->getAdv());
+        $ni = intval(log10($var)) +1;
         $gemalin = "";
 
         for ($i=0;$i<$ni;$i++){
@@ -80,6 +80,10 @@ class Reponse
     public function getC(): int
     {
         return substr_count($this->rep,"C");
+    }
+
+    public function get(): Reponse{
+        return $this;
     }
 }
 ?>

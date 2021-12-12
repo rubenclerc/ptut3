@@ -221,10 +221,19 @@ class Challenge
      * getCode
      *
      * @param  Joueur $j
-     * @return int
+     * @return array
      */
-    public function getCode(Joueur $j): int{
-        return $this->codes[$j->toString()];
+    public function getCode(Compte $j): array{
+        $challengeDao = new ChallengeDao();
+
+        return $challengeDao->getCodes($this->nomChallenge, $j->getUsername());
+    }
+
+    public function getLastCode(Compte $j): int{
+        $code = $this->getCode($j);
+        $last = end($code);
+
+        return $last;
     }
 
     /**

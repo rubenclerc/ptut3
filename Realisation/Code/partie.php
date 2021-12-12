@@ -7,6 +7,8 @@ require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR .
 require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "ChallengeDao.php");
 require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "CompteDao.php");
 require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Tentative.php");
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "EssayerDao.php");
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Reponse.php");
 
 
 // Set du username
@@ -26,10 +28,11 @@ if(!isset($_SESSION['username'])) {
 
 // Tentative
 if(isset($_POST["code"])){
-    $adv = $compteDao->DirtyRead(htmlentities($_GET['adv']));
+    $adv = $compteDao->DirtyRead($_GET['adv']);
     $code = intval(htmlentities($_POST["n0"]) . htmlentities($_POST["n1"]) . htmlentities($_POST["n2"]) . htmlentities($_POST["n3"]) . htmlentities($_POST["n4"]) . htmlentities($_POST["n5"]));
 
-    $essai = new Tentative($code, $compte, $adv, $curChallenge);
+    $essaiDao = new EssayerDao();
+    $essai = $essaiDao->Create($compte, $adv, $code, $curChallenge);
 }
 ?>
 <!DOCTYPE html>
@@ -68,7 +71,20 @@ if(isset($_POST["code"])){
 
             <div class="row my-3 justify-content-around">
 
-            <?php if(isset($_GET['adv'])){ ?>                
+            <?php if(isset($_GET['adv'])){ ?> 
+                <?php
+                $essayerDao = new EssayerDao();
+                $adve = $compteDao->DirtyRead($_GET['adv']);
+
+                $tentatives = $essayerDao->ListAll($compte, $adve, $curChallenge);
+
+                foreach($tentatives as $tentative){
+                    $reponse = $tentative->Tenter();
+                    $strRep = $reponse->getRep();
+                    echo $strRep;
+                }
+                    
+                    ?>              
                 <div class="col-md-5 red-border mx-3">
                     <div class="tab-content" id="v-pills-tabContent">
                             <h2 class="rouge text-center mt-2"><?= htmlentities($_GET['adv']) ?></h2>
