@@ -77,31 +77,30 @@ if(isset($_POST["code"])){
                 $adve = $compteDao->DirtyRead($_GET['adv']);
 
                 $tentatives = $essayerDao->ListAll($compte, $adve, $curChallenge);
-
-                foreach($tentatives as $tentative){
-                    $reponse = $tentative->Tenter();
-                    $strRep = $reponse->getRep();
-                    echo $strRep;
-                }
-                    
-                    ?>              
+                ?>
                 <div class="col-md-5 red-border mx-3">
                     <div class="tab-content" id="v-pills-tabContent">
                             <h2 class="rouge text-center mt-2"><?= htmlentities($_GET['adv']) ?></h2>
 
                             <hr class="red-hr">
 
+                <?php
+                foreach($tentatives as $tentative){
+                    $reponse = $tentative->Tenter();
+                    $strRep = $reponse->getRep();
+                ?>               
                             <div class="row justify-content-around mb-4">
-                                    <h4 class="col-md-2 bleu blue-dot">2</h4>
-                                    <h4 class="col-md-2 rouge red-dot">2</h4>
+                                    <h4 class="col-md-2 bleu blue-dot"><?= substr_count($strRep, "C")?></h4>
+                                    <h4 class="col-md-2 rouge red-dot"><?= substr_count($strRep, "B") ?></h4>
 
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center">A</h4>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $strRep[0] ?></h4>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $strRep[1] ?></h4>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $strRep[2] ?></h4>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $strRep[3] ?></h4>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $strRep[4] ?></h4>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $strRep[5] ?></h4>
                             </div>
+                <?php } ?>
                     </div>
                 </div>
             <?php } ?>
@@ -147,7 +146,7 @@ if(isset($_POST["code"])){
                     </div>
 
                     <div class="row red-border my-3 px-5 py-3">
-                        <form action="<?=  "partie.php?chal=". htmlentities($_GET["chal"]) ."&adv=". htmlentities($name) ?>" method="POST">
+                        <form action="<?=  "partie.php?chal=". htmlentities($_GET["chal"]) ."&adv=". htmlentities($_GET['adv']) ?>" method="POST">
                             <div class="row justify-content-around form-group">
                                 <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n0" required>
                                 <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n1" required>
