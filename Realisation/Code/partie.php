@@ -84,22 +84,25 @@ if(isset($_POST["code"])){
 
                             <hr class="red-hr">
 
+                            
                 <?php
                 foreach($tentatives as $tentative){
                     $reponse = $tentative->Tenter();
                     $strRep = $reponse->getRep();
+                    $code = str_split($tentative->getCode(), 1);
                 ?>               
                             <div class="row justify-content-around mb-4">
-                                    <h4 class="col-md-2 bleu blue-dot"><?= substr_count($strRep, "C")?></h4>
-                                    <h4 class="col-md-2 rouge red-dot"><?= substr_count($strRep, "B") ?></h4>
+                                    <h4 class="col-md-2 bleu blue-dot"><?= substr_count($strRep, "B")?></h4>
+                                    <h4 class="col-md-2 rouge red-dot"><?= substr_count($strRep, "C") ?></h4>
 
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $strRep[0] ?></h4>
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $strRep[1] ?></h4>
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $strRep[2] ?></h4>
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $strRep[3] ?></h4>
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $strRep[4] ?></h4>
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $strRep[5] ?></h4>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?=  $code[0] ?></h4>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[1] ?></h4>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[2] ?></h4>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[3] ?></h4>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[4] ?></h4>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[5] ?></h4>
                             </div>
+                <?php if(substr_count($strRep, "C") == 6) {$gagne = true;}?>
                 <?php } ?>
                     </div>
                 </div>
@@ -116,7 +119,6 @@ if(isset($_POST["code"])){
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <?php
                             $participants = $challengeDao->ListParticipants($_GET["chal"]);
-                            $i = 0;
 
                             foreach($participants as $participant){
 
@@ -124,13 +126,8 @@ if(isset($_POST["code"])){
                                     $name = $participant->getUsername();
                                     $url = "partie.php?chal=". htmlentities($_GET["chal"]) ."&adv=". htmlentities($name);
 
-                                    if($i == 0){
-                                        echo "<a href='$url' class='nav-link text-center'>$name</a>";
+                                    echo "<a href='$url' class='nav-link text-center'>$name</a>";
 
-                                    }else{
-                                        echo "<a href='$url' class='bleu nav-link text-center'>$name</a>";
-                                    }
-                                    $i++;
 
 
                                     echo "<div class='row justify-content-around'>
@@ -148,12 +145,12 @@ if(isset($_POST["code"])){
                     <div class="row red-border my-3 px-5 py-3">
                         <form action="<?=  "partie.php?chal=". htmlentities($_GET["chal"]) ."&adv=". htmlentities($_GET['adv']) ?>" method="POST">
                             <div class="row justify-content-around form-group">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n0" required>
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n1" required>
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n2" required>
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n3" required>
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n4" required>
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n5" required>
+                                <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n0" required>
+                                <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n1" required>
+                                <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n2" required>
+                                <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n3" required>
+                                <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n4" required>
+                                <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n5" required>
                             </div>
 
                             <div class="row justify-content-center px-5 pt-3">

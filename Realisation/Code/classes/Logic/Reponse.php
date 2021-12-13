@@ -28,58 +28,43 @@ class Reponse
 
     /**
      * Comparer
-     * B = mal placé
-     * c = bon
+     * A = chiffre qui a rien a voir avec le code
+     * B = bon chiffre mais mal placé
+     * c = bon chiffre bien placé
      * @return void
      */
     public function Comparer(): void {
 
-        $var = $this->tentative->getCode();
-        $var2 =$this->tentative->getChallenge()->getLastCode($this->tentative->getAdv());
-        $ni = intval(log10($var)) +1;
+        $var = strval($this->tentative->getCode());
+        $var2 = strval($this->tentative->getChallenge()->getCode($this->tentative->getAdv()));
         $gemalin = "";
+        $cpt =intval(log10($var2)) + 1;
 
-        for ($i=0;$i<$ni;$i++){
-        $gemalin.="A";
+
+        for ($i=0;$i<$cpt;$i++){
+            $gemalin.="A";
         }
 
-        $r ="";
-
-        $cpt =intval(log10($var2)) + 1;
 
         for($x=0;$x<$cpt;$x++){
             for($y=0;$y<$cpt;$y++){
-                if($var2[$x]==$var[$y]){
+                if(strcmp($var[$x],$var2[$y]) == 0){
                     $gemalin[$x]="B";
                 }
             }
         }
 
-        for ( $i = 0; $i <=$cpt; $i++) {
+        for ($i = 0; $i <=$cpt-1; $i++) {
             if ($var2[$i]==$var[$i]){
-
                 //comparer le i caractere 
                 $gemalin[$i]="C";
-            }  
-            
+            }
         }
-
         $this->rep = $gemalin;
     }
 
     public function getRep(){
         return $this->rep;
-    }
-
-
-    public function getB(): int
-    {
-        return substr_count($this->rep,"B");
-    }
-
-    public function getC(): int
-    {
-        return substr_count($this->rep,"C");
     }
 
     public function get(): Reponse{
