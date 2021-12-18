@@ -48,31 +48,6 @@ Class Admin extends Compte{
             'nomChallenge' => $nom
         ));
     }
-    /**
-     * 
-     */
-    public function modifierChallenge(Challenge $c, string $nomChallenge, int $difficulte, DateTime $dateDebut, DateTime $dateFin, int $nbPlaces){
-        $bdd=Connexion();
-        $nom=htmlentities($nomChallenge);
-        $diff=htmlentities($difficulte);
-        $nb=htmlentities($nbPlaces);
-        $req = $bdd->prepare('UPDATE CHALLENGE nomChallenge= :nomChallenge, difficulte= :difficulte, dateDebut= :dateDebut, dateFin= :dateFin, nbParticipants= :nbParticipants WHERE nomChallenge = :oldName');
-
-        $req->execute(array(
-            'nomChallenge' => $nom,
-            'difficulte' => $diff,
-            'dateDebut' => $dateDebut,
-            'dateFin' => $dateFin,
-            'nbParticipants' => $nb,
-            'oldName' => $c->ToString()
-        ));
-
-        $c->setNomChallenge($nom);
-        $c->setDifficulte($diff);
-        $c->setDateDebut($dateDebut);
-        $c->setDateFin($dateFin);
-        $c->setNbPlaces($nb);
-    }
 
 }
 ?>
