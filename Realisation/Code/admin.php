@@ -74,114 +74,32 @@ if(isset($_POST['deconnexion'])){
                           </tr>
                         </thead>
                         <tbody >
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge1</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td class="rouge croix">X</td>
-                          </tr>
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge2</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td class="rouge croix">X</td>
-                          </tr>
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge3</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td class="rouge croix">X</td>
-                          </tr>
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge4</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td class="rouge croix">X</td>
-                          </tr>
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge5</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td class="rouge croix">X</td>
-                          </tr>
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge6</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td class="rouge croix">X</td>
-                          </tr>
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge7</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td class="rouge croix">X</td>
-                          </tr>
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge8</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td class="rouge croix">X</td>
-                          </tr>
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge9</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td class="rouge croix">X</td>
-                          </tr>
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge10</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td class="rouge croix">X</td>
-                          </tr> 
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge11</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td class="rouge croix">X</td>
-                          </tr> 
-                          <tr class="bleu text-center align-self-center">
-                            <td scope="row">Challenge12</td>
-                            <td>Facile</td>
-                            <td>18 sur 20</td>
-                            <td>07 / 11</td>
-                            <td>18:00</td>
-                            <td>2 jours</td>
-                            <td class="rouge croix">X</td>
-                          </tr>                   
+                        <?php
+                            $challengeDao = new ChallengeDao();
+                            $challenges = $challengeDao->ListAll();
+
+                            foreach($challenges as $challenge)
+                            {
+                                $nbParti = $challengeDao->CountParticipants($challenge->ToString());
+
+                                if($nbParti == null)
+                                {
+                                    $nbParti = 0;
+                                }
+
+                                echo '<tr class="text-center align-self-center">';
+                                echo '<td>'. $challenge->ToString() .'</td>';
+                                echo '<td>'. $challenge->getDifficulte() .'</td>';
+                                echo '<td>'. $nbParti ."/" . $challenge->getNbPlaces() .'</td>';
+                                echo '<td>'. $challenge->getDateDebut()->format('D d M') .'</td>';
+                                echo '<td>'. $challenge->getDateDebut()->format('H') . "h". $challenge->getDateDebut()->format('m') . '</td>';
+                                echo '<td>'. $challenge->getDuree()->format('d') . "j, " . $challenge->getDuree()->format('h'). "H" .'</td>';
+                                echo '<td>'. $challengeDao->Delete($challenge).'
+                                           <a href="admin.php" class="btn btn-primary">X </a>
+                                     </td>';
+                                echo '</tr>';
+                            }
+                          ?>   
                         </tbody>
                       </table>
                     </div>
