@@ -82,7 +82,7 @@ class ChallengeDao
         $idC=$row['idChallenge'];
         $date=$row['dateDebut'];
         if($dateDebut<$date){
-            $req = $this->db->prepare('delete challenge  where idChallenge = '. $idC);
+            $req = $this->db->prepare('delete from challenge  where idChallenge = '. $idC);
             $req->bindParam(':nomChall',$nomChallenge);
             $req->bindParam(':dateDebut', $dateDebut);	
             $req->bindParam(':dateFin', $dateFin);

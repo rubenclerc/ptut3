@@ -21,6 +21,7 @@ if(isset($_POST['deconnexion'])){
     header('Location: connexion.php');
     exit();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,11 +95,14 @@ if(isset($_POST['deconnexion'])){
                                 echo '<td>'. $challenge->getDateDebut()->format('D d M') .'</td>';
                                 echo '<td>'. $challenge->getDateDebut()->format('H') . "h". $challenge->getDateDebut()->format('m') . '</td>';
                                 echo '<td>'. $challenge->getDuree()->format('d') . "j, " . $challenge->getDuree()->format('h'). "H" .'</td>';
-                                echo '<td>'. $challengeDao->Delete($challenge).'
-                                           <a href="admin.php" class="btn btn-primary">X </a>
+                                echo '<td>
+                                          <a href="admin.php?chal='. $challenge->ToString() . '" class="btn btn-primary">X </a>
                                      </td>';
                                 echo '</tr>';
                             }
+                            /*if(isset($_GET['chal'])) {
+                              $challengeDao->Delete($challengeDao->Read($_GET['chal']));
+                              }*/
                           ?>   
                         </tbody>
                       </table>
