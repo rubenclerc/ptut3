@@ -1,3 +1,27 @@
+<?php
+session_start();
+
+require_once ("classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "ConnBdd.php");
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Admin.php");
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "ChallengeDao.php");
+
+// Si un utilisateur veut accéder à la page sans être connecté
+if(!isset($_SESSION['username'])) {
+  header('Location: connexion.php');
+  exit();
+}
+
+// Set du username
+$compte = new Joueur();
+$compte->setUsername($_SESSION['username']);
+
+// Déconnexion
+if(isset($_POST['deconnexion'])){
+    $compte->seDeconnecter();
+    header('Location: connexion.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -21,12 +45,16 @@
             <div class="row my-3 justify-content-between">
                 <img class="col-md-2" src="pictures/logoEcrit.png" alt="Logo Mindmaster" id="navLogo">
 
-                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2">Tutoriel</h1>
+                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2">Ajouter</h1>
                 
-                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2">Identifiant</h1>
+                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= $compte->getUsername() ?></h1>
 
-                <a href="#" class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><h1 >Deconnexion</h1></a>
-            </div>
+                <a href="connexion.php" class="col-md-2 text-center align-self-center py-2">
+                    <form action="accueil.php" method="POST">
+                            <button type="submit" class="btn btn-danger" name="deconnexion"><h3> Se déconnecter </h3></button>
+                    </form>
+                </a>
+          </div>
 
 
 
