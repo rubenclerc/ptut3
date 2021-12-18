@@ -25,7 +25,11 @@ class Tentative
             
     }
     
-
+    /**
+     * Gagner
+     * 
+     * @return bool vrai si la tentative correspond au code adverse
+     */
     public function Gagner(): bool {
         $bool = false;
         $res = new Reponse($this);
@@ -39,22 +43,33 @@ class Tentative
         return $bool;
     }
     
+    /**
+     * retourne un challenge
+     */
     public function getChallenge(): Challenge
     {
         return $this->challenge;
     }
     
-
+    /**
+     * retourne l'aversaire ciblé
+     */
     public function getAdv(): Compte
     {
         return $this->adv;
     }
 
+    /**
+     * retourne le code 
+     */
     public function getCode(): int
     {
         return $this->code;
     }
     
+    /**
+     * retourne la réponse sous la forme de correspondance avec le code adverse
+     */
     public function Tenter(): Reponse {
         $res = new Reponse($this);
         $res->Comparer($this);

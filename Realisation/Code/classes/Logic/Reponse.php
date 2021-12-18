@@ -28,6 +28,8 @@ class Reponse
 
     /**
      * Comparer
+     * Compare et donne les correspondances entre un code et une tentative
+     * 
      * A = chiffre qui a rien a voir avec le code
      * B = bon chiffre mais mal placé
      * c = bon chiffre bien placé
