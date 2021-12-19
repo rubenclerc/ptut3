@@ -20,14 +20,13 @@ if(!isset($_SESSION['username'])) {
 if (isset($_POST['submit'])){
     $name=$_POST['name'];
     $dif=$_POST['challenge-difficulty'];
-    $dateD=date_create_from_format('Y-M-D H:i:s',$_POST['dateD']);
-    $dd = new DateTime($dateD);
-    $dateF=date_create_from_format('Y-M-D H:i:s',$_POST['dateF']);
-    $df = new DateTime($dateF);
+    $dd = new DateTime($_POST['dateD']);
+    $df = new DateTime($_POST['dateF']);
     $nb=$_POST['nbp'];
     $challenge= new Challenge($name,$dif,$dd,$df,$nb);
     $challengeDao->Create($challenge,$compte);
-    echo 'ok';
+    header('Location: admin.php');
+    exit();
 }
 ?>
 <!DOCTYPE html>
