@@ -1,5 +1,6 @@
 <?php
 require_once 'Joueur.php';
+require_once (dirname(__DIR__) . DIRECTORY_SEPARATOR . "DAO" . DIRECTORY_SEPARATOR . "ChallengeDao.php");
 
 
 /**
@@ -49,6 +50,11 @@ class Challenge
      * @var array
      */
     private $participants;
+
+    /**
+     * @var int
+     */
+    private $id;
 
     // Méthodes
 
@@ -253,6 +259,15 @@ class Challenge
 
     public function getNbPlaces():int{
         return $this->nbPlaces;
+    }
+
+    public function setId(){
+        $challengeD=new ChallengeDao();
+        $this->id=$challengeD->getId($this->nomChallenge);
+    }
+
+    public function getId():int{
+        return $this->id;
     }
 }
 ?>

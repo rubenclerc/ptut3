@@ -55,14 +55,14 @@ class ChallengeDao
         $dateFin=$challenge->getDateFin();
         $nbParticipants=$challenge->getNbPlaces();
         $difficulte=$challenge->getDifficulte();
-        $req=$this->db->prepare('SELECT * FROM challenge WHERE nomChallenge=:nomChall');
-        $req->bindParam(':nomChall',$nomChallenge);
+        $idChall=$challenge->getId();
+        $req=$this->db->prepare('SELECT * FROM challenge WHERE idChallenge=:idChall');
+        $req->bindParam(':idChall',$idChall);
         $req->execute();
         $row=$req->fetch(PDO::FETCH_ASSOC);
-        $idC=$row['idChallenge'];
         $date=$row['dateDebut'];
         if($dateDebut<$date){
-            $req = $this->db->prepare('update challenge set nomChallenge = :nomChall, dateDebut = :dateDebut, dateFin = :dateFin, nbParticipants = :nbParticipants, difficulte = :difficulte where idChallenge = '. $idC);
+            $req = $this->db->prepare('update challenge set nomChallenge = :nomChall, dateDebut = :dateDebut, dateFin = :dateFin, nbParticipants = :nbParticipants, difficulte = :difficulte where idChallenge = '. $idChall);
             $req->bindParam(':nomChall',$nomChallenge);
             $req->bindParam(':dateDebut', $dateDebut);	
             $req->bindParam(':dateFin', $dateFin);
@@ -73,7 +73,7 @@ class ChallengeDao
     }
 
     public function Delete(Challenge $challenge){
-        $nomChallenge=$challenge->ToString();
+        $idChall=$challenge->ToString();
         $dateDebut=$challenge->getDateDebut();
         $req=$this->db->prepare('SELECT * FROM challenge WHERE nomChallenge=:nomChall');
         $req->bindParam(':nomChall',$nomChallenge);
@@ -200,6 +200,15 @@ class ChallengeDao
         $code = $row['codeJoueur'];
 
         return $code;
+    }
+
+    public function getId(string $nomChallenge):int{
+        $nomChall = $nomChallenge;
+        $req=$this->db->prepare('SELECT idChallenge from challenge where nomChallenge = :nomChall');
+        $req->bindParam(':nomChall',$nomChall);
+        $req->execute();
+        $row = $req->fetch(PDO::FETCH_ASSOC);
+        return $row['idChallenge'];
     }
 
 }

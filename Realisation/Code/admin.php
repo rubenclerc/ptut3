@@ -12,7 +12,7 @@ if(!isset($_SESSION['username'])) {
 }
 
 // Set du username
-$compte = new Joueur();
+$compte = new Admin();
 $compte->setUsername($_SESSION['username']);
 
 // Déconnexion
@@ -20,6 +20,10 @@ if(isset($_POST['deconnexion'])){
     $compte->seDeconnecter();
     header('Location: connexion.php');
     exit();
+}
+
+if(isset($_GET['chal'])) {
+    $challengeDao->Delete($challengeDao->Read($_GET['chal']));
 }
 
 ?>
@@ -100,9 +104,7 @@ if(isset($_POST['deconnexion'])){
                                      </td>';
                                 echo '</tr>';
                             }
-                            /*if(isset($_GET['chal'])) {
-                              $challengeDao->Delete($challengeDao->Read($_GET['chal']));
-                              }*/
+                           
                           ?>   
                         </tbody>
                       </table>
