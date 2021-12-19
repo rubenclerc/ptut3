@@ -15,6 +15,7 @@ if(!isset($_SESSION['username'])) {
   $compte = new Admin();
   $compte->setUsername($_SESSION['username']);
   
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,40 +55,41 @@ if(!isset($_SESSION['username'])) {
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="challenge-name">NOM:</label>
-                                <input type="text" class="form-control blue-border" id="challenge-name">
+                                <input type="text" class="form-control blue-border" id="challenge-name" required="required>
                             </div>
 
                             <div class="form-group">
                                 <label for="challenge-difficulty">DIFFICULTÉ:</label>
-                                <select name="challenge-difficulty" class="form-control blue-border">
+                                <select name="challenge-difficulty" class="form-control blue-border" required="required">
                                     <option value="very-easy">Très facile</option>
                                     <option value="easy">Facile</option>
                                     <option value="average">Moyen</option>
                                     <option value="hard">Difficile</option>
                                     <option value="very-hard">Très difficile</option>
+                                    <option value="impossible">impossible</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="challenge-date">JOUR:</label>
-                                <input type="date" class="form-control blue-border" id="challenge-date">
+                                <input type="date" class="form-control blue-border" id="challenge-date" required="required">
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="challenge-no">PARTICIPANTS:</label>
-                                <input type="number" min="2" class="form-control blue-border" id="challenge-no">
+                                <input type="number" min="2" class="form-control blue-border" id="challenge-no" required="required">
                             </div>
 
                             <div class="form-group">
                                 <label for="challenge-dur">DURÉE (EN HEURES):</label>
-                                <input type="number" min="1" class="form-control blue-border" id="challenge-dur">
+                                <input type="number" min="1" class="form-control blue-border" id="challenge-dur" required="required">
                             </div>
 
                             <div class="form-group">
                                 <label for="challenge-hour">HEURE:</label>
-                                <input type="time" class="form-control blue-border" id="challenge-hour">
+                                <input type="time" class="form-control blue-border" id="challenge-hour" required="required">
                             </div>
                         </div>
 
