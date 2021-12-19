@@ -15,6 +15,8 @@ if(!isset($_SESSION['username'])) {
 $compte = new Admin();
 $compte->setUsername($_SESSION['username']);
 
+$challengeDao = new ChallengeDao();
+
 // Déconnexion
 if(isset($_POST['deconnexion'])){
     $compte->seDeconnecter();
@@ -104,7 +106,7 @@ if(isset($_GET['chal'])) {
                                 echo '<td>'. $challenge->getDateDebut()->format('H') . "h". $challenge->getDateDebut()->format('m') . '</td>';
                                 echo '<td>'. $challenge->getDuree()->format('d') . "j, " . $challenge->getDuree()->format('h'). "H" .'</td>';
                                 echo '<td>
-                                          <a href="admin.php?chal='. $challenge->ToString() . '" class="btn btn-primary">X </a>
+                                          <a href="admin.php?chal='. $challenge->ToString() . '" class="btn btn-primary" >X </a>
                                      </td>';
                                 echo '</tr>';
                             }

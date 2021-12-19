@@ -73,7 +73,7 @@ class ChallengeDao
     }
 
     public function Delete(Challenge $challenge){
-        $idChall=$challenge->ToString();
+        $nomChallenge=$challenge->ToString();
         $dateDebut=$challenge->getDateDebut();
         $req=$this->db->prepare('SELECT * FROM challenge WHERE nomChallenge=:nomChall');
         $req->bindParam(':nomChall',$nomChallenge);
@@ -81,7 +81,8 @@ class ChallengeDao
         $row=$req->fetch(PDO::FETCH_ASSOC);
         $idC=$row['idChallenge'];
         $date=$row['dateDebut'];
-        if($dateDebut < $date){
+        if($dateDebut = $date){
+            echo"ok";
             $reqdel = $this->db->prepare('delete from challenge  where idChallenge = '. $idC);
             $reqdel->execute();
         }
