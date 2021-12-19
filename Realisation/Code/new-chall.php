@@ -14,8 +14,21 @@ if(!isset($_SESSION['username'])) {
   // Set du username et init challengeDAO
   $compte = new Admin();
   $compte->setUsername($_SESSION['username']);
-  
 
+  $challengeDao = new ChallengeDao();
+ 
+if (isset($_POST['submit'])){
+    $name=$_POST['name'];
+    $dif=$_POST['challenge-difficulty'];
+    $dateD=date_create_from_format('Y-M-D H:i:s',$_POST['dateD']);
+    $dd = new DateTime($dateD);
+    $dateF=date_create_from_format('Y-M-D H:i:s',$_POST['dateF']);
+    $df = new DateTime($dateF);
+    $nb=$_POST['nbp'];
+    $challenge= new Challenge($name,$dif,$dd,$df,$nb);
+    $challengeDao->Create($challenge,$compte);
+    echo 'ok';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,53 +61,58 @@ if(!isset($_SESSION['username'])) {
             </div>
 
             <div class="container">
-                <form action="">
+                <form action="new-chall.php" method="POST">
                     <div class="row bleu red-border justify-content-around">
                         <h1 class="text-center my-4">CRÉER UN CHALLENGE</h1>
 
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="challenge-name">NOM:</label>
-                                <input type="text" class="form-control blue-border" id="challenge-name" required="required>
+                                <input type="text" class="form-control blue-border" id="challenge-name" name="name" required="required">
                             </div>
 
                             <div class="form-group">
                                 <label for="challenge-difficulty">DIFFICULTÉ:</label>
-                                <select name="challenge-difficulty" class="form-control blue-border" required="required">
-                                    <option value="very-easy">Très facile</option>
-                                    <option value="easy">Facile</option>
-                                    <option value="average">Moyen</option>
-                                    <option value="hard">Difficile</option>
-                                    <option value="very-hard">Très difficile</option>
-                                    <option value="impossible">impossible</option>
+                                <select name="challenge-difficulty" class="form-control blue-border" >
+                                    <option value="1">Très facile</option>
+                                    <option value="2">Facile</option>
+                                    <option value="3">Moyen</option>
+                                    <option value="4">Difficile</option>
+                                    <option value="5">Très difficile</option>
+                                    <option value="6">impossible</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="challenge-date">JOUR:</label>
-                                <input type="date" class="form-control blue-border" id="challenge-date" required="required">
+                                <label for="challenge-date">JOUR debut:</label>
+                                <input type="datetime-local" class="form-control blue-border" id="challenge-date" name="dateD" required="required">
                             </div>
+                            <!--<div class="col-md-3">
+                             <div class="form-group">
+                                <label for="challenge-date">JOUR fin:</label>
+                                <input type="time" class="form-control blue-border" id="challenge-date" name="timeD" required="required">
+                                </div>
+                                </div>-->
                         </div>
 
                         <div class="col-md-3">
+                             <!--<div class="form-group">
+                                <label for="challenge-date">JOUR fin:</label>
+                                <input type="time" class="form-control blue-border" id="challenge-date" name="timeF" required="required">
+                            </div>-->
+                            <div class="form-group">
+                                <label for="challenge-date">JOUR fin:</label>
+                                <input type="datetime-local" class="form-control blue-border" id="challenge-date" name="dateF" required="required">
+                            </div>
+
                             <div class="form-group">
                                 <label for="challenge-no">PARTICIPANTS:</label>
-                                <input type="number" min="2" class="form-control blue-border" id="challenge-no" required="required">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="challenge-dur">DURÉE (EN HEURES):</label>
-                                <input type="number" min="1" class="form-control blue-border" id="challenge-dur" required="required">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="challenge-hour">HEURE:</label>
-                                <input type="time" class="form-control blue-border" id="challenge-hour" required="required">
+                                <input type="number" min="2" class="form-control blue-border" id="challenge-no" name="nbp" required="required">
                             </div>
                         </div>
 
                         <div class="row justify-content-around">
-                            <input type="submit" class="form-control blue-border my-3" id="submitButton" value="VALIDER">
+                            <input type="submit" class="form-control blue-border my-3" id="submitButton" value="VALIDER" name="submit">
                         </div>
                     </div>
                 </form>

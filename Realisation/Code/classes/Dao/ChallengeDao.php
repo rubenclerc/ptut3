@@ -17,8 +17,8 @@ class ChallengeDao
 
     public function Create(Challenge $challenge, Admin $admin){
         $nomChallenge=$challenge->ToString();
-        $dateDebut=$challenge->getDateDebut();
-        $dateFin=$challenge->getDateFin();
+        $dateDebut=$challenge->getDateDebut()->format('Y-m-d H:i:s');
+        $dateFin=$challenge->getDateFin()->format('Y-m-d H:i:s');
         $nbParticipants=$challenge->getNbPlaces();
         $difficulte=$challenge->getDifficulte();
         $a=$admin->getUsername();
@@ -29,11 +29,11 @@ class ChallengeDao
             $row=$req->fetch(PDO::FETCH_ASSOC);
             $idA=$row['idCompte'];
 
-        $req = $this->db->prepare("INSERT INTO CHALLENGE(nomChallenge, dateDebut, dateFin, nbParticipantsMax, difficulte, compteAdmin) VALUES(:nomChallenge, :dateDebut, :dateFin, :nbParticipantsMax, :difficulte, :idAdmin)");
+        $req = $this->db->prepare("INSERT INTO CHALLENGE(nomChallenge, dateDebut, dateFin,nbPartcipants, difficulte, compteAdmin) VALUES(:nomChallenge, :dateDebut, :dateFin, :nbParticipants, :difficulte, :idAdmin)");
         $req->bindParam(':nomChallenge', $nomChallenge);
         $req->bindParam(':dateDebut', $dateDebut);
         $req->bindParam(':dateFin', $dateFin);
-        $req->bindParam(':nbParticipantsMax', $nbParticipants);
+        $req->bindParam(':nbParticipants', $nbParticipants);
         $req->bindParam(':difficulte', $difficulte);
         $req->bindParam(':idAdmin', $idA);
 
