@@ -1,3 +1,21 @@
+<?php
+session_start();
+
+require_once ("classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "ConnBdd.php");
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Admin.php");
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "ChallengeDao.php");
+
+// Si un utilisateur veut accéder à la page sans être connecté
+if(!isset($_SESSION['username'])) {
+    header('Location: connexion.php');
+    exit();
+  }
+  
+  // Set du username et init challengeDAO
+  $compte = new Admin();
+  $compte->setUsername($_SESSION['username']);
+  
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,8 +38,12 @@
         <div class="container-fluid">
             <div class="row my-3 mb-5 justify-content-between">
                 <img class="col-md-2" src="pictures/logoEcrit.png" alt="Logo Mindmaster" id="navLogo">
-
-                <h2 class="col-md-1 align-self-center"><a href="#" class="nav-link text-center nav-red-border">Quitter</a></h2>
+                <a href="admin.php" class="col-md-2 text-center align-self-center py-2">
+                    <form action="admin.php" method="POST">
+                            <button type="submit" class="btn btn-danger" name="Quitter"><h3> Quitter </h3></button>
+                    </form>
+                </a>
+               <!-- <h2 class="col-md-1 align-self-center"><a href="#" class="nav-link text-center nav-red-border">Quitter</a></h2>-->
             </div>
 
             <div class="container">

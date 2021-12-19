@@ -49,13 +49,17 @@ if(isset($_GET['chal'])) {
         <div class="container-fluid">
             <div class="row my-3 justify-content-between">
                 <img class="col-md-2" src="pictures/logoEcrit.png" alt="Logo Mindmaster" id="navLogo">
-
-                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2">Ajouter</h1>
+                <a href="new-chall.php" class="col-md-2 text-center align-self-center py-2">
+                    <form action="new-chall.php" method="POST">
+                            <button type="submit" class="btn btn-danger" name="Modifier"><h3> Ajouter </h3></button>
+                    </form>
+                </a>
+                <!--<h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2">Ajouter</h1>-->
                 
                 <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= $compte->getUsername() ?></h1>
 
                 <a href="connexion.php" class="col-md-2 text-center align-self-center py-2">
-                    <form action="accueil.php" method="POST">
+                    <form action="admin.php" method="POST">
                             <button type="submit" class="btn btn-danger" name="deconnexion"><h3> Se déconnecter </h3></button>
                     </form>
                 </a>
