@@ -21,9 +21,10 @@ class ChallengeDao
         $dateFin=$challenge->getDateFin();
         $nbParticipants=$challenge->getNbPlaces();
         $difficulte=$challenge->getDifficulte();
+        $a=$admin->getUsername();
 
         $req=$this->db->prepare('SELECT * FROM compte WHERE username = :username');
-            $req->bindParam(':username',$admin->getUsername());
+            $req->bindParam(':username',$a);
             $req->execute();
             $row=$req->fetch(PDO::FETCH_ASSOC);
             $idA=$row['idCompte'];
