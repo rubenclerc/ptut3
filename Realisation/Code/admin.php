@@ -108,6 +108,9 @@ if(isset($_GET['chal'])) {
                                 echo '<td>
                                           <a href="admin.php?chal='. $challenge->ToString() . '" class="btn btn-primary" >X </a>
                                      </td>';
+                                echo '<td>
+                                     <a href="modif_chall.php?chal='. $challenge->ToString() . '" class="btn btn-primary" >X </a>
+                                </td>';
                                 echo '</tr>';
                             }
                            

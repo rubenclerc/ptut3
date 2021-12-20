@@ -1,9 +1,14 @@
-<?php
+<?php 
 session_start();
 
 require_once ("classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "ConnBdd.php");
 require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Admin.php");
 require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "ChallengeDao.php");
+
+if(!isset($_GET['chal'])){
+    header('Location:admin.php');
+    exit;
+}
 
 // Si un utilisateur veut accéder à la page sans être connecté
 if(!isset($_SESSION['username'])) {
@@ -16,18 +21,9 @@ if(!isset($_SESSION['username'])) {
   $compte->setUsername($_SESSION['username']);
 
   $challengeDao = new ChallengeDao();
- 
-if (isset($_POST['submit'])){
-    $name=$_POST['name'];
-    $dif=$_POST['challenge-difficulty'];
-    $dd = new DateTime($_POST['dateD']);
-    $df = new DateTime($_POST['dateF']);
-    $nb=$_POST['nbp'];
-    $challenge= new Challenge($name,$dif,$dd,$df,$nb);
-    $challengeDao->Create($challenge,$compte);
-    header('Location: admin.php');
-    exit();
-}
+  $challenge = $challengeDao->Read($_GET['chal']);
+  echo $challenge->getDifficulte();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,12 +63,12 @@ if (isset($_POST['submit'])){
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="challenge-name">NOM:</label>
-                                <input type="text" class="form-control blue-border" id="challenge-name" name="name" required="required">
+                                <input type="text" class="form-control blue-border" id="challenge-name" name="name" value="<?php echo $challenge->toString()?>" required="required">
                             </div>
 
                             <div class="form-group">
                                 <label for="challenge-difficulty">DIFFICULTÉ:</label>
-                                <select name="challenge-difficulty" class="form-control blue-border" >
+                                <select name="challenge-difficulty" class="form-control blue-border" value="<?php ?>">
                                     <option value="1">Très facile</option>
                                     <option value="2">Facile</option>
                                     <option value="3">Moyen</option>
@@ -84,7 +80,7 @@ if (isset($_POST['submit'])){
 
                             <div class="form-group">
                                 <label for="challenge-date">JOUR debut:</label>
-                                <input type="date" class="form-control blue-border" id="challenge-date" name="dateD" required="required">
+                                <input type="datetime-local" class="form-control blue-border" id="challenge-date" name="dateD" required="required">
                             </div>
                             <!--<div class="col-md-3">
                              <div class="form-group">
@@ -101,12 +97,12 @@ if (isset($_POST['submit'])){
                             </div>-->
                             <div class="form-group">
                                 <label for="challenge-date">JOUR fin:</label>
-                                <input type="date" class="form-control blue-border" id="challenge-date" name="dateF" required="required">
+                                <input type="datetime-local" class="form-control blue-border" id="challenge-date" name="dateF" required="required">
                             </div>
 
                             <div class="form-group">
                                 <label for="challenge-no">PARTICIPANTS:</label>
-                                <input type="number" min="2" class="form-control blue-border" id="challenge-no" name="nbp" required="required">
+                                <input type="number" min="2" class="form-control blue-border" id="challenge-no" name="nbp" value="<?php echo $challenge->getNbPlaces(); ?>" required="required">
                             </div>
                         </div>
 
