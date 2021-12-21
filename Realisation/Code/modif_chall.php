@@ -19,11 +19,29 @@ if(!isset($_SESSION['username'])) {
   // Set du username et init challengeDAO
   $compte = new Admin();
   $compte->setUsername($_SESSION['username']);
+  $url = "modif_chall.php?chal=".$_GET['chal'];
 
   $challengeDao = new ChallengeDao();
-  $challenge = $challengeDao->Read($_GET['chal']);
-  echo $challenge->getDifficulte();
+  $challenge = $challengeDao->ReadId($_GET['chal']);
+  $difficultes = array(1=>'Très facile',
+  2=>'Facile',
+  3=>'Moyen',
+  4=>'Difficile',
+  5=>'Très difficile',
+  6=>'Impossible');
 
+  if (isset($_POST['submit'])){
+    $name=$_POST['name'];
+    $dif=$_POST['challenge-difficulty'];
+    $dd = new DateTime($_POST['dateD']);
+    $df = new DateTime($_POST['dateF']);
+    $nb=$_POST['nbp'];
+    $challenge= new Challenge($name,$dif,$dd,$df,$nb);
+    $id=$_GET['chal'];
+    $challengeDao->Update($challenge,$id);
+    header('Location: admin.php');
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,9 +74,9 @@ if(!isset($_SESSION['username'])) {
             </div>
 
             <div class="container">
-                <form action="new-chall.php" method="POST">
+                <form action="<?php echo $url; ?>" method="POST">
                     <div class="row bleu red-border justify-content-around">
-                        <h1 class="text-center my-4">CRÉER UN CHALLENGE</h1>
+                        <h1 class="text-center my-4">MODIFIER UN CHALLENGE</h1>
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -68,19 +86,16 @@ if(!isset($_SESSION['username'])) {
 
                             <div class="form-group">
                                 <label for="challenge-difficulty">DIFFICULTÉ:</label>
-                                <select name="challenge-difficulty" class="form-control blue-border" value="<?php ?>">
-                                    <option value="1">Très facile</option>
-                                    <option value="2">Facile</option>
-                                    <option value="3">Moyen</option>
-                                    <option value="4">Difficile</option>
-                                    <option value="5">Très difficile</option>
-                                    <option value="6">impossible</option>
+                                <select name="challenge-difficulty" class="form-control blue-border">
+                                    <?php foreach($difficultes as $var => $diff) : ?>
+                                        <option value="<?php echo $var ?>"<?php if ($var == $challenge->getDifficulte()): ?> selected="selected"<?php endif; ?>><?php echo $diff?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="challenge-date">JOUR debut:</label>
-                                <input type="datetime-local" class="form-control blue-border" id="challenge-date" name="dateD" required="required">
+                                <input type="date" class="form-control blue-border" id="challenge-date" name="dateD" value="<?php echo $challenge->getDateDebut()->format('Y-m-d') ?>" required="required">
                             </div>
                             <!--<div class="col-md-3">
                              <div class="form-group">
@@ -97,7 +112,7 @@ if(!isset($_SESSION['username'])) {
                             </div>-->
                             <div class="form-group">
                                 <label for="challenge-date">JOUR fin:</label>
-                                <input type="datetime-local" class="form-control blue-border" id="challenge-date" name="dateF" required="required">
+                                <input type="date" class="form-control blue-border" id="challenge-date" name="dateF"  value="<?php echo $challenge->getDateFin()->format('Y-m-d') ?>" required="required">
                             </div>
 
                             <div class="form-group">

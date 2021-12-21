@@ -50,25 +50,33 @@ class ChallengeDao
         return $challenge;
     }
 
-    public function Update(Challenge $challenge){
-        $nomChallenge=$challenge->ToString();
-        $dateDebut=$challenge->getDateDebut();
-        $dateFin=$challenge->getDateFin();
-        $nbParticipants=$challenge->getNbPlaces();
-        $difficulte=$challenge->getDifficulte();
-        $idChall=$challenge->getId();
+    public function ReadId(int $idChallenge): Challenge{
+        $challenge = null;
         $req=$this->db->prepare('SELECT * FROM challenge WHERE idChallenge=:idChall');
-        $req->bindParam(':idChall',$idChall);
+        $req->bindParam(':idChall',$idChallenge);
         $req->execute();
         $row=$req->fetch(PDO::FETCH_ASSOC);
-        $date=$row['dateDebut'];
-        if($dateDebut<$date){
-            $req = $this->db->prepare('update challenge set nomChallenge = :nomChall, dateDebut = :dateDebut, dateFin = :dateFin, nbParticipants = :nbParticipants, difficulte = :difficulte where idChallenge = '. $idChall);
+        $challenge=new Challenge($row['nomChallenge'],$row['difficulte'],new DateTime($row['dateDebut']), new DateTime($row['dateFin']),$row['nbPartcipants']);
+        return $challenge;
+    }
+
+    public function Update(Challenge $challenge, int $id){
+        $nomChallenge=$challenge->ToString();
+        $dateDebut=$challenge->getDateDebut()->format('Y-m-d H:i:s');
+        $dateFin=$challenge->getDateFin()->format('Y-m-d H:i:s');
+        $nbParticipants=$challenge->getNbPlaces();
+        $difficulte=$challenge->getDifficulte();
+        $date=date("Y-m-d H:i:s");
+        $timestamp1 = strtotime($dateDebut); 
+        $timestamp2 = strtotime($date);
+        if(($timestamp1 > $timestamp2)){
+            $req = $this->db->prepare('update challenge set nomChallenge = :nomChall, dateDebut = :dateDebut, dateFin = :dateFin, nbPartcipants = :nbParticipants, difficulte = :difficulte where idChallenge = :id');
             $req->bindParam(':nomChall',$nomChallenge);
             $req->bindParam(':dateDebut', $dateDebut);	
             $req->bindParam(':dateFin', $dateFin);
             $req->bindParam(':nbParticipants',$nbParticipants);
             $req->bindParam(':difficulte', $difficulte);
+            $req->bindParam(':id',$id);
             $req->execute();
         }
     }
