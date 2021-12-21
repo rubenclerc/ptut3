@@ -1,3 +1,29 @@
+<?php
+session_start();
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Joueur.php");
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "CompteDao.php");
+
+// Si un utilisateur veut accéder à la page sans être connecté
+if(!isset($_SESSION['username'])) {
+    header('Location: connexion.php');
+    exit();
+}
+
+// Initialisation
+$compteDao = new CompteDao();
+$compte = $compteDao->DirtyRead($_SESSION['username']);
+
+if(isset($_POST['modifier'])){
+    $compte->setUsername( htmlentities($_POST['username']));
+    $compte->setPassHash( htmlentities($_POST['password']));
+
+    $compteDao->update($compte);
+
+    $reussi = true;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,24 +46,38 @@
         <div class="container-fluid">
             <div class="row my-3 mb-5 justify-content-between">
                 <img class="col-md-2" src="pictures/logoEcrit.png" alt="Logo Mindmaster" id="navLogo">
-                <h2 class="col-md-1 align-self-center"><a href="#" class="nav-link text-center nav-red-border">Quitter</a></h2>
+                <a href="connexion.php" class="col-md-2 text-center align-self-center py-2">
+                    <button class="btn btn-danger"><h3>Revenir à l'acceuil</h3></button>
+                </a>
             </div>
         
         <div class="container">
-                <form action="">
+                <form action="profil.php" method="POST">
                     <div class="container col-md-9">
                         <div class="row bleu red-border justify-content-around">
                             <h3 class="text-center my-4">PROFIL</h3>
                             <div class="col-md-3">
+                            <?php
+                                    if(isset($reussi) && $reussi){
+                                        echo '<div class="alert alert-success px-5">
+                                                Enregistrement réussi !
+                                            </div>';
+                                    }
+                                ?>
+
                                 <div class="form-group">
-                                    <label for="" class="form-label">Identifiant :</label>
-                                    <input type="text" class="form-control blue-border" placeholder="Identifiant" required="required">
+                                    <label for="username" class="form-label">Identifiant :</label>
+                                    <input name="username" type="text" class="form-control blue-border" placeholder="Identifiant" required="required" value="<?= $compte->getUsername() ?>">
                                     <a class="form-text text-muted">Changer son identifiant</a>                                
                                 </div>
                                 <div class="form-group">
-                                    <label for="" class="form-label">Mot de passe :</label>
-                                    <input type="password"  class="form-control blue-border" placeholder="********" required="required">
-                                    <a href="#" class="form-text text-muted">Changer son mot de passe</a>
+                                    <label for="password" class="form-label">Mot de passe :</label>
+                                    <input type="password" name="password" class="form-control blue-border" placeholder="********" required="required">
+                                    <a class="form-text text-muted">Changer son mot de passe</a>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="submit" name="modifier" class="btn btn-primary form-control mt-3" value="Modifier les informations">
                                 </div>
                             </div>
                             <p>
@@ -46,21 +86,21 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="NbPartie">Nombre de parties :</label>
-                                    <input type="text"  class="form-control blue-border" id="NbPartie">
+                                    <input type="text"  class="form-control blue-border" id="NbPartie" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="NbPoints">Nombre de points :</label>
-                                    <input type="text"  class="form-control blue-border" id="NbPoints">
+                                    <input type="text"  class="form-control blue-border" id="NbPoints" disabled>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="NbVictoires">Nombre de Victoires : </label>
-                                    <input type="text"  class="form-control blue-border" id="NbVictoires">
+                                    <input type="text"  class="form-control blue-border" id="NbVictoires" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="Nbdcouvertes">Nombre de decouvertes :</label>
-                                    <input type="text"  class="form-control blue-border" id="Nbdcouvertes">
+                                    <input type="text"  class="form-control blue-border" id="Nbdcouvertes" disabled>
                                 </div>
                             </div>
                             <p>

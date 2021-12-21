@@ -49,7 +49,7 @@ if(isset($_POST['deconnexion'])){
 
                 <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2">Tutoriel</h1>
                 
-                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= $compte->getUsername() ?></h1>
+                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"> <a class="bleu nav-link" href="profil.php"><?= $compte->getUsername() ?></a></h1>
 
                 <a href="connexion.php" class="col-md-2 text-center align-self-center py-2">
                     <form action="accueil.php" method="POST">

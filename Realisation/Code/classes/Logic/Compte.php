@@ -91,6 +91,10 @@ class Compte {
         $this->username = $username;
     }
 
+    public function setPassHash($passHash){
+        $this->passwordHash =  hash("sha256", $passHash);
+    }
+
     public function toString(): string{
         return $this->username;
     }
