@@ -128,23 +128,23 @@ class EssayerDao{
     public function Trouve(joueur $j, joueur $adv):bool{
         $b = false;
         $jName = $j->getUsername();
-        $req=$this->db->prepare('SELECT id from compte where username=:jName');
-        $req->bindParam(':jName',$jName);
-        $req->execute();
-        $jrow=$req->fetch(PDO::FETCH_ASSOC);
+        $reqJ=$this->db->prepare('SELECT idCompte from compte where username=:jName');
+        $reqJ->bindParam(':jName',$jName);
+        $reqJ->execute();
+        $jrow=$reqJ->fetch(PDO::FETCH_ASSOC);
         $aName = $adv->getUsername();
-        $req=$this->db->prepare('SELECT id from compte where username=:aName');
-        $req->bindParam(':aName',$aName);
+        $reqA=$this->db->prepare('SELECT idCompte from compte where username=:aName');
+        $reqA->bindParam(':aName',$aName);
+        $reqA->execute();
+        $arow=$reqA->fetch(PDO::FETCH_ASSOC);
+        $idJ=intval($jrow['idCompte']);
+        $idA=intval($arow['idCompte']);
+        $req=$this->db->prepare('SELECT * from essayer where joueurAttaquant=:idJ and joueurAttaque=:idA');
+        $req->bindParam(':idJ',$idJ);
+        $req->bindParam(':idA',$idA);
         $req->execute();
-        $arow=$req->fetch(PDO::FETCH_ASSOC);
-        $req=$this->db->prepare('SELECT trouve from essayer where joueurAttaquant=:idJ and joueurAttaque=:idA');
-        $req->bindParam(':idJ',$jrow['idCompte']);
-        $req->bindParam(':idA',$arow['idCompte']);
-        $req->execute();
-        $row=$req->fetch(PDO::FETCH_ASSOC);
-        while($row=$req->fetch(PDO::FETCH_ASSOC)){
-            echo 'coucou';
-            if($row['trouve']){
+        while($row=$req->fetch(PDO::FETCH_BOTH)){
+            if($row[0]){
                 $b=true;
             }
         }

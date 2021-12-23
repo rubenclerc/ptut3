@@ -101,7 +101,7 @@ if(isset($_POST["code"])){
                                     <h4 class="col-md-2 bleu blue-dot"><?= substr_count($strRep, "B")?></h4>
                                     <h4 class="col-md-2 rouge red-dot"><?= substr_count($strRep, "C") ?></h4>
 
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?=  $code[0] ?></h4>
+                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[0] ?></h4>
                                     <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[1] ?></h4>
                                     <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[2] ?></h4>
                                     <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[3] ?></h4>
@@ -127,7 +127,7 @@ if(isset($_POST["code"])){
                             $participants = $challengeDao->ListParticipants($_GET["chal"]);
                             $essaiDAO = new EssayerDao();
                             foreach($participants as $participant){
-                                if(($participant->getUsername() != $_SESSION["username"])&&(!$essaiDAO->Trouve($compte,$participant))){
+                                if(($participant->getUsername() != $_SESSION["username"])&&($essaiDAO->Trouve($compte,$participant)==0)){
                                     $name = $participant->getUsername();
                                     $url = "partie.php?chal=". htmlentities($_GET["chal"]) ."&adv=". htmlentities($name);
 
