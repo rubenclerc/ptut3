@@ -30,9 +30,15 @@ if(!isset($_SESSION['username'])) {
 if(isset($_POST["code"])){
     $adv = $compteDao->DirtyRead($_GET['adv']);
     $code = intval(htmlentities($_POST["n0"]) . htmlentities($_POST["n1"]) . htmlentities($_POST["n2"]) . htmlentities($_POST["n3"]) . htmlentities($_POST["n4"]) . htmlentities($_POST["n5"]));
-
+    $tent = new Tentative($code,$compte,$adv,$curChallenge);
+    $reponse = $tent->Tenter();
+    $strRep = $reponse->getRep();
+    $b=false;
+    if(substr_count($strRep, "C")==6){
+        $b=true;
+    }
     $essaiDao = new EssayerDao();
-    $essai = $essaiDao->Create($compte, $adv, $code, $curChallenge);
+    $essai = $essaiDao->Create($compte, $adv, $code, $curChallenge,$b);
 }
 ?>
 <!DOCTYPE html>
@@ -119,10 +125,9 @@ if(isset($_POST["code"])){
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <?php
                             $participants = $challengeDao->ListParticipants($_GET["chal"]);
-
+                            $essaiDAO = new EssayerDao();
                             foreach($participants as $participant){
-
-                                if($participant->getUsername() != $_SESSION["username"]){
+                                if(($participant->getUsername() != $_SESSION["username"])&&(!$essaiDAO->Trouve($compte,$participant))){
                                     $name = $participant->getUsername();
                                     $url = "partie.php?chal=". htmlentities($_GET["chal"]) ."&adv=". htmlentities($name);
 
