@@ -37,6 +37,7 @@ if(isset($_POST["code"])){
     if(substr_count($strRep, "C")==6){
         $b=true;
     }
+    var_dump($b);
     $essaiDao = new EssayerDao();
     $essai = $essaiDao->Create($compte, $adv, $code, $curChallenge,$b);
 }
@@ -127,7 +128,7 @@ if(isset($_POST["code"])){
                             $participants = $challengeDao->ListParticipants($_GET["chal"]);
                             $essaiDAO = new EssayerDao();
                             foreach($participants as $participant){
-                                if(($participant->getUsername() != $_SESSION["username"])&&($essaiDAO->Trouve($compte,$participant)==0)){
+                                if(($participant->getUsername() != $_SESSION["username"])&&(!$essaiDAO->Trouve($compte,$participant))){
                                     $name = $participant->getUsername();
                                     $url = "partie.php?chal=". htmlentities($_GET["chal"]) ."&adv=". htmlentities($name);
 

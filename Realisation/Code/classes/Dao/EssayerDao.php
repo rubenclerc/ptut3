@@ -143,8 +143,8 @@ class EssayerDao{
         $req->bindParam(':idJ',$idJ);
         $req->bindParam(':idA',$idA);
         $req->execute();
-        while($row=$req->fetch(PDO::FETCH_BOTH)){
-            if($row[0]){
+        while($row=$req->fetch(PDO::FETCH_ASSOC)){
+            if($row['trouve']==1){
                 $b=true;
             }
         }
