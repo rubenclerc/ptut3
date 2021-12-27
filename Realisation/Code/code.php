@@ -113,7 +113,7 @@ if(isset($_POST["val"])){
                 </div>                    
 
                 <a href="CGU.PHP" class="col-md-6 nav-link">Conditions d'utilisations</a>
-                    <a href="Mentions_legales.php" class="col-md-6 nav-link">Mentions légales</a>
+                <a href="Mentions_legales.php" class="col-md-6 nav-link">Mentions légales</a>
             </div>
         </div>
     </body>
