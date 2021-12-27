@@ -83,10 +83,11 @@ if(isset($_POST['modifier'])){
                             <p>
                             <hr>
                             <h3 class="text-center my-4">STATISTIQUES</h3>
+                            <?php $stats = $compteDao->getStat($_SESSION["username"]);?>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="NbPartie">Nombre de parties :</label>
-                                    <input type="text"  class="form-control blue-border" id="NbPartie" disabled>
+                                    <input type="text"  class="form-control blue-border" id="NbPartie" value="<?= $stats["nbParties"] ?>" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="NbPoints">Nombre de points :</label>
@@ -96,7 +97,7 @@ if(isset($_POST['modifier'])){
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="NbVictoires">Nombre de Victoires : </label>
-                                    <input type="text"  class="form-control blue-border" id="NbVictoires" disabled>
+                                    <input type="text"  class="form-control blue-border" id="NbVictoires" value="<?= $stats["nbWin"] ?>" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="Nbdcouvertes">Nombre de decouvertes :</label>

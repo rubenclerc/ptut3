@@ -104,4 +104,39 @@ class CompteDao{
 
         return $exist;
     }
+
+    public function getStat($username): array{
+        // Init
+        $ret = array();
+
+        // On récupère l'id du joueur
+        $req = $this->db->prepare('SELECT idCompte FROM COMPTE WHERE username=:username');
+        $req->bindParam(':username',$username);
+        $req->execute();
+
+        $row = $req->fetch(PDO::FETCH_ASSOC);
+        $id = $row['idCompte'];
+
+        // Requête pour le nombre de parties jouées
+        $reqParties = $this->db->prepare('SELECT SUM(IF(joueur = :idCompte, 1, 0)) AS nbParties FROM PARTICIPER');
+        $reqParties->bindParam(':idCompte',$id);
+        $reqParties->execute();
+
+        $rowParties = $reqParties->fetch(PDO::FETCH_ASSOC);
+        $nbParties = $rowParties['nbParties'];
+
+        // Requête pour le nombre de parties gagnées
+        $reqWin = $this->db->prepare('SELECT SUM(IF(compteJoueur = :idCompte, 1, 0)) AS nbWin FROM CHALLENGE');
+        $reqWin->bindParam(':idCompte',$id);
+        $reqWin->execute();
+
+        $rowWin = $reqWin->fetch(PDO::FETCH_ASSOC);
+        $nbWin = $rowWin['nbWin'];
+
+        // Ajout des stats au résultat
+        $ret["nbParties"] = $nbParties;
+        $ret["nbWin"] = $nbWin;
+
+        return $ret;
+    }
 }
