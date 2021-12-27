@@ -84,7 +84,7 @@ if (isset($_POST['submit'])){
 
                             <div class="form-group">
                                 <label for="challenge-date">JOUR debut:</label>
-                                <input type="date" class="form-control blue-border" id="challenge-date" name="dateD" required="required">
+                                <input type="datetime-local" class="form-control blue-border" id="challenge-date" name="dateD" required="required">
                             </div>
                             <!--<div class="col-md-3">
                              <div class="form-group">
@@ -101,7 +101,7 @@ if (isset($_POST['submit'])){
                             </div>-->
                             <div class="form-group">
                                 <label for="challenge-date">JOUR fin:</label>
-                                <input type="date" class="form-control blue-border" id="challenge-date" name="dateF" required="required">
+                                <input type="datetime-local" class="form-control blue-border" id="challenge-date" name="dateF" required="required">
                             </div>
 
                             <div class="form-group">

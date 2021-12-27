@@ -82,6 +82,7 @@ if(isset($_GET['chal'])) {
                             <th scope="col">Heure</th>
                             <th scope="col">Durée</th>
                             <th scope="col">Suppresion</th>
+                            <th scope="col">Modification</th>
                           </tr>
                         </thead>
                         <tbody >
