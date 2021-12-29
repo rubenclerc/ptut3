@@ -94,11 +94,17 @@ if(isset($_POST['deconnexion'])){
                                 echo '<td>'. $challenge->getDateDebut()->format('D d M') .'</td>';
                                 echo '<td>'. $challenge->getDateDebut()->format('H') . "h". $challenge->getDateDebut()->format('m') . '</td>';
                                 echo '<td>'. $challenge->getDuree()->format('d') . "j, " . $challenge->getDuree()->format('h'). "H" .'</td>';
-                               if (($nbParti< $challenge->getNbPlaces())||($challengeDao->isIn($_SESSION['username'],$challenge->ToString()))){
+                                if($challenge->getTimeStampRestant() <= 0){
+                                echo '<td>
+                                    <a href="resultat.php?chal='. $challenge->ToString() . '" class="btn btn-success">Résultat </a>
+                                    </td>';
+                               }
+                               else if (($nbParti< $challenge->getNbPlaces())||($challengeDao->isIn($_SESSION['username'],$challenge->ToString()))&&($challenge->getTimeStampRestant() > 0)){
                                    echo '<td>
                                             <a href="code.php?chal='. $challenge->ToString() . '" class="btn btn-primary">Rejoindre </a>
                                       </td>';
-                               }else {
+                               }
+                               else{
                                 echo '<td>
                                     <a class="btn btn-secondary">Rejoindre </a>
                                 </td>';
