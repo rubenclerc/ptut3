@@ -148,7 +148,7 @@ if(isset($_POST["code"])){
                             ?>                   
                         </div>
                     </div>
-                    <?php if(isset($_GET['adv'])){ ?> 
+                    <?php if(isset(htmlentities($_GET['adv']))){ ?> 
                         <div class="row red-border my-3 px-5 py-3">
                             <form action="<?=  "partie.php?chal=". htmlentities($_GET["chal"]) ."&adv=". htmlentities($_GET['adv']) ?>" method="POST">
                                 <div class="row justify-content-around form-group">
