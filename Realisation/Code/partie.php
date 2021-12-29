@@ -149,23 +149,23 @@ if(isset($_POST["code"])){
                             ?>                   
                         </div>
                     </div>
-
-                    <div class="row red-border my-3 px-5 py-3">
-                        <form action="<?=  "partie.php?chal=". htmlentities($_GET["chal"]) ."&adv=". htmlentities($_GET['adv']) ?>" method="POST">
-                            <div class="row justify-content-around form-group">
-                                <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n0" required>
-                                <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n1" required>
-                                <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n2" required>
-                                <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n3" required>
-                                <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n4" required>
-                                <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n5" required>
-                            </div>
-
-                            <div class="row justify-content-center px-5 pt-3">
-                                <input class="btn btn-primary" type="submit" value="Valider" name="code">
-                            </div>
-                        </form>
-                    </div>
+                    <?php if(isset($_GET['adv'])){ ?> 
+                        <div class="row red-border my-3 px-5 py-3">
+                            <form action="<?=  "partie.php?chal=". htmlentities($_GET["chal"]) ."&adv=". htmlentities($_GET['adv']) ?>" method="POST">
+                                <div class="row justify-content-around form-group">
+                                    <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n0" required>
+                                    <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n1" required>
+                                    <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n2" required>
+                                    <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n3" required>
+                                    <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n4" required>
+                                    <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n5" required>
+                                </div>
+                                <div class="row justify-content-center px-5 pt-3">
+                                    <input class="btn btn-primary" type="submit" value="Valider" name="code">
+                                </div>
+                            </form>
+                        </div>
+                    <?php } ?>
                 </div>
             </div>
 
