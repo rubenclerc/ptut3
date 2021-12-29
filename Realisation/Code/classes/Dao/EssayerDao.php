@@ -125,7 +125,7 @@ class EssayerDao{
         return $listeTentatives;
     }
 
-    public function Trouve(joueur $j, joueur $adv):bool{
+    public function Trouve(compte $j, compte $adv):bool{
         $b = false;
         $jName = $j->getUsername();
         $reqJ=$this->db->prepare('SELECT idCompte from compte where username=:jName');
