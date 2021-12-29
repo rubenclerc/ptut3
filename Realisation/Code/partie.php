@@ -135,8 +135,6 @@ if(isset($_POST["code"])){
 
                                     echo "<a href='$url' class='nav-link text-center'>$name</a>";
 
-
-
                                     echo "<div class='row justify-content-around'>
                                             <hr class='md-size'>
                                         </div>";
