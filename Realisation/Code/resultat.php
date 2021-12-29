@@ -49,9 +49,21 @@ $curChallenge = $challengeDao->Read(htmlentities($_GET['chal']));
                     </tr>
                 </thead>
 
-                <tr>
+                <?php
+                    $participants = $challengeDao->ListParticipants($_GET["chal"]);
+                    foreach($participants as $participant){ ?>
 
-                </tr>
+                    <tr>
+                           
+                    <?php
+                        $name = $participant->getUsername();
+                        echo "<td>$name</td>";
+                    ?>
+                    <td></td>
+                    <td></td>
+                    
+                    </tr>
+                <?php } ?>
             </table>
         </div>
 
