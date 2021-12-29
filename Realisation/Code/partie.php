@@ -13,6 +13,8 @@ require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR .
 
 // Set du username
 $compteDao = new CompteDao();
+
+$essaiDAO = new EssayerDao();
 $compte = new Joueur();
 $compte->setUsername($_SESSION['username']);
 
@@ -126,8 +128,7 @@ if(isset($_POST["code"])){
 
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <?php
-                            $participants = $challengeDao->ListParticipants($_GET["chal"]);
-                            $essaiDAO = new EssayerDao();
+                            $participants = $challengeDao->ListParticipants($_GET["chal"]);$essaiDAO = new EssayerDao();
                             foreach($participants as $participant){
                                 if(($participant->getUsername() != $_SESSION["username"])&&(!$essaiDAO->Trouve($compte,$participant))){
                                     $name = $participant->getUsername();
@@ -146,7 +147,9 @@ if(isset($_POST["code"])){
                             ?>                   
                         </div>
                     </div>
-                    <?php if(isset(htmlentities($_GET['adv']))){ ?> 
+                    <?php if(isset($_GET['adv'])){ 
+                        if (!$essaiDAO->Trouve($compte,$compteDao->DirtyRead($_GET['adv']))){
+                        ?> 
                         <div class="row red-border my-3 px-5 py-3">
                             <form action="<?=  "partie.php?chal=". htmlentities($_GET["chal"]) ."&adv=". htmlentities($_GET['adv']) ?>" method="POST">
                                 <div class="row justify-content-around form-group">
@@ -162,7 +165,7 @@ if(isset($_POST["code"])){
                                 </div>
                             </form>
                         </div>
-                    <?php } ?>
+                    <?php }} ?>
                 </div>
             </div>
 
