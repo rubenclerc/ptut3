@@ -1,5 +1,11 @@
 <?php
 session_start();
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "ChallengeDao.php");
+
+
+// Challenge courant
+$challengeDao = new ChallengeDao();
+$curChallenge = $challengeDao->Read(htmlentities($_GET['chal']));
 
 ?>
 
@@ -22,6 +28,16 @@ session_start();
     </head>
 
     <body>
+        <div class="container-fluid">
+            <div class="row my-3 justify-content-between">
+                <img class="col-md-2" src="pictures/logoEcrit.png" alt="Logo Mindmaster" id="navLogo">
+
+                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= $curChallenge->ToString() ?></h1>
+
+                <a href="accueil.php" class="col-md-2 text-center align-self-center py-2">
+                        <button class="btn btn-danger" ><h3>Revenir à l'accueil</h3></button>
+                </a>
+        </div>
 
     </body>
 
