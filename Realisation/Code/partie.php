@@ -69,7 +69,10 @@ if(isset($_POST["code"])){
 
                 <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2 pts-ico"><?= $compte->getNbPoints() ?></h1>
 
-                <h1 class="col-md-2 bleu text-center align-self-center time-ico"><?= $curChallenge->getTpsRestant()->format('d') . "j, " . $curChallenge->getTpsRestant()->format('H') . "h" . $curChallenge->getTpsRestant()->format('i') ?></h1>
+                <?php if($curChallenge->getTimeStampRestant() > 0){ ?>
+                    <h1 class="col-md-2 bleu text-center align-self-center time-ico"><?= $curChallenge->getTpsRestant()->format('d') . "j, " . $curChallenge->getTpsRestant()->format('H') . "h" . $curChallenge->getTpsRestant()->format('i') ?></h1>
+                <?php } else { Header("Location: resultat.php"); exit(); }?>
+
 
                 <a href="accueil.php" class="col-md-2 text-center align-self-center py-2">
                         <button class="btn btn-danger" ><h3>Revenir à l'accueil</h3></button>

@@ -192,10 +192,15 @@ class Challenge
 
     public function getTpsRestant(): DateTime{
         $int = $this->dateFin->getTimestamp() - time();
+
         $duree = new DateTime();
         $duree->setTimestamp($int);
 
         return $duree;
+    }
+
+    public function getTimeStampRestant(): int{
+        return $this->getTpsRestant()->getTimestamp();
     }
     
     /**
