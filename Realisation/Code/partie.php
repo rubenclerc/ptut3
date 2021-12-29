@@ -37,7 +37,6 @@ if(isset($_POST["code"])){
     if(substr_count($strRep, "C")==6){
         $b=true;
     }
-    var_dump($b);
     $essaiDao = new EssayerDao();
     $essai = $essaiDao->Create($compte, $adv, $code, $curChallenge,$b);
 }
@@ -111,7 +110,7 @@ if(isset($_POST["code"])){
                                     <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[4] ?></h4>
                                     <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[5] ?></h4>
                             </div>
-                <?php if(substr_count($strRep, "C") == 6) {$gagne = true;}?>
+                <?php if(substr_count($strRep, "C") == 6) {$gagne = true; echo "<p class='bleu'>Bravo vous avez trouvé le code de {$adve->getUsername()}</p>";}?>
                 <?php } ?>
                     </div>
                 </div>
