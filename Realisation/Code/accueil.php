@@ -15,6 +15,8 @@ if(!isset($_SESSION['username'])) {
 $compte = new Joueur();
 $compte->setUsername($_SESSION['username']);
 
+$challengeDao = new ChallengeDao();
+
 // Déconnexion
 if(isset($_POST['deconnexion'])){
     $compte->seDeconnecter();
@@ -74,7 +76,6 @@ if(isset($_POST['deconnexion'])){
                         </thead>
                         <tbody >
                           <?php
-                            $challengeDao = new ChallengeDao();
                             $challenges = $challengeDao->ListAll();
 
                             foreach($challenges as $challenge)
@@ -93,9 +94,17 @@ if(isset($_POST['deconnexion'])){
                                 echo '<td>'. $challenge->getDateDebut()->format('D d M') .'</td>';
                                 echo '<td>'. $challenge->getDateDebut()->format('H') . "h". $challenge->getDateDebut()->format('m') . '</td>';
                                 echo '<td>'. $challenge->getDuree()->format('d') . "j, " . $challenge->getDuree()->format('h'). "H" .'</td>';
-                                echo '<td>
+                               if (($nbParti< $challenge->getNbPlaces())||($challengeDao->isIn($_SESSION['username'],$challenge->ToString()))){
+                                   echo '<td>
                                             <a href="code.php?chal='. $challenge->ToString() . '" class="btn btn-primary">Rejoindre </a>
                                       </td>';
+                               }else {
+                                echo '<td>
+                                    <a class="btn btn-secondary">Rejoindre </a>
+                                </td>';
+                               }
+                                
+                                      
                                 echo '</tr>';
                             }
                           ?>                 
