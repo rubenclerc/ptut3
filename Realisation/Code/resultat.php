@@ -39,6 +39,24 @@ $curChallenge = $challengeDao->Read(htmlentities($_GET['chal']));
                 </a>
         </div>
 
+        <div class="container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Codes trouvés</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+
+                <tr>
+
+                </tr>
+            </table>
+        </div>
+
+
+
     </body>
 
 </html>
