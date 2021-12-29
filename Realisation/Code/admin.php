@@ -58,7 +58,7 @@ if(isset($_GET['chal'])) {
                 </a>
                 <!--<h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2">Ajouter</h1>-->
                 
-                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= $compte->getUsername() ?></h1>
+                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"> <a class="bleu nav-link" href="profil.php"><?= $compte->getUsername() ?></a></h1>
 
                 <a href="connexion.php" class="col-md-2 text-center align-self-center py-2">
                     <form action="admin.php" method="POST">
