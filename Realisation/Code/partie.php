@@ -99,8 +99,8 @@ if(isset($_POST["code"])){
                     $code = str_split($tentative->getCode(), 1);
                 ?>               
                             <div class="row justify-content-around mb-4">
-                                    <h4 class="col-md-2 bleu blue-dot"><?= substr_count($strRep, "B")?></h4>
-                                    <h4 class="col-md-2 rouge red-dot"><?= substr_count($strRep, "C") ?></h4>
+                                    <h4 class="col-md-2 bleu blue-dot"><?= substr_count($strRep, "C")?></h4>
+                                    <h4 class="col-md-2 rouge red-dot"><?= substr_count($strRep, "B") ?></h4>
 
                                     <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[0] ?></h4>
                                     <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[1] ?></h4>
