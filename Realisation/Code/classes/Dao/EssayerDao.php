@@ -125,9 +125,10 @@ class EssayerDao{
         return $listeTentatives;
     }
 
-    public function Trouve(compte $j, compte $adv):bool{
+    public function Trouve(compte $j, compte $adv, Challenge $challenge):bool{
         $b = false;
         $jName = $j->getUsername();
+        $chall =  $challenge->ToString();
         $reqJ=$this->db->prepare('SELECT idCompte from compte where username=:jName');
         $reqJ->bindParam(':jName',$jName);
         $reqJ->execute();
@@ -139,9 +140,15 @@ class EssayerDao{
         $arow=$reqA->fetch(PDO::FETCH_ASSOC);
         $idJ=intval($jrow['idCompte']);
         $idA=intval($arow['idCompte']);
-        $req=$this->db->prepare('SELECT * from essayer where joueurAttaquant=:idJ and joueurAttaque=:idA');
+        $reqC=$this->db->prepare('SELECT idChallenge from challenge where nomChallenge=:Nchall');
+        $reqC->bindParam(':Nchall',$chall);
+        $reqC->execute();
+        $crow=$reqC->fetch(PDO::FETCH_ASSOC);
+        $idC=intval($crow['idChallenge']);
+        $req=$this->db->prepare('SELECT * from essayer where joueurAttaquant=:idJ and joueurAttaque=:idA and challenge=:idC');
         $req->bindParam(':idJ',$idJ);
         $req->bindParam(':idA',$idA);
+        $req->bindParam(':idC',$idC);
         $req->execute();
         while($row=$req->fetch(PDO::FETCH_ASSOC)){
             if($row['trouve']==1){

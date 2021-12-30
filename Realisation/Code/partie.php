@@ -130,7 +130,7 @@ if(isset($_POST["code"])){
                             <?php
                             $participants = $challengeDao->ListParticipants($_GET["chal"]);$essaiDAO = new EssayerDao();
                             foreach($participants as $participant){
-                                if(($participant->getUsername() != $_SESSION["username"])&&(!$essaiDAO->Trouve($compte,$participant))){
+                                if(($participant->getUsername() != $_SESSION["username"])&&(!$essaiDAO->Trouve($compte,$participant,$curChallenge))){
                                     $name = $participant->getUsername();
                                     $url = "partie.php?chal=". htmlentities($_GET["chal"]) ."&adv=". htmlentities($name);
 
@@ -148,7 +148,7 @@ if(isset($_POST["code"])){
                         </div>
                     </div>
                     <?php if(isset($_GET['adv'])){ 
-                        if (!$essaiDAO->Trouve($compte,$compteDao->DirtyRead($_GET['adv']))){
+                        if (!$essaiDAO->Trouve($compte,$compteDao->DirtyRead($_GET['adv']),$curChallenge)){
                         ?> 
                         <div class="row red-border my-3 px-5 py-3">
                             <form action="<?=  "partie.php?chal=". htmlentities($_GET["chal"]) ."&adv=". htmlentities($_GET['adv']) ?>" method="POST">
