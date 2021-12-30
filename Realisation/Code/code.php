@@ -30,19 +30,21 @@ if($challengeDao->isIn($compte->getUsername(), $challenge->ToString())){
 // Joindre la page de partie
 if(isset($_POST["val"])){
     $warning = false;
+    for($i=0;$i<$challenge->getDifficulte();$i++){
+        
+    if(!empty($_POST["n".$i])){
 
-    if(!empty($_POST["n0"] && $_POST["n1"] && $_POST["n2"] && $_POST["n3"] && $_POST["n4"] && $_POST["n5"])){
-
-        $code = intval(htmlentities($_POST["n0"] . $_POST["n1"] . $_POST["n2"] . $_POST["n3"] . $_POST["n4"] . $_POST["n5"]));
+        $code .= intval(htmlentities($_POST["n".$i]));
+        
+    }else{
+        $warning = true;
+    }}
         $challengeDao->UpdateParticipants($challenge->ToString(), $compte->getUsername(), $code);
         echo $code;
         
         $url = "partie.php?chal=" . $_GET["chal"];
         Header("Location: $url");
         exit();
-    }else{
-        $warning = true;
-    }
 
 }
 
@@ -90,12 +92,11 @@ if(isset($_POST["val"])){
 
                         <form action="code.php?chal=<?= $_GET["chal"] ?>"  method="POST">
                             <div class="row justify-content-around form-group">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n0">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n1">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n2">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n3">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n4">
-                                <input class="col-md-1 blue-border" type="number" min="0" max="9" name="n5">
+                            <?php 
+                                        for ($i=0;$i<$challenge->getDifficulte();$i++){
+                                            echo'<input class="col-md-1 blue-border" type="number" min="1" max="9" name="n'.$i.'" required>';
+                                        }
+                                    ?>
                             </div>
                             <div class="row justify-content-center px-5 pt-3">
                                 <input class="btn btn-primary" name="val" type="submit" value="Valider">

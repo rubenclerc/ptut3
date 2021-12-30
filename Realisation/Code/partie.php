@@ -21,22 +21,23 @@ $compte->setUsername($_SESSION['username']);
 // Challenge courant
 $challengeDao = new ChallengeDao();
 $curChallenge = $challengeDao->Read(htmlentities($_GET['chal']));
-
 // Si un utilisateur veut accéder à la page sans être connecté
 if(!isset($_SESSION['username'])) {
     header('Location: connexion.php');
     exit();
 }
-
 // Tentative
 if(isset($_POST["code"])){
     $adv = $compteDao->DirtyRead($_GET['adv']);
-    $code = intval(htmlentities($_POST["n0"]) . htmlentities($_POST["n1"]) . htmlentities($_POST["n2"]) . htmlentities($_POST["n3"]) . htmlentities($_POST["n4"]) . htmlentities($_POST["n5"]));
+    $code = 0;
+    for ($i=0;$i<$curChallenge->getDifficulte();$i++){
+        $code .=intval(htmlentities($_POST["n".$i]));
+    }
     $tent = new Tentative($code,$compte,$adv,$curChallenge);
     $reponse = $tent->Tenter();
     $strRep = $reponse->getRep();
     $b=false;
-    if(substr_count($strRep, "C")==6){
+    if(substr_count($strRep, "C")==$curChallenge->getDifficulte()){
         $b=true;
     }
     $essaiDao = new EssayerDao();
@@ -104,15 +105,16 @@ if(isset($_POST["code"])){
                             <div class="row justify-content-around mb-4">
                                     <h4 class="col-md-2 bleu blue-dot"><?= substr_count($strRep, "C")?></h4>
                                     <h4 class="col-md-2 rouge red-dot"><?= substr_count($strRep, "B") ?></h4>
-
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[0] ?></h4>
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[1] ?></h4>
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[2] ?></h4>
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[3] ?></h4>
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[4] ?></h4>
-                                    <h4 class="col-md-1 blue-border blue-border-xs bleu text-center"><?= $code[5] ?></h4>
+                                    <?php 
+                                    $i=0;
+                                        while($i<$curChallenge->getDifficulte()){
+                                            echo'<h4 class="col-md-1 blue-border blue-border-xs bleu text-center">'. $code[$i] .'</h4>';
+                                            $i++;
+                                        }
+                                    ?>
+                                   
                             </div>
-                <?php if(substr_count($strRep, "C") == 6) {$gagne = true; echo "<p class='bleu'>Bravo vous avez trouvé le code de {$adve->getUsername()}</p>";}?>
+                <?php if(substr_count($strRep, "C") == $curChallenge->getDifficulte()) {$gagne = true; echo "<p class='bleu'>Bravo vous avez trouvé le code de {$adve->getUsername()}</p>";}?>
                 <?php } ?>
                     </div>
                 </div>
@@ -153,12 +155,12 @@ if(isset($_POST["code"])){
                         <div class="row red-border my-3 px-5 py-3">
                             <form action="<?=  "partie.php?chal=". htmlentities($_GET["chal"]) ."&adv=". htmlentities($_GET['adv']) ?>" method="POST">
                                 <div class="row justify-content-around form-group">
-                                    <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n0" required>
-                                    <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n1" required>
-                                    <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n2" required>
-                                    <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n3" required>
-                                    <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n4" required>
-                                    <input class="col-md-1 blue-border" type="number" min="1" max="9" name="n5" required>
+                                    <?php 
+                                        for ($i=0;$i<$curChallenge->getDifficulte();$i++){
+                                            echo'<input class="col-md-1 blue-border" type="number" min="1" max="9" name="n'.$i.'" required>';
+                                        }
+                                    ?>
+                                    
                                 </div>
                                 <div class="row justify-content-center px-5 pt-3">
                                     <input class="btn btn-primary" type="submit" value="Valider" name="code">
