@@ -30,10 +30,11 @@ class Compte {
     
 
     // Méthodes
-    public function __construct($username = "", $passwordHash = "", $estAdmin = false){
+    public function __construct($username = "", $passwordHash = "", $estAdmin = false, $nbPoints = 0){
         $this->username = $username;
         $this->passwordHash = $passwordHash;
         $this->estAdmin = $estAdmin;
+        $this->nbPoints = $nbPoints;
     }
 
     // Constructeur créé lors de la connexion
@@ -114,4 +115,19 @@ class Compte {
     public function getNbPoints():int{
         return $this->nbPoints;
     }
+
+    public function getNbPointsChal($chal){
+        $chal = htmlentities($chal);
+        $nbPoints = 0;
+        $chalDao = new ChallengeDao();
+        $nbPoints = $chalDao->getNbPoints($chal, $this->username);
+        return $nbPoints;
+    }
+
+    public function addPoints($chal){
+        $this->nbPoints += $chal->getDifficulte();
+        $chalDao = new ChallengeDao();
+        $chalDao->addPoints($chal->ToString(),$this->username ,$this->nbPoints);
+    }
+
 }

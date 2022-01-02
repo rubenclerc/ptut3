@@ -1,6 +1,5 @@
 <?php
 require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "ConnBdd.php");
-require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Joueur.php");
 require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Challenge.php");
 require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Tentative.php");
 
@@ -104,13 +103,13 @@ class EssayerDao{
             $jreq = $this->db->prepare('SELECT * FROM COMPTE WHERE idCompte = :idCompte');
             $jreq->execute(array('idCompte' => $rowIdJ['idCompte']));
             $jrow = $jreq->fetch(PDO::FETCH_ASSOC);
-            $joueur = new Compte($jrow['username'], $jrow['passw'], $jrow['estAdmin']);
+            $joueur = new Compte($jrow['username'], $jrow['passw'], $jrow['estAdmin'], $jrow['nbPoints']);
 
             // Création de l'adversaire
             $areq = $this->db->prepare('SELECT * FROM COMPTE WHERE idCompte = :idCompte');
             $areq->execute(array('idCompte' => $rowIdA['idCompte']));
             $arow = $areq->fetch(PDO::FETCH_ASSOC);
-            $adversaire = new Compte($arow['username'], $arow['passw'], $arow['estAdmin']);
+            $adversaire = new Compte($arow['username'], $arow['passw'], $arow['estAdmin'], $arow['nbPoints']);
 
             // Création du challenge
             $creq = $this->db->prepare('SELECT * FROM CHALLENGE WHERE idChallenge = :idChallenge');

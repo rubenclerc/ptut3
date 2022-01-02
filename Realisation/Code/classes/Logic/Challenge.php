@@ -1,5 +1,4 @@
 <?php
-require_once 'Joueur.php';
 require_once (dirname(__DIR__) . DIRECTORY_SEPARATOR . "DAO" . DIRECTORY_SEPARATOR . "ChallengeDao.php");
 
 

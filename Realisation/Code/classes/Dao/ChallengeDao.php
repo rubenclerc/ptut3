@@ -129,7 +129,7 @@ class ChallengeDao
         $req->execute();
         
         while($row=$req->fetch(PDO::FETCH_ASSOC)){
-            $j = new Compte($row['username'],$row['passw'],$row['estAdmin']);
+            $j = new Compte($row['username'],$row['passw'],$row['estAdmin'], $row['nbPoints']);
             $participants[]=$j;
         }
         return $participants;
@@ -222,6 +222,28 @@ class ChallengeDao
         $req->execute();
         $row = $req->fetch(PDO::FETCH_ASSOC);
         return $row['idChallenge'];
+    }
+
+    public function getNbPoints($chal, $username){
+
+        $req = $this->db->prepare('SELECT nbPoints FROM PARTICIPER WHERE challenge = (SELECT idChallenge FROM CHALLENGE WHERE nomChallenge = :chal) AND joueur = (SELECT idCompte FROM compte WHERE username = :username)');
+        $req->bindParam(':chal',$chal);
+        $req->bindParam(':username',$username);
+        $req->execute();
+
+        $row = $req->fetch(PDO::FETCH_ASSOC);
+        $nbPoints = $row['nbPoints'];
+
+        return $nbPoints;
+    }
+
+    public function addPoints($chal, $username, $nbPoints){
+
+        $req = $this->db->prepare('UPDATE PARTICIPER SET nbPoints = nbPoints + :nbPoints WHERE challenge = (SELECT idChallenge FROM CHALLENGE WHERE nomChallenge = :chal) AND joueur = (SELECT idCompte FROM compte WHERE username = :username)');
+        $req->bindParam(':chal',$chal);
+        $req->bindParam(':username',$username);
+        $req->bindParam(':nbPoints',$nbPoints);
+        $req->execute();
     }
 
 }

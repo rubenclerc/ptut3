@@ -3,7 +3,6 @@ session_start();
 
 require_once('classes' . DIRECTORY_SEPARATOR . 'Logic'. DIRECTORY_SEPARATOR .'ConnBdd.php');
 require_once('classes' . DIRECTORY_SEPARATOR . 'Logic'. DIRECTORY_SEPARATOR .'Compte.php');
-require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Joueur.php");
 require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "ChallengeDao.php");
 require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "CompteDao.php");
 require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Tentative.php");
@@ -42,6 +41,11 @@ if(isset($_POST["code"])){
     }
     $essaiDao = new EssayerDao();
     $essai = $essaiDao->Create($compte, $adv, $code, $curChallenge,$b);
+
+    if($essaiDao->Trouve($compte, $adv, $curChallenge)){
+        $compte->addPoints($curChallenge);
+    }
+    
 }
 ?>
 <!DOCTYPE html>
@@ -69,7 +73,7 @@ if(isset($_POST["code"])){
 
                 <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2"><?= $curChallenge->ToString() ?></h1>
 
-                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2 pts-ico"><?= $compte->getNbPoints() ?></h1>
+                <h1 class="col-md-2 bleu nav-red-border text-center align-self-center py-2 pts-ico"><?= $compte->getNbPointsChal($_GET['chal']) ?></h1>
 
                 <?php if($curChallenge->getTimeStampRestant() > 0){ ?>
                     <h1 class="col-md-2 bleu text-center align-self-center time-ico"><?= $curChallenge->getTpsRestant()->format('d') . "j, " . $curChallenge->getTpsRestant()->format('H') . "h" . $curChallenge->getTpsRestant()->format('i') ?></h1>

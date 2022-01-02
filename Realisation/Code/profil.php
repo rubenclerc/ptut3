@@ -1,6 +1,5 @@
 <?php
 session_start();
-require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Joueur.php");
 require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "CompteDao.php");
 
 // Si un utilisateur veut accéder à la page sans être connecté

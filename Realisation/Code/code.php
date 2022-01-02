@@ -3,7 +3,6 @@ session_start();
 
 require_once 'classes/Logic/ConnBdd.php';
 require_once 'classes/Logic/Compte.php';
-require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR . "Joueur.php");
 require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "ChallengeDao.php");
 
 
