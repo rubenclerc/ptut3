@@ -8,6 +8,10 @@ require_once(dirname(__DIR__) . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATO
 class Compte {
 
     // Attributs
+    /**
+     * @var int
+     */
+    private $nbPoints;
 
     /**
      * @var string
@@ -105,5 +109,9 @@ class Compte {
 
     public function getPasswordHash(): string{
         return $this->passwordHash;
+    }
+
+    public function getNbPoints():int{
+        return $this->nbPoints;
     }
 }

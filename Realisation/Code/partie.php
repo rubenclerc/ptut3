@@ -15,7 +15,7 @@ require_once ( "classes" . DIRECTORY_SEPARATOR . "Logic" . DIRECTORY_SEPARATOR .
 $compteDao = new CompteDao();
 
 $essaiDAO = new EssayerDao();
-$compte = new Joueur();
+$compte = new Compte();
 $compte->setUsername($_SESSION['username']);
 
 // Challenge courant

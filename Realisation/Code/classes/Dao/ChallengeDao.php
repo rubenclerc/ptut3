@@ -129,7 +129,7 @@ class ChallengeDao
         $req->execute();
         
         while($row=$req->fetch(PDO::FETCH_ASSOC)){
-            $j = new Joueur($row['username'],$row['passw'],$row['estAdmin']);
+            $j = new Compte($row['username'],$row['passw'],$row['estAdmin']);
             $participants[]=$j;
         }
         return $participants;

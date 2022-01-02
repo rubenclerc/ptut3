@@ -8,7 +8,7 @@ require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "
 
 
 // Init
-$compte = new Joueur();
+$compte = new Compte();
 $compte->setUsername($_SESSION['username']);
 
 $challengeDao = new ChallengeDao();

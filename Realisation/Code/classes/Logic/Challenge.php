@@ -42,7 +42,7 @@ class Challenge
     private $nbPlaces;
 
     /**
-     * @var Joueur
+     * @var Compte
      */
     private $gagnant;
 
@@ -99,7 +99,7 @@ class Challenge
      * @param  int $code
      * @return void
      */
-    public function addCode(Joueur $j, int $code){
+    public function addCode(Compte $j, int $code){
         $this->codes[$j->toString()] =  $code;
     }
     
@@ -214,9 +214,9 @@ class Challenge
 
     /**
      * AddJoueur
-     * @param Joueur j
+     * @param Compte j
      */
-    public function addJoueur(Joueur $j){
+    public function addJoueur(Compte $j){
         $this->participants[]=$j;
     }
 
@@ -231,7 +231,7 @@ class Challenge
     /**
      * getCode
      *
-     * @param  Joueur $j
+     * @param  Compte $j
      * @return int
      */
     public function getCode(Compte $j): int{
