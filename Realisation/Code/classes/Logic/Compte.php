@@ -127,7 +127,7 @@ class Compte {
     public function addPoints($chal){
         $this->nbPoints += $chal->getDifficulte();
         $chalDao = new ChallengeDao();
-        $chalDao->addPoints($chal->ToString(),$this->username ,$this->nbPoints);
+        $chalDao->addPoints($chal->ToString(),$this->username , $chal->getDifficulte());
     }
 
 }

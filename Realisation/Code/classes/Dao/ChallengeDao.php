@@ -244,6 +244,11 @@ class ChallengeDao
         $req->bindParam(':username',$username);
         $req->bindParam(':nbPoints',$nbPoints);
         $req->execute();
+
+        $req = $this->db->prepare('UPDATE COMPTE SET nbPoints = nbPoints + :nbPoints WHERE username = :username');
+        $req->bindParam(':username',$username);
+        $req->bindParam(':nbPoints',$nbPoints);
+        $req->execute();
     }
 
 }
