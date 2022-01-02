@@ -130,4 +130,10 @@ class Compte {
         $chalDao->addPoints($chal->ToString(),$this->username , $chal->getDifficulte());
     }
 
+    public function setPoints($nbPoints){
+        $compteDao = new CompteDao();
+        $compteDao->addPoints($this->username, $nbPoints);
+        $this->nbPoints += $nbPoints;
+    }
+
 }

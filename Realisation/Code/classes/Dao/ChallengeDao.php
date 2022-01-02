@@ -251,4 +251,44 @@ class ChallengeDao
         $req->execute();
     }
 
+    public function getClassement($chal){
+
+        $participants=array();
+
+        $req=$this->db->prepare('SELECT idChallenge from challenge where nomChallenge = :nomChallenge');
+        $req->bindParam(':nomChallenge',$chal);
+        $req->execute();
+        $row=$req->fetch(PDO::FETCH_ASSOC);
+        $idC = $row['idChallenge'];
+
+        $req=$this->db->prepare('SELECT * from Compte inner join Participer on Compte.idCompte=Participer.joueur WHERE challenge = :idChal  ORDER BY Participer.nbPoints DESC');
+        $req->bindParam(':idChal',$idC);
+        $req->execute();
+        
+        while($row=$req->fetch(PDO::FETCH_ASSOC)){
+            $j = new Compte($row['username'],$row['passw'],$row['estAdmin'], $row['nbPoints']);
+            $participants[]=$j;
+        }
+
+        return $participants;
+    }
+
+    public function setGagnant($nomChallenge, $gagnant){
+
+            $req = $this->db->prepare('UPDATE challenge SET compteJoueur = (SELECT idCompte FROM COMPTE WHERE username = :gagnant) WHERE nomChallenge = :nomChallenge');
+            $req->bindParam(':nomChallenge',$nomChallenge);
+            $req->bindParam(':gagnant',$gagnant);
+            $req->execute();
+    }
+
+    public function getGagnant($nomChallenge){
+        $req = $this->db->prepare('SELECT compteJoueur FROM challenge WHERE nomChallenge = :nomChallenge');
+        $req->bindParam(':nomChallenge',$nomChallenge);
+        $req->execute();
+
+        $row = $req->fetch(PDO::FETCH_ASSOC);
+        $gagnant = $row['compteJoueur'];
+        return $gagnant;
+    }
+
 }

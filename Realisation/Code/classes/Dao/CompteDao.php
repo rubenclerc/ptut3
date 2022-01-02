@@ -157,4 +157,26 @@ class CompteDao{
 
         return $ret;
     }
+
+    public function addPoints($username, $points){
+        $req = $this->db->prepare('UPDATE COMPTE SET nbPoints = nbPoints + :points WHERE username = :username');
+        $req->bindParam(':username',$username);
+        $req->bindParam(':points',$points);
+        $req->execute();
+    }
+
+    public function codeTrouves($chal, $user){
+        $req = $this->db->prepare('SELECT SUM(IF(trouve = 1, 1, 0)) AS nb FROM ESSAYER WHERE joueurAttaquant = (SELECT idCompte FROM COMPTE WHERE username = :user) AND trouve = 1 AND challenge = (SELECT idChallenge FROM CHALLENGE WHERE nomChallenge = :chal)');
+        $req->bindParam(':user',$user);
+        $req->bindParam(':chal',$chal);
+        $req->execute();
+
+        $row = $req->fetch(PDO::FETCH_ASSOC);
+
+        if($row['nb'] == NULL){
+            $row['nb'] = 0;
+        }
+
+        return $row['nb'];
+    }
 }

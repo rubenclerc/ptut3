@@ -1,12 +1,15 @@
 <?php
 session_start();
+
 require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "ChallengeDao.php");
+require_once ( "classes" . DIRECTORY_SEPARATOR . "Dao" . DIRECTORY_SEPARATOR . "CompteDao.php");
 
 
 // Challenge courant
+$count = 1;
 $challengeDao = new ChallengeDao();
 $curChallenge = $challengeDao->Read(htmlentities($_GET['chal']));
-
+$bonus = 0;
 ?>
 
 <!DOCTYPE html>
@@ -43,24 +46,55 @@ $curChallenge = $challengeDao->Read(htmlentities($_GET['chal']));
             <table class="table">
                 <thead>
                     <tr>
+                        <th>Rang</th>
                         <th>Username</th>
                         <th>Codes trouvés</th>
+                        <th>Bonus</th>
                         <th>Points</th>
                     </tr>
                 </thead>
 
                 <?php
-                    $participants = $challengeDao->ListParticipants($_GET["chal"]);
+                    $participants = $challengeDao->getClassement($_GET["chal"]);
                     foreach($participants as $participant){ ?>
 
                     <tr>
                            
                     <?php
                         $name = $participant->getUsername();
-                        echo "<td>$name</td>";
+                        $points = $participant->getNbPoints();
+                        $classement = $count++;
+
+                        if($challengeDao->getGagnant($curChallenge->ToString()) == NULL){
+                            if($classement == 1 && $points > 0){
+                                $challengeDao->setGagnant($curChallenge->ToString(), $name);
+                                $bonus = $challengeDao->CountParticipants($curChallenge->ToString());
+                                
+                            }elseif($classement == 2 && $points > 0){
+                                $bonus = intval($challengeDao->CountParticipants($curChallenge->ToString()) / 2);
+                            }elseif($classement == 3 && $points > 0){
+                                $bonus = intval($challengeDao->CountParticipants($curChallenge->ToString()) / 3);
+                            }else{
+                                $bonus = 0;
+                            }
+
+                            $participant->setPoints($bonus);
+                        }
+
+                        if($classement == 1 && $points > 0){
+                            $bonus = $challengeDao->CountParticipants($curChallenge->ToString());
+                        }elseif($classement == 2 && $points > 0){
+                            $bonus = intval($challengeDao->CountParticipants($curChallenge->ToString()) / 2);
+                        }elseif($classement == 3 && $points > 0){
+                            $bonus = intval($challengeDao->CountParticipants($curChallenge->ToString()) / 3);
+                        }else{
+                            $bonus = 0;
+                        }
+                        
+                        $compteDao = new CompteDao();
+
+                        echo "<td>$classement</td> <td>$name</td> <td>{$compteDao->codeTrouves($curChallenge->ToString(), $name)}</td> <td>$bonus</td> <td>{$participant->getNbPoints()}</td>";
                     ?>
-                    <td></td>
-                    <td></td>
                     
                     </tr>
                 <?php } ?>
