@@ -90,7 +90,7 @@ if(isset($_POST['modifier'])){
                                 </div>
                                 <div class="form-group">
                                     <label for="NbPoints">Nombre de points :</label>
-                                    <input type="text"  class="form-control blue-border" id="NbPoints" disabled>
+                                    <input type="text"  class="form-control blue-border" id="NbPoints"value="<?= $stats['nbPoints'] ?>" disabled>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -100,7 +100,7 @@ if(isset($_POST['modifier'])){
                                 </div>
                                 <div class="form-group">
                                     <label for="Nbdcouvertes">Nombre de decouvertes :</label>
-                                    <input type="text"  class="form-control blue-border" id="Nbdcouvertes" disabled>
+                                    <input type="text"  class="form-control blue-border" id="Nbdcouvertes" value="<?= $stats['nbDecouv'] ?>" disabled>
                                 </div>
                             </div>
                             <p>

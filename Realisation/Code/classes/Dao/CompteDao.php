@@ -133,9 +133,27 @@ class CompteDao{
         $rowWin = $reqWin->fetch(PDO::FETCH_ASSOC);
         $nbWin = $rowWin['nbWin'];
 
+        // Requête pour le nombre de points
+        $reqPoints = $this->db->prepare('SELECT nbPoints FROM COMPTE WHERE username = :username');
+        $reqPoints->bindParam(':username',$username);
+        $reqPoints->execute();
+
+        $rowPoints = $reqPoints->fetch(PDO::FETCH_ASSOC);
+        $nbPoints = $rowPoints['nbPoints'];
+
+        // Requête pour le nombre de découvertes
+        $reqDecouvertes = $this->db->prepare('SELECT SUM(IF(trouve = 1, 1, 0)) AS nbDecouv FROM ESSAYER WHERE joueurAttaquant = :idCompte');
+        $reqDecouvertes->bindParam(':idCompte',$id);
+        $reqDecouvertes->execute();
+
+        $rowDecouvertes = $reqDecouvertes->fetch(PDO::FETCH_ASSOC);
+        $nbDecouvertes = $rowDecouvertes['nbDecouv'];
+
         // Ajout des stats au résultat
         $ret["nbParties"] = $nbParties;
         $ret["nbWin"] = $nbWin;
+        $ret["nbPoints"] = $nbPoints;
+        $ret["nbDecouv"] = $nbDecouvertes;
 
         return $ret;
     }
