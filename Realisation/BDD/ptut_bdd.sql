@@ -56,3 +56,6 @@ alter table Participer add constraint fk_joueur foreign key (joueur) references 
 alter table Participer add constraint fk_challenge foreign key (challenge) references Challenge(idChallenge) ON UPDATE CASCADE ON DELETE CASCADE;
 
 alter table Essayer add column trouve boolean;
+
+alter table Compte add column nbPoints boolean;
+
