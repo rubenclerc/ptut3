@@ -57,5 +57,5 @@ alter table Participer add constraint fk_challenge foreign key (challenge) refer
 
 alter table Essayer add column trouve boolean;
 
-alter table Compte add column nbPoints boolean;
+alter table Compte add column nbPoints int;
 
