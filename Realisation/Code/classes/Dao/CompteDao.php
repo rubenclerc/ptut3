@@ -17,7 +17,7 @@ class CompteDao{
         $pass=$c->getPasswordHash();
         $admin=$c->getEstAdmin();
 
-        $req = $this->db->prepare('INSERT INTO compte (username, passw, estAdmin, nbPoints) values (:username, :pass, :estAdmin, 0)');
+        $req = $this->db->prepare('INSERT INTO Compte (username, passw, estAdmin, nbPoints) VALUES (:username, :pass, :estAdmin, 0)');
         $req->bindParam(':username',$username);
         $req->bindParam(':pass', $pass);	
         $req->bindParam(':estAdmin', $admin);
@@ -26,12 +26,12 @@ class CompteDao{
 
     public function Read(string $login, string $passHash): Compte{
 
-        $compte = null;
+        $Compte = null;
         $row = null;
 
         if(isset($login)&&isset($passHash)){
             try{
-                $req=$this->db->prepare('SELECT * FROM COMPTE WHERE username=:username');
+                $req=$this->db->prepare('SELECT * FROM Compte WHERE username=:username');
                 $req->bindParam(':username',$login);
                 $req->execute();
 
@@ -49,26 +49,26 @@ class CompteDao{
                 throw new BadPasswordError("");
             }
             else{
-                $compte = new Compte($row["username"], $row["passw"], $row["estAdmin"], $row['nbPoints']);
+                $Compte = new Compte($row["username"], $row["passw"], $row["estAdmin"], $row['nbPoints']);
             }
         }
 
-        return $compte;
+        return $Compte;
     }
 
     public function DirtyRead(string $username): Compte{
-        $compte = null;
+        $Compte = null;
         $row = null;
 
-        $req=$this->db->prepare('SELECT * FROM COMPTE WHERE username=:username');
+        $req=$this->db->prepare('SELECT * FROM Compte WHERE username=:username');
         $req->bindParam(':username',$username);
         $req->execute();
 
         $row=$req->fetch(PDO::FETCH_ASSOC);
 
-        $compte = new Compte($row["username"], $row["passw"], $row["estAdmin"], $row['nbPoints']);
+        $Compte = new Compte($row["username"], $row["passw"], $row["estAdmin"], $row['nbPoints']);
 
-        return $compte;
+        return $Compte;
     }
 
     public function Update(Compte $c){
@@ -76,14 +76,14 @@ class CompteDao{
         $pass=$c->getPasswordHash();
         $admin=$c->getEstAdmin();
 
-        $req=$this->db->prepare('SELECT idCompte FROM COMPTE WHERE username=:username');
+        $req=$this->db->prepare('SELECT idCompte FROM Compte WHERE username=:username');
         $req->bindParam(':username',$username);
         $req->execute();
 
         $row=$req->fetch(PDO::FETCH_ASSOC);
         $id=$row['idCompte'];
 
-        $req = $this->db->prepare('update compte set username = :username, passw = :pass, estAdmin = :estAdmin where idCompte = '. $id);
+        $req = $this->db->prepare('UPDATE Compte SET username = :username, passw = :pass, estAdmin = :estAdmin WHERE idCompte = '. $id);
         $req->bindParam(':username',$username);
         $req->bindParam(':pass', $pass);	
         $req->bindParam(':estAdmin', $admin);
@@ -94,7 +94,7 @@ class CompteDao{
         $exist=true;
         $user=htmlentities($username);
 
-        $req=$this->db->prepare('SELECT idCompte FROM COMPTE WHERE username=:username');
+        $req=$this->db->prepare('SELECT idCompte FROM Compte WHERE username=:username');
         $req->bindParam(':username',$user);
         $req->execute();
         $row = $req->fetch(PDO::FETCH_ASSOC);
@@ -110,7 +110,7 @@ class CompteDao{
         $ret = array();
 
         // On récupère l'id du joueur
-        $req = $this->db->prepare('SELECT idCompte FROM COMPTE WHERE username=:username');
+        $req = $this->db->prepare('SELECT idCompte FROM Compte WHERE username=:username');
         $req->bindParam(':username',$username);
         $req->execute();
 
@@ -118,7 +118,7 @@ class CompteDao{
         $id = $row['idCompte'];
 
         // Requête pour le nombre de parties jouées
-        $reqParties = $this->db->prepare('SELECT SUM(IF(joueur = :idCompte, 1, 0)) AS nbParties FROM PARTICIPER');
+        $reqParties = $this->db->prepare('SELECT SUM(IF(joueur = :idCompte, 1, 0)) AS nbParties FROM Participer');
         $reqParties->bindParam(':idCompte',$id);
         $reqParties->execute();
 
@@ -126,7 +126,7 @@ class CompteDao{
         $nbParties = $rowParties['nbParties'];
 
         // Requête pour le nombre de parties gagnées
-        $reqWin = $this->db->prepare('SELECT SUM(IF(compteJoueur = :idCompte, 1, 0)) AS nbWin FROM CHALLENGE');
+        $reqWin = $this->db->prepare('SELECT SUM(IF(compteJoueur = :idCompte, 1, 0)) AS nbWin FROM Challenge');
         $reqWin->bindParam(':idCompte',$id);
         $reqWin->execute();
 
@@ -134,7 +134,7 @@ class CompteDao{
         $nbWin = $rowWin['nbWin'];
 
         // Requête pour le nombre de points
-        $reqPoints = $this->db->prepare('SELECT nbPoints FROM COMPTE WHERE username = :username');
+        $reqPoints = $this->db->prepare('SELECT nbPoints FROM Compte WHERE username = :username');
         $reqPoints->bindParam(':username',$username);
         $reqPoints->execute();
 
@@ -142,7 +142,7 @@ class CompteDao{
         $nbPoints = $rowPoints['nbPoints'];
 
         // Requête pour le nombre de découvertes
-        $reqDecouvertes = $this->db->prepare('SELECT SUM(IF(trouve = 1, 1, 0)) AS nbDecouv FROM ESSAYER WHERE joueurAttaquant = :idCompte');
+        $reqDecouvertes = $this->db->prepare('SELECT SUM(IF(trouve = 1, 1, 0)) AS nbDecouv FROM Essayer WHERE joueurAttaquant = :idCompte');
         $reqDecouvertes->bindParam(':idCompte',$id);
         $reqDecouvertes->execute();
 
@@ -159,14 +159,14 @@ class CompteDao{
     }
 
     public function addPoints($username, $points){
-        $req = $this->db->prepare('UPDATE COMPTE SET nbPoints = nbPoints + :points WHERE username = :username');
+        $req = $this->db->prepare('UPDATE Compte SET nbPoints = nbPoints + :points WHERE username = :username');
         $req->bindParam(':username',$username);
         $req->bindParam(':points',$points);
         $req->execute();
     }
 
     public function codeTrouves($chal, $user){
-        $req = $this->db->prepare('SELECT SUM(IF(trouve = 1, 1, 0)) AS nb FROM ESSAYER WHERE joueurAttaquant = (SELECT idCompte FROM COMPTE WHERE username = :user) AND trouve = 1 AND challenge = (SELECT idChallenge FROM CHALLENGE WHERE nomChallenge = :chal)');
+        $req = $this->db->prepare('SELECT SUM(IF(trouve = 1, 1, 0)) AS nb FROM Essayer WHERE joueurAttaquant = (SELECT idCompte FROM Compte WHERE username = :user) AND trouve = 1 AND challenge = (SELECT idChallenge FROM Challenge WHERE nomChallenge = :chal)');
         $req->bindParam(':user',$user);
         $req->bindParam(':chal',$chal);
         $req->execute();

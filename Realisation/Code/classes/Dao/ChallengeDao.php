@@ -23,13 +23,13 @@ class ChallengeDao
         $difficulte=$challenge->getDifficulte();
         $a=$admin->getUsername();
 
-        $req=$this->db->prepare('SELECT * FROM compte WHERE username = :username');
+        $req=$this->db->prepare('SELECT * FROM Compte WHERE username = :username');
             $req->bindParam(':username',$a);
             $req->execute();
             $row=$req->fetch(PDO::FETCH_ASSOC);
             $idA=$row['idCompte'];
 
-        $req = $this->db->prepare("INSERT INTO CHALLENGE(nomChallenge, dateDebut, dateFin,nbPartcipants, difficulte, compteAdmin) VALUES(:nomChallenge, :dateDebut, :dateFin, :nbParticipants, :difficulte, :idAdmin)");
+        $req = $this->db->prepare("INSERT INTO Challenge(nomChallenge, dateDebut, dateFin,nbPartcipants, difficulte, compteAdmin) VALUES(:nomChallenge, :dateDebut, :dateFin, :nbParticipants, :difficulte, :idAdmin)");
         $req->bindParam(':nomChallenge', $nomChallenge);
         $req->bindParam(':dateDebut', $dateDebut);
         $req->bindParam(':dateFin', $dateFin);
@@ -42,7 +42,7 @@ class ChallengeDao
 
     public function Read(string $nomChallenge): Challenge{
         $challenge = null;
-        $req=$this->db->prepare('SELECT * FROM challenge WHERE nomChallenge=:nomChall');
+        $req=$this->db->prepare('SELECT * FROM Challenge WHERE nomChallenge=:nomChall');
         $req->bindParam(':nomChall',$nomChallenge);
         $req->execute();
         $row=$req->fetch(PDO::FETCH_ASSOC);
@@ -52,7 +52,7 @@ class ChallengeDao
 
     public function ReadId(int $idChallenge): Challenge{
         $challenge = null;
-        $req=$this->db->prepare('SELECT * FROM challenge WHERE idChallenge=:idChall');
+        $req=$this->db->prepare('SELECT * FROM Challenge WHERE idChallenge=:idChall');
         $req->bindParam(':idChall',$idChallenge);
         $req->execute();
         $row=$req->fetch(PDO::FETCH_ASSOC);
@@ -70,7 +70,7 @@ class ChallengeDao
         $timestamp1 = strtotime($dateDebut); 
         $timestamp2 = strtotime($date);
         if(($timestamp1 > $timestamp2)){
-            $req = $this->db->prepare('update challenge set nomChallenge = :nomChall, dateDebut = :dateDebut, dateFin = :dateFin, nbPartcipants = :nbParticipants, difficulte = :difficulte where idChallenge = :id');
+            $req = $this->db->prepare('UPDATE Challenge SET nomChallenge = :nomChall, dateDebut = :dateDebut, dateFin = :dateFin, nbPartcipants = :nbParticipants, difficulte = :difficulte WHERE idChallenge = :id');
             $req->bindParam(':nomChall',$nomChallenge);
             $req->bindParam(':dateDebut', $dateDebut);	
             $req->bindParam(':dateFin', $dateFin);
@@ -85,7 +85,7 @@ class ChallengeDao
         $nomChallenge=$challenge->ToString();
         $dateDebut=$challenge->getDateDebut();
         $stringDate = $dateDebut->format('Y-m-d H:i:s');
-        $req=$this->db->prepare('SELECT * FROM challenge WHERE nomChallenge=:nomChall');
+        $req=$this->db->prepare('SELECT * FROM Challenge WHERE nomChallenge=:nomChall');
         $req->bindParam(':nomChall',$nomChallenge);
         $req->execute();
         $row=$req->fetch(PDO::FETCH_ASSOC);
@@ -95,14 +95,14 @@ class ChallengeDao
         $timestamp2 = strtotime($date);  
         if($timestamp1 > $timestamp2){
             echo"ok";
-            $reqdel = $this->db->prepare('delete from challenge  where idChallenge = '. $idC);
+            $reqdel = $this->db->prepare('DELETE FROM Challenge  where idChallenge = '. $idC);
             $reqdel->execute();
         }
 
     }
 
     public function ListAll(): array{
-        $req=$this->db->prepare('SELECT * FROM CHALLENGE');
+        $req=$this->db->prepare('SELECT * FROM Challenge');
         $req->execute();
         $challenges = array();
         while($row=$req->fetch(PDO::FETCH_ASSOC)){
@@ -118,13 +118,13 @@ class ChallengeDao
     public function ListParticipants(string $nomChallenge): array{
 
         $participants=array();
-        $req=$this->db->prepare('SELECT idChallenge from challenge where nomChallenge = :nomChallenge');
+        $req=$this->db->prepare('SELECT idChallenge FROM Challenge WHERE nomChallenge = :nomChallenge');
         $req->bindParam(':nomChallenge',$nomChallenge);
         $req->execute();
         $row=$req->fetch(PDO::FETCH_ASSOC);
         $idC = $row['idChallenge'];
 
-        $req=$this->db->prepare('SELECT * from Compte inner join Participer on Compte.idCompte=Participer.joueur WHERE challenge = :idChal');
+        $req=$this->db->prepare('SELECT * FROM Compte INNER JOIN Participer ON Compte.idCompte=Participer.joueur WHERE challenge = :idChal');
         $req->bindParam(':idChal',$idC);
         $req->execute();
         
@@ -138,21 +138,21 @@ class ChallengeDao
     public function UpdateParticipants(string $nomChallenge, string $username, int $code){
 
         //On récupère l'ID du challenge
-        $req=$this->db->prepare('SELECT idChallenge from challenge where nomChallenge = :nomChallenge');
+        $req=$this->db->prepare('SELECT idChallenge FROM Challenge WHERE nomChallenge = :nomChallenge');
         $req->bindParam(':nomChallenge',$nomChallenge);
         $req->execute();
         $row=$req->fetch(PDO::FETCH_ASSOC);
         $idC = $row['idChallenge'];
 
         //On récupère l'ID du joueur
-        $req=$this->db->prepare('SELECT idCompte from compte where username = :username');
+        $req=$this->db->prepare('SELECT idCompte FROM Compte WHERE username = :username');
         $req->bindParam(':username',$username);
         $req->execute();
         $row=$req->fetch(PDO::FETCH_ASSOC);
         $idCo = $row['idCompte'];
 
         //On insert le joueur, le challenge et le code dans la table
-        $req=$this->db->prepare('INSERT into participer (codeJoueur, nbPoints, challenge, joueur) values(:code, 0, :challenge, :joueur)');
+        $req=$this->db->prepare('INSERT INTO Participer (codeJoueur, nbPoints, challenge, joueur) VALUES(:code, 0, :challenge, :joueur)');
         $req->bindParam(':challenge',$idC);
         $req->bindParam(':joueur',$idCo);
         $req->bindParam(':code',$code);
@@ -163,7 +163,7 @@ class ChallengeDao
         $res = true;
         $chall = htmlentities($nomChallenge);
 
-        $req = $this->db->prepare('SELECT idChallenge FROM challenge where nomChallenge = :nomChallenge');
+        $req = $this->db->prepare('SELECT idChallenge FROM Challenge WHERE nomChallenge = :nomChallenge');
         $req->bindParam(':nomChall',$chall);
         $req->execute();
 
@@ -175,7 +175,7 @@ class ChallengeDao
     }
 
     public function CountParticipants(string $nomChallenge): int{
-        $req = $this->db->prepare('SELECT COUNT(*) FROM Participer inner join Challenge on Participer.challenge=Challenge.idChallenge where Challenge.nomChallenge = :nomChallenge');
+        $req = $this->db->prepare('SELECT COUNT(*) FROM Participer INNER JOIN Challenge ON Participer.challenge=Challenge.idChallenge WHERE Challenge.nomChallenge = :nomChallenge');
         $req->bindParam(':nomChallenge',$nomChallenge);
         $req->execute();
 
@@ -187,7 +187,7 @@ class ChallengeDao
     public function isIn(string $user, string $nomChallenge):bool{
         $res = false;
 
-        $req = $this->db->prepare('SELECT * FROM Participer WHERE joueur = (SELECT idCompte FROM compte WHERE username = :user) AND challenge = (SELECT idChallenge FROM challenge WHERE nomChallenge = :nomChallenge)');
+        $req = $this->db->prepare('SELECT * FROM Participer WHERE joueur = (SELECT idCompte FROM Compte WHERE username = :user) AND challenge = (SELECT idChallenge FROM Challenge WHERE nomChallenge = :nomChallenge)');
         $req->bindParam(':user',$user);
         $req->bindParam(':nomChallenge',$nomChallenge);
         $req->execute();
@@ -204,7 +204,7 @@ class ChallengeDao
 
     public function getCode(string $nomChallenge, string $login): int{
 
-        $req = $this->db->prepare('SELECT codeJoueur FROM PARTICIPER WHERE challenge = (SELECT idChallenge FROM challenge WHERE nomChallenge = :nomChallenge) AND joueur = (SELECT idCompte FROM compte WHERE username = :login)');
+        $req = $this->db->prepare('SELECT codeJoueur FROM Participer WHERE challenge = (SELECT idChallenge FROM Challenge WHERE nomChallenge = :nomChallenge) AND joueur = (SELECT idCompte FROM Compte WHERE username = :login)');
         $req->bindParam(':nomChallenge',$nomChallenge);
         $req->bindParam(':login',$login);
         $req->execute();
@@ -217,7 +217,7 @@ class ChallengeDao
 
     public function getId(string $nomChallenge):int{
         $nomChall = $nomChallenge;
-        $req=$this->db->prepare('SELECT idChallenge from challenge where nomChallenge = :nomChall');
+        $req=$this->db->prepare('SELECT idChallenge from Challenge where nomChallenge = :nomChall');
         $req->bindParam(':nomChall',$nomChall);
         $req->execute();
         $row = $req->fetch(PDO::FETCH_ASSOC);
@@ -226,7 +226,7 @@ class ChallengeDao
 
     public function getNbPoints($chal, $username){
 
-        $req = $this->db->prepare('SELECT nbPoints FROM PARTICIPER WHERE challenge = (SELECT idChallenge FROM CHALLENGE WHERE nomChallenge = :chal) AND joueur = (SELECT idCompte FROM compte WHERE username = :username)');
+        $req = $this->db->prepare('SELECT nbPoints FROM Participer WHERE challenge = (SELECT idChallenge FROM Challenge WHERE nomChallenge = :chal) AND joueur = (SELECT idCompte FROM Compte WHERE username = :username)');
         $req->bindParam(':chal',$chal);
         $req->bindParam(':username',$username);
         $req->execute();
@@ -239,13 +239,13 @@ class ChallengeDao
 
     public function addPoints($chal, $username, $nbPoints){
 
-        $req = $this->db->prepare('UPDATE PARTICIPER SET nbPoints = nbPoints + :nbPoints WHERE challenge = (SELECT idChallenge FROM CHALLENGE WHERE nomChallenge = :chal) AND joueur = (SELECT idCompte FROM compte WHERE username = :username)');
+        $req = $this->db->prepare('UPDATE Participer SET nbPoints = nbPoints + :nbPoints WHERE challenge = (SELECT idChallenge FROM Challenge WHERE nomChallenge = :chal) AND joueur = (SELECT idCompte FROM Compte WHERE username = :username)');
         $req->bindParam(':chal',$chal);
         $req->bindParam(':username',$username);
         $req->bindParam(':nbPoints',$nbPoints);
         $req->execute();
 
-        $req = $this->db->prepare('UPDATE COMPTE SET nbPoints = nbPoints + :nbPoints WHERE username = :username');
+        $req = $this->db->prepare('UPDATE Compte SET nbPoints = nbPoints + :nbPoints WHERE username = :username');
         $req->bindParam(':username',$username);
         $req->bindParam(':nbPoints',$nbPoints);
         $req->execute();
@@ -255,13 +255,13 @@ class ChallengeDao
 
         $participants=array();
 
-        $req=$this->db->prepare('SELECT idChallenge from challenge where nomChallenge = :nomChallenge');
+        $req=$this->db->prepare('SELECT idChallenge FROM Challenge WHERE nomChallenge = :nomChallenge');
         $req->bindParam(':nomChallenge',$chal);
         $req->execute();
         $row=$req->fetch(PDO::FETCH_ASSOC);
         $idC = $row['idChallenge'];
 
-        $req=$this->db->prepare('SELECT * from Compte inner join Participer on Compte.idCompte=Participer.joueur WHERE challenge = :idChal  ORDER BY Participer.nbPoints DESC');
+        $req=$this->db->prepare('SELECT * FROM Compte INNER JOIN Participer ON Compte.idCompte=Participer.joueur WHERE challenge = :idChal  ORDER BY Participer.nbPoints DESC');
         $req->bindParam(':idChal',$idC);
         $req->execute();
         
@@ -275,14 +275,14 @@ class ChallengeDao
 
     public function setGagnant($nomChallenge, $gagnant){
 
-            $req = $this->db->prepare('UPDATE challenge SET compteJoueur = (SELECT idCompte FROM COMPTE WHERE username = :gagnant) WHERE nomChallenge = :nomChallenge');
+            $req = $this->db->prepare('UPDATE Challenge SET compteJoueur = (SELECT idCompte FROM Compte WHERE username = :gagnant) WHERE nomChallenge = :nomChallenge');
             $req->bindParam(':nomChallenge',$nomChallenge);
             $req->bindParam(':gagnant',$gagnant);
             $req->execute();
     }
 
     public function getGagnant($nomChallenge){
-        $req = $this->db->prepare('SELECT compteJoueur FROM challenge WHERE nomChallenge = :nomChallenge');
+        $req = $this->db->prepare('SELECT compteJoueur FROM Challenge WHERE nomChallenge = :nomChallenge');
         $req->bindParam(':nomChallenge',$nomChallenge);
         $req->execute();
 

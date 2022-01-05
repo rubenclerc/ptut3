@@ -43,7 +43,7 @@ class EssayerDao{
         $req->execute();
 
         // Récupération de la nouvelle tentative
-        $req = $this->db->prepare('SELECT idTentative FROM tentative ORDER BY idTentative DESC LIMIT 1');
+        $req = $this->db->prepare('SELECT idTentative FROM Tentative ORDER BY idTentative DESC LIMIT 1');
         $req -> execute();
 
         $row = $req->fetch(PDO::FETCH_ASSOC);
@@ -64,7 +64,7 @@ class EssayerDao{
     public function Read(int $idTentative): Tentative{
         $tentative = null;
 
-        $req = $this->db->prepare('SELECT * FROM ESSAYER WHERE tentative = :idTentative');
+        $req = $this->db->prepare('SELECT * FROM Essayer WHERE tentative = :idTentative');
         $req->execute(array('idTentative' => $idTentative));
         $row = $req->fetch(PDO::FETCH_ASSOC);
 
@@ -78,41 +78,41 @@ class EssayerDao{
         $listeTentatives = [];
 
         // Récupération de l'identifiant du challenge
-        $reqIdC = $this->db->prepare('SELECT idChallenge FROM CHALLENGE WHERE nomChallenge = :nomChallenge');
+        $reqIdC = $this->db->prepare('SELECT idChallenge FROM Challenge WHERE nomChallenge = :nomChallenge');
         $reqIdC->execute(array('nomChallenge' => $challenge->ToString()));
         $rowIdC = $reqIdC->fetch(PDO::FETCH_ASSOC);
 
         // Récupération de l'identifiant du joueur
-        $reqIdJ = $this->db->prepare('SELECT idCompte FROM COMPTE WHERE username = :username');
+        $reqIdJ = $this->db->prepare('SELECT idCompte FROM Compte WHERE username = :username');
         $reqIdJ->execute(array('username' => $joueur->getUsername()));
         $rowIdJ = $reqIdJ->fetch(PDO::FETCH_ASSOC);
 
 
         // Récupération de l'identifiant de l'adversaire
-        $reqIdA = $this->db->prepare('SELECT idCompte FROM COMPTE WHERE username = :username');
+        $reqIdA = $this->db->prepare('SELECT idCompte FROM Compte WHERE username = :username');
         $reqIdA->execute(array('username' => $adv->getUsername()));
         $rowIdA = $reqIdA->fetch(PDO::FETCH_ASSOC);
 
         // Récupération des tentatives
-        $reqArr = $this->db->prepare('SELECT * FROM ESSAYER WHERE joueurAttaquant = :idJoueur AND challenge = :idChallenge AND joueurAttaque = :idAdversaire');
+        $reqArr = $this->db->prepare('SELECT * FROM Essayer WHERE joueurAttaquant = :idJoueur AND challenge = :idChallenge AND joueurAttaque = :idAdversaire');
         $reqArr->execute(array('idJoueur' => $rowIdJ['idCompte'], 'idChallenge' => $rowIdC['idChallenge'], 'idAdversaire' => $rowIdA['idCompte']));
 
         while($row = $reqArr->fetch(PDO::FETCH_ASSOC)){
             
             // Création du joueur
-            $jreq = $this->db->prepare('SELECT * FROM COMPTE WHERE idCompte = :idCompte');
+            $jreq = $this->db->prepare('SELECT * FROM Compte WHERE idCompte = :idCompte');
             $jreq->execute(array('idCompte' => $rowIdJ['idCompte']));
             $jrow = $jreq->fetch(PDO::FETCH_ASSOC);
             $joueur = new Compte($jrow['username'], $jrow['passw'], $jrow['estAdmin'], $jrow['nbPoints']);
 
             // Création de l'adversaire
-            $areq = $this->db->prepare('SELECT * FROM COMPTE WHERE idCompte = :idCompte');
+            $areq = $this->db->prepare('SELECT * FROM Compte WHERE idCompte = :idCompte');
             $areq->execute(array('idCompte' => $rowIdA['idCompte']));
             $arow = $areq->fetch(PDO::FETCH_ASSOC);
             $adversaire = new Compte($arow['username'], $arow['passw'], $arow['estAdmin'], $arow['nbPoints']);
 
             // Création du challenge
-            $creq = $this->db->prepare('SELECT * FROM CHALLENGE WHERE idChallenge = :idChallenge');
+            $creq = $this->db->prepare('SELECT * FROM Challenge WHERE idChallenge = :idChallenge');
             $creq->execute(array('idChallenge' => $rowIdC['idChallenge']));
             $crow = $creq->fetch(PDO::FETCH_ASSOC);
             $challenge = new Challenge($crow['nomChallenge'], intval($crow['difficulte']), new DateTime($crow['dateDebut']), new DateTime($crow['dateFin']), intval($crow['nbPartcipants']));
@@ -128,23 +128,23 @@ class EssayerDao{
         $b = false;
         $jName = $j->getUsername();
         $chall =  $challenge->ToString();
-        $reqJ=$this->db->prepare('SELECT idCompte from compte where username=:jName');
+        $reqJ=$this->db->prepare('SELECT idCompte FROM Compte WHERE username=:jName');
         $reqJ->bindParam(':jName',$jName);
         $reqJ->execute();
         $jrow=$reqJ->fetch(PDO::FETCH_ASSOC);
         $aName = $adv->getUsername();
-        $reqA=$this->db->prepare('SELECT idCompte from compte where username=:aName');
+        $reqA=$this->db->prepare('SELECT idCompte FROM Compte WHERE username=:aName');
         $reqA->bindParam(':aName',$aName);
         $reqA->execute();
         $arow=$reqA->fetch(PDO::FETCH_ASSOC);
         $idJ=intval($jrow['idCompte']);
         $idA=intval($arow['idCompte']);
-        $reqC=$this->db->prepare('SELECT idChallenge from challenge where nomChallenge=:Nchall');
+        $reqC=$this->db->prepare('SELECT idChallenge FROM Challenge WHERE nomChallenge=:Nchall');
         $reqC->bindParam(':Nchall',$chall);
         $reqC->execute();
         $crow=$reqC->fetch(PDO::FETCH_ASSOC);
         $idC=intval($crow['idChallenge']);
-        $req=$this->db->prepare('SELECT * from essayer where joueurAttaquant=:idJ and joueurAttaque=:idA and challenge=:idC');
+        $req=$this->db->prepare('SELECT * FROM Essayer WHERE joueurAttaquant=:idJ AND joueurAttaque=:idA AND challenge=:idC');
         $req->bindParam(':idJ',$idJ);
         $req->bindParam(':idA',$idA);
         $req->bindParam(':idC',$idC);
