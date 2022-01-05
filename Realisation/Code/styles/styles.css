@@ -6,7 +6,8 @@ body{
     min-height: 100%;
     background-image: url("../pictures/bg-img.png");
     background-repeat: no-repeat;
-    background-position: center;
+    background-position:center;
+    background-attachment: scroll ;
 }
 
 #navLogo{
