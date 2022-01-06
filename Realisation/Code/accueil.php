@@ -36,6 +36,13 @@ if(isset($_POST['deconnexion'])){
 
         <!-- Titre -->
         <title>MindMaster</title>
+        <style>
+.divScroll {
+overflow-y:scroll;
+height:500px;
+
+}
+</style>
         <link rel="icon" href="pictures/logo.png">
 
         <!-- CSS -->
@@ -61,8 +68,8 @@ if(isset($_POST['deconnexion'])){
             </div>
             
             <div class="container-fluid">
-                <div class="row red-border">
-                    <table class="table table-hover rouge">
+                <div class="row red-border "><div class="divScroll">
+                    <table class="table table-hover rouge" >
                         <thead>
                           <tr class="bleu text-center align-self-center">
                             <th scope="col">Challenge</th>
@@ -75,6 +82,7 @@ if(isset($_POST['deconnexion'])){
                           </tr>
                         </thead>
                         <tbody >
+                            
                           <?php
                             $challenges = $challengeDao->ListAll();
 
@@ -117,9 +125,10 @@ if(isset($_POST['deconnexion'])){
                                       
                                 echo '</tr>';
                             }
-                          ?>                 
+                          ?>  
+                                           
                         </tbody>
-                      </table>
+                      </table></div>
                     </div>
                 </div>
             </div>

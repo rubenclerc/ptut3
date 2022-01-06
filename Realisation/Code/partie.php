@@ -58,6 +58,16 @@ if(isset($_POST["code"])){
 
         <!-- Titre -->
         <title>MindMaster</title>
+        <style>
+.divScroll {
+overflow-y:scroll;
+height: 150px;
+}
+.divScrollT {
+overflow-y:scroll;
+height: 350px;
+}
+</style>
         <link rel="icon" href="pictures/logo.png">
 
         <!-- CSS -->
@@ -96,7 +106,7 @@ if(isset($_POST["code"])){
                 <div class="col-md-5 red-border mx-3">
                     <div class="tab-content" id="v-pills-tabContent">
                             <h2 class="rouge text-center mt-2"><?= htmlentities($_GET['adv']) ?></h2>
-
+<div class="divScrollT">
                             <hr class="red-hr">
 
                             
@@ -107,8 +117,8 @@ if(isset($_POST["code"])){
                     $code = str_split($tentative->getCode(), 1);
                 ?>               
                             <div class="row justify-content-around mb-4">
-                                    <h4 class="col-md-2 bleu blue-dot"><?= substr_count($strRep, "C")?></h4>
-                                    <h4 class="col-md-2 rouge red-dot"><?= substr_count($strRep, "B") ?></h4>
+                                    <h4 class="col-md-2 bleu " ><?= substr_count($strRep, "C")?> <img src="pictures/rond_bleu.png" alt="rond_bleu" id="rond_bleu"></h4>
+                                    <h4 class="col-md-2 rouge "><?= substr_count($strRep, "B") ?> <img src="pictures/rond_rouge.png" alt="rond_rouge" id="rond_rouge"></h4>
                                     <?php 
                                     $i=0;
                                         while($i<$curChallenge->getDifficulte()){
@@ -120,6 +130,7 @@ if(isset($_POST["code"])){
                             </div>
                 <?php if(substr_count($strRep, "C") == $curChallenge->getDifficulte()) {$gagne = true; echo "<p class='bleu'>Bravo vous avez trouvé le code de {$adve->getUsername()}</p>";}?>
                 <?php } ?>
+                </div>
                     </div>
                 </div>
             <?php } ?>
@@ -127,12 +138,13 @@ if(isset($_POST["code"])){
                 <div class="col-md-5 mx-3 adv">
                     <div class="row red-border">
                         <h2 class="bleu text-center mt-2">Adversaires</h2>
-
                         <div class="row justify-content-around">
                             <hr class="red-hr">
                         </div>
-
+ <div class="divScroll">
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            
+               
                             <?php
                             $participants = $challengeDao->ListParticipants($_GET["chal"]);$essaiDAO = new EssayerDao();
                             foreach($participants as $participant){
@@ -151,6 +163,7 @@ if(isset($_POST["code"])){
                             }
 
                             ?>                   
+                        </div>
                         </div>
                     </div>
                     <?php if(isset($_GET['adv'])){ 

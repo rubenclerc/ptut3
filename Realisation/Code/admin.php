@@ -39,6 +39,13 @@ if(isset($_GET['chal'])) {
 
         <!-- Titre -->
         <title>MindMaster</title>
+        <style>
+.divScroll {
+overflow-y:scroll;
+height:500px;
+
+}
+</style>
         <link rel="icon" href="pictures/logo.png">
 
         <!-- CSS -->
@@ -72,6 +79,7 @@ if(isset($_GET['chal'])) {
             
             <div class="container-fluid">
                 <div class="row red-border">
+                <div class="divScroll">
                     <table class="table table-hover rouge">
                         <thead>
                           <tr class="bleu text-center align-self-center">
