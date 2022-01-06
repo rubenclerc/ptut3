@@ -80,7 +80,7 @@ if(isset($_GET['chal'])) {
                             <th scope="col">Participants</th>
                             <th scope="col">Jour</th>
                             <th scope="col">Heure</th>
-                            <th scope="col">Durée</th>
+                            <th scope="col">Temps restant</th>
                             <th scope="col">Suppresion</th>
                             <th scope="col">Modification</th>
                           </tr>
@@ -105,7 +105,7 @@ if(isset($_GET['chal'])) {
                                 echo '<td>'. $nbParti ."/" . $challenge->getNbPlaces() .'</td>';
                                 echo '<td>'. $challenge->getDateDebut()->format('D d M') .'</td>';
                                 echo '<td>'. $challenge->getDateDebut()->format('H') . "h". $challenge->getDateDebut()->format('m') . '</td>';
-                                echo '<td>'. $challenge->getDuree()->format('d') . "j, " . $challenge->getDuree()->format('h'). "H" .'</td>';
+                                echo '<td>'. $challenge->getTpsRestant()->format('d') . "j, " . $challenge->getTpsRestant()->format('H') . "h" . $challenge->getTpsRestant()->format('i') .'</td>';
                                 
                                 $stringDate = $challenge->getdateDebut()->format('Y-m-d H:i:s');
                                 if ($stringDate>date("Y-m-d H:i:s")){

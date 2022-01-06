@@ -70,7 +70,7 @@ if(isset($_POST['deconnexion'])){
                             <th scope="col">Participants</th>
                             <th scope="col">Jour</th>
                             <th scope="col">Heure</th>
-                            <th scope="col">Durée</th>
+                            <th scope="col">Temps restant</th>
                             <th scope="col">Inscription</th>
                           </tr>
                         </thead>
@@ -93,7 +93,7 @@ if(isset($_POST['deconnexion'])){
                                 echo '<td>'. $nbParti ."/" . $challenge->getNbPlaces() .'</td>';
                                 echo '<td>'. $challenge->getDateDebut()->format('D d M') .'</td>';
                                 echo '<td>'. $challenge->getDateDebut()->format('H') . "h". $challenge->getDateDebut()->format('m') . '</td>';
-                                echo '<td>'. $challenge->getDuree()->format('d') . "j, " . $challenge->getDuree()->format('h'). "H" .'</td>';
+                                echo '<td>'.$challenge->getTpsRestant()->format('d') . "j, " . $challenge->getTpsRestant()->format('H') . "h" . $challenge->getTpsRestant()->format('i').'</td>';
                                 if($challenge->getTimeStampRestant() <= 0){
                                 echo '<td>
                                     <a href="resultat.php?chal='. $challenge->ToString() . '" class="btn btn-success">Résultat </a>

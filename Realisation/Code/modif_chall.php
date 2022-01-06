@@ -77,16 +77,19 @@ if(!isset($_SESSION['username'])) {
                 <form action="<?php echo $url; ?>" method="POST">
                     <div class="row bleu red-border justify-content-around">
                         <h1 class="text-center my-4">MODIFIER UN CHALLENGE</h1>
-
+                        <?php
+                             $stringDate = $challenge->getdateDebut()->format('Y-m-d H:i:s');
+                                
+                        ?>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="challenge-name">NOM:</label>
-                                <input type="text" class="form-control blue-border" id="challenge-name" name="name" value="<?php echo $challenge->toString()?>" required="required">
+                                <input <?php if ($stringDate<date("Y-m-d H:i:s")){?> readonly <?php }?>type="text" class="form-control blue-border" id="challenge-name" name="name" value="<?php echo $challenge->toString()?>" required="required">
                             </div>
 
                             <div class="form-group">
                                 <label for="challenge-difficulty">DIFFICULTÉ:</label>
-                                <select name="challenge-difficulty" class="form-control blue-border">
+                                <select <?php if ($stringDate<date("Y-m-d H:i:s")){?> readonly <?php }?>name="challenge-difficulty" class="form-control blue-border">
                                     <?php foreach($difficultes as $var => $diff) : ?>
                                         <option value="<?php echo $var ?>"<?php if ($var == $challenge->getDifficulte()): ?> selected="selected"<?php endif; ?>><?php echo $diff?></option>
                                     <?php endforeach; ?>
@@ -95,7 +98,7 @@ if(!isset($_SESSION['username'])) {
 
                             <div class="form-group">
                                 <label for="challenge-date">JOUR debut:</label>
-                                <input type="date" class="form-control blue-border" id="challenge-date" name="dateD" value="<?php echo $challenge->getDateDebut()->format('Y-m-d') ?>" required="required">
+                                <input <?php if ($stringDate<date("Y-m-d H:i:s")){?> readonly <?php }?>type="datetime-local" class="form-control blue-border" id="challenge-date" name="dateD" value="<?php echo $challenge->getDateDebut()->format('Y-m-d H:i:s') ?>" required="required">
                             </div>
                             <!--<div class="col-md-3">
                              <div class="form-group">
@@ -112,12 +115,12 @@ if(!isset($_SESSION['username'])) {
                             </div>-->
                             <div class="form-group">
                                 <label for="challenge-date">JOUR fin:</label>
-                                <input type="date" class="form-control blue-border" id="challenge-date" name="dateF"  value="<?php echo $challenge->getDateFin()->format('Y-m-d') ?>" required="required">
+                                <input type="datetime-local" class="form-control blue-border" id="challenge-date" name="dateF"  value="<?php echo $challenge->getDateFin()->format('Y-m-d H:i:s') ?>" required="required">
                             </div>
 
                             <div class="form-group">
                                 <label for="challenge-no">PARTICIPANTS:</label>
-                                <input type="number" min="2" class="form-control blue-border" id="challenge-no" name="nbp" value="<?php echo $challenge->getNbPlaces(); ?>" required="required">
+                                <input type="number" min="<?php echo $challenge->getNbPlaces(); ?>" class="form-control blue-border" id="challenge-no" name="nbp" value="<?php echo $challenge->getNbPlaces(); ?>" required="required">
                             </div>
                         </div>
 

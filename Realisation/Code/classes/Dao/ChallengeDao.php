@@ -69,6 +69,7 @@ class ChallengeDao
         $date=date("Y-m-d H:i:s");
         $timestamp1 = strtotime($dateDebut); 
         $timestamp2 = strtotime($date);
+        $timestamp3 = strtotime($dateFin); 
         if(($timestamp1 > $timestamp2)){
             $req = $this->db->prepare('UPDATE Challenge SET nomChallenge = :nomChall, dateDebut = :dateDebut, dateFin = :dateFin, nbPartcipants = :nbParticipants, difficulte = :difficulte WHERE idChallenge = :id');
             $req->bindParam(':nomChall',$nomChallenge);
@@ -78,7 +79,14 @@ class ChallengeDao
             $req->bindParam(':difficulte', $difficulte);
             $req->bindParam(':id',$id);
             $req->execute();
+        }else if($timestamp1<$timestamp2){
+             $req = $this->db->prepare('UPDATE Challenge SET  dateFin = :dateFin, nbPartcipants = :nbParticipants WHERE idChallenge = :id');
+            $req->bindParam(':dateFin', $dateFin);
+            $req->bindParam(':nbParticipants',$nbParticipants);
+            $req->bindParam(':id',$id);
+            $req->execute();
         }
+        
     }
 
     public function Delete(Challenge $challenge){
