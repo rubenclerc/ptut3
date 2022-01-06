@@ -17,7 +17,7 @@ class CompteDao{
         $pass=$c->getPasswordHash();
         $admin=$c->getEstAdmin();
 
-        $req = $this->db->prepare('INSERT INTO Compte (username, passw, estAdmin, nbPoints) VALUES (:username, :pass, :estAdmin, 0)');
+        $req = $this->db->prepare('INSERT INTO Compte(username, passw, estAdmin, nbPoints) VALUES(:username, :pass, :estAdmin, 0)');
         $req->bindParam(':username',$username);
         $req->bindParam(':pass', $pass);	
         $req->bindParam(':estAdmin', $admin);
