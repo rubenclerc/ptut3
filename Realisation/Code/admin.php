@@ -87,9 +87,9 @@ if(isset($_GET['chal'])) {
                         </thead>
                         <tbody >
                         <?php
+  
                             $challengeDao = new ChallengeDao();
                             $challenges = $challengeDao->ListAll();
-
                             foreach($challenges as $challenge)
                             {
                                 $nbParti = $challengeDao->CountParticipants($challenge->ToString());
@@ -106,9 +106,17 @@ if(isset($_GET['chal'])) {
                                 echo '<td>'. $challenge->getDateDebut()->format('D d M') .'</td>';
                                 echo '<td>'. $challenge->getDateDebut()->format('H') . "h". $challenge->getDateDebut()->format('m') . '</td>';
                                 echo '<td>'. $challenge->getDuree()->format('d') . "j, " . $challenge->getDuree()->format('h'). "H" .'</td>';
+                                
+                                $stringDate = $challenge->getdateDebut()->format('Y-m-d H:i:s');
+                                if ($stringDate>date("Y-m-d H:i:s")){
                                 echo '<td>
-                                          <a href="admin.php?chal='. $challenge->ToString() . '" class="btn btn-primary" >X </a>
-                                     </td>';
+                                          <a href="admin.php?chal='. $challenge->ToString() . '" class="btn btn-primary" >Supprimer </a>
+                                     </td>';}
+                                     else{
+                                        echo '<td>
+                                            <a class="btn btn-secondary">X</a>
+                                        </td>';
+                                       }
                                      $challenge->setId();
                                 echo '<td>
                                      <a href="modif_chall.php?chal='. $challenge->getId() . '" class="btn btn-primary" >X </a>
