@@ -49,15 +49,28 @@ class EssayerDao{
         $row = $req->fetch(PDO::FETCH_ASSOC);
         $idTentative = $row['idTentative'];
 
-        // Insère le l'essai
-        $req = $this->db->prepare('INSERT INTO Essayer(codeEssaye, tentative, joueurAttaquant, joueurAttaque, challenge, trouve) VALUES(:code, :id_Tentative, :id_Attaquant, :id_Attaque, :id_Challenge, :trouve)');
-        $req->bindParam(':code',$code);	
-        $req->bindParam(':id_Tentative', $idTentative);
-        $req->bindParam(':id_Attaquant', $idAttaquant);
-        $req->bindParam(':id_Attaque', $idVictime);
-        $req->bindParam(":id_Challenge",$idChallenge);
-        $req->bindParam(":trouve",$trouv);
-        $req->execute();
+        if($trouv){
+            // Insère le l'essai
+            $req = $this->db->prepare('INSERT INTO Essayer(codeEssaye, tentative, joueurAttaquant, joueurAttaque, challenge, trouve) VALUES(:code, :id_Tentative, :id_Attaquant, :id_Attaque, :id_Challenge, 1)');
+            $req->bindParam(':code',$code);	
+            $req->bindParam(':id_Tentative', $idTentative);
+            $req->bindParam(':id_Attaquant', $idAttaquant);
+            $req->bindParam(':id_Attaque', $idVictime);
+            $req->bindParam(":id_Challenge",$idChallenge);
+            $req->execute();
+
+        }else{
+            // Insère le l'essai
+            $req = $this->db->prepare('INSERT INTO Essayer(codeEssaye, tentative, joueurAttaquant, joueurAttaque, challenge, trouve) VALUES(:code, :id_Tentative, :id_Attaquant, :id_Attaque, :id_Challenge, 0)');
+            $req->bindParam(':code',$code);	
+            $req->bindParam(':id_Tentative', $idTentative);
+            $req->bindParam(':id_Attaquant', $idAttaquant);
+            $req->bindParam(':id_Attaque', $idVictime);
+            $req->bindParam(":id_Challenge",$idChallenge);
+            $req->execute();
+
+        }
+
 
     }
 
