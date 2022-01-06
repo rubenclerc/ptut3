@@ -79,7 +79,7 @@ class ChallengeDao
             $req->bindParam(':difficulte', $difficulte);
             $req->bindParam(':id',$id);
             $req->execute();
-        }else if($timestamp1<$timestamp2){
+        }else if($timestamp1<$timestamp3){
              $req = $this->db->prepare('UPDATE Challenge SET  dateFin = :dateFin, nbPartcipants = :nbParticipants WHERE idChallenge = :id');
             $req->bindParam(':dateFin', $dateFin);
             $req->bindParam(':nbParticipants',$nbParticipants);
