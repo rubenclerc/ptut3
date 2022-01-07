@@ -102,26 +102,36 @@ height:500px;
                                 echo '<td>'. $challenge->getDateDebut()->format('D d M') .'</td>';
                                 echo '<td>'. $challenge->getDateDebut()->format('H') . "h". $challenge->getDateDebut()->format('m') . '</td>';
                                 echo '<td>'.$challenge->getTpsRestant()->format('d') . "j, " . $challenge->getTpsRestant()->format('H') . "h" . $challenge->getTpsRestant()->format('i').'</td>';
-                                if($challenge->getTimeStampRestant() <= 0){
-                                echo '<td>
-                                    <a href="resultat.php?chal='. $challenge->ToString() . '" class="btn btn-success">Résultat </a>
-                                    </td>';
-                               }else if ($challengeDao->isIn($_SESSION['username'],$challenge->ToString())&&($challenge->getTimeStampRestant() > 0)){
-                                    echo '<td>
-                                        <a href="code.php?chal='. $challenge->ToString() . '" class="btn btn-primary">Rejoins </a>
-                                    </td>';
-                               }
-                               else if (($nbParti< $challenge->getNbPlaces())&&($challenge->getTimeStampRestant() > 0)){
-                                   echo '<td>
-                                            <a href="code.php?chal='. $challenge->ToString() . '" class="btn btn-primary">Rejoindre </a>
-                                      </td>';
-                               }
-                               else{
-                                echo '<td>
-                                    <a class="btn btn-secondary">Rejoindre </a>
-                                </td>';
-                               }
+                                $now = new DateTime();
+
+                                if($now > $challenge->getDateDebut())
+                                {
                                 
+
+                                    if($challenge->getTimeStampRestant() <= 0){
+                                    echo '<td>
+                                        <a href="resultat.php?chal='. $challenge->ToString() . '" class="btn btn-success">Résultat </a>
+                                        </td>';
+                                }else if ($challengeDao->isIn($_SESSION['username'],$challenge->ToString())&&($challenge->getTimeStampRestant() > 0)){
+                                        echo '<td>
+                                            <a href="code.php?chal='. $challenge->ToString() . '" class="btn btn-primary">Rejoins </a>
+                                        </td>';
+                                }
+                                else if (($nbParti< $challenge->getNbPlaces())&&($challenge->getTimeStampRestant() > 0)){
+                                    echo '<td>
+                                                <a href="code.php?chal='. $challenge->ToString() . '" class="btn btn-primary">Rejoindre </a>
+                                        </td>';
+                                }
+                                else{
+                                    echo '<td>
+                                        <a class="btn btn-secondary">Rejoindre </a>
+                                    </td>';
+                                }
+                               }else{
+                                echo '<td>
+                                <a class="btn btn-secondary">Rejoindre </a>
+                            </td>';
+                               }
                                       
                                 echo '</tr>';
                             }
